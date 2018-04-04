@@ -23,7 +23,7 @@ public class Article extends DomainEntity {
 
 	// Attributes ----------------------------------------------
 
-	private String Title;
+	private String title;
 	private Date moment;
 	private String summary;
 	private String body;
@@ -32,11 +32,11 @@ public class Article extends DomainEntity {
 
 	@NotBlank
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -88,7 +88,7 @@ public class Article extends DomainEntity {
 
 	private Collection<FollowUp> followUps;
 	private Newspaper newspaper;
-	private User user;
+	private User writer;
 
 	@Valid
 	@OneToMany
@@ -113,12 +113,12 @@ public class Article extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getUser() {
-		return user;
+	public User getWriter() {
+		return writer;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setWriter(User writer) {
+		this.writer = writer;
 	}
 
 }

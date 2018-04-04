@@ -29,27 +29,12 @@
 			</list>
 		</property>
 	</bean>
-
+	
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="username" value="customer1" />
+		<property name="password" value="ffbc4675f864e0e9aab8bdf7a0437010" />
 		<property name="authorities">
 			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
-				</bean>
 				<bean class="security.Authority">
 					<property name="authority" value="CUSTOMER" />
 				</bean>
@@ -57,6 +42,312 @@
 		</property>
 	</bean>
 	
-	<!-- Other domain beans come here -->	
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="customer2" />
+		<property name="password" value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="user1" />
+		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="user2" />
+		<property name="password" value="7e58d63b60197ceb55a1c487989a3720" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ADMINISTRATOR -->
+	
+	<bean id="admin1" class="domain.Administrator">
+		<property name="name" value="Admin" />
+		<property name="surname" value="Admin" />
+		<property name="email" value="admin@admin.com" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="postalAddress" value="41500" />
+		<property name="userAccount" ref="userAccount1" />
+	</bean>
+	
+	<!-- CUSTOMER -->
+
+	<bean id="customer1" class="domain.Customer">
+		<property name="name" value="Dani" />
+		<property name="surname" value="Rodríguez" />
+		<property name="email" value="dani@gmail.com" />
+		<property name="phoneNumber" value="666666666" />
+		<property name="postalAddress" value="41500" />
+		<property name="userAccount" ref="userAccount2" />
+		<property name="subscriptions">
+			<list>
+				<ref bean="subscription1" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="customer2" class="domain.Customer">
+		<property name="name" value="Alfonso" />
+		<property name="surname" value="Soldado" />
+		<property name="email" value="alfonso@gmail.com" />
+		<property name="phoneNumber" value="777777777" />
+		<property name="postalAddress" value="41000" />
+		<property name="userAccount" ref="userAccount3" />
+		<property name="subscriptions">
+			<list>
+				<ref bean="subscription2" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- USER -->
+	
+	<bean id="user1" class="domain.User">
+		<property name="name" value="Manuel" />
+		<property name="surname" value="Bartual" />
+		<property name="email" value="manuel@gmail.com" />
+		<property name="phoneNumber" value="666777777" />
+		<property name="postalAddress" value="41800" />
+		<property name="userAccount" ref="userAccount4" />
+		<property name="articles">
+			<list>
+				<ref bean="article1" />
+			</list>
+		</property>
+		<property name="chirps">
+			<list>
+				<ref bean="chirp1" />
+			</list>
+		</property>
+		<property name="newspapers">
+			<list>
+				<ref bean="newspaper1" />
+			</list>
+		</property>
+		<property name="following">
+			<list>
+				<ref bean="user2" />
+			</list>
+		</property>
+		<property name="followers">
+			<list>
+				<ref bean="user2" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="user2" class="domain.User">
+		<property name="name" value="Miguel" />
+		<property name="surname" value="Benítez" />
+		<property name="email" value="miguel@gmail.com" />
+		<property name="phoneNumber" value="666777666" />
+		<property name="postalAddress" value="41200" />
+		<property name="userAccount" ref="userAccount5" />
+		<property name="articles">
+			<list>
+				<ref bean="article2" />
+			</list>
+		</property>
+		<property name="chirps">
+			<list>
+				<ref bean="chirp2" />
+			</list>
+		</property>
+		<property name="newspapers">
+			<list>
+				<ref bean="newspaper2" />
+			</list>
+		</property>
+		<property name="following">
+			<list>
+				<ref bean="user1" />
+			</list>
+		</property>
+		<property name="followers">
+			<list>
+				<ref bean="user1" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ARTICLE -->
+	
+	<bean id="article1" class="domain.Article">
+		<property name="title" value="Weather" />
+		<property name="moment" value="2018/02/28 14:25" />
+		<property name="summary" value="It's gonna rain tomorrow." />
+		<property name="body" value="It's gonna rain tomorrow in the morning." />
+		<property name="pictures">
+			<list>
+				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
+			</list>
+		</property>
+		<property name="draftmode" value="true" />
+		<property name="followUps">
+			<list>
+				<ref bean="followUp1" />
+			</list>
+		</property>
+		<property name="newspaper" ref="newspaper1" />
+		<property name="writer" ref="user1" />
+	</bean>
+	
+	<bean id="article2" class="domain.Article">
+		<property name="title" value="Sport" />
+		<property name="moment" value="2017/03/28 15:25" />
+		<property name="summary" value="Sevilla FC win." />
+		<property name="body" value="Sevilla FC won the champions league." />
+		<property name="pictures">
+			<list>
+				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
+			</list>
+		</property>
+		<property name="draftmode" value="true" />
+		<property name="followUps">
+			<list>
+				<ref bean="followUp2" />
+			</list>
+		</property>
+		<property name="newspaper" ref="newspaper2" />
+		<property name="writer" ref="user2" />
+	</bean>
+	
+	<!-- CHIRP -->
+
+	<bean id="chirp1" class="domain.Chirp">
+		<property name="moment" value="2017/04/15 15:25" />
+		<property name="title" value="This is a title" />
+		<property name="description" value="This is a description" />
+		<property name="user" ref="user1" />
+	</bean>
+	
+	<bean id="chirp2" class="domain.Chirp">
+		<property name="moment" value="2017/10/15 15:25" />
+		<property name="title" value="This is another title" />
+		<property name="description" value="This is another description" />
+		<property name="user" ref="user2" />
+	</bean>
+	
+	<!-- CONFIGURATION -->
+	
+	<bean id="configuration" class="domain.Configuration">
+	<property name="tabooWords">
+		<list>
+			<value>sex</value>
+			<value>sexo</value>
+			<value>viagra</value>
+			<value>cialis</value>
+		</list>
+	</property>
+	</bean>
+
+	<!-- CREDIT CARD -->
+
+	<bean id="creditCard1" class="domain.CreditCard">
+		<property name="holderName" value="BBVA" />
+		<property name="brandName" value="MasterCard" />
+		<property name="number" value="4099537775843795" />
+		<property name="expirationMonth" value="02" />
+		<property name="expirationYear" value="19" />
+		<property name="CVV" value="123" />
+	</bean>
+
+	<bean id="creditCard2" class="domain.CreditCard">
+		<property name="holderName" value="Caixa" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="38642556792047" />
+		<property name="expirationMonth" value="05" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="223" />
+	</bean>
+	
+	<!-- FOLLOWUP -->
+
+	<bean id="followUp1" class="domain.FollowUp">
+		<property name="title" value="This is a title" />
+		<property name="moment" value="2017/04/15 15:25" />
+		<property name="summary" value="This is a summary" />
+		<property name="text" value="This is a text" />
+		<property name="pictures">
+			<list>
+				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="followUp2" class="domain.FollowUp">
+		<property name="title" value="This is another title" />
+		<property name="moment" value="2018/01/15 11:25" />
+		<property name="summary" value="This is another summary" />
+		<property name="text" value="This is another text" />
+		<property name="pictures">
+			<list>
+				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- NEWSPAPER -->
+
+	<bean id="newspaper1" class="domain.Newspaper">
+		<property name="title" value="This is a title" />
+		<property name="publication" value="2017/04/15" />
+		<property name="description" value="This is a description" />
+		<property name="picture" value="http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg" />
+		<property name="hide" value="false" />
+		<property name="articles">
+			<list>
+				<ref bean="article1" />
+			</list>
+		</property>
+		<property name="author" ref="user1" />
+	</bean>
+	
+	<bean id="newspaper2" class="domain.Newspaper">
+		<property name="title" value="This is another title" />
+		<property name="publication" value="2017/08/15" />
+		<property name="description" value="This is another description" />
+		<property name="picture" value="http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg" />
+		<property name="hide" value="false" />
+		<property name="articles">
+			<list>
+				<ref bean="article2" />
+			</list>
+		</property>
+		<property name="author" ref="user2" />
+	</bean>
+	
+	<!-- SUBSCRIPTION -->
+
+	<bean id="subscription1" class="domain.Subscription">
+		<property name="creditcard" ref="creditCard1" />
+		<property name="customer" ref="customer1" />
+		<property name="newspaper" ref="newspaper1" />
+	</bean>
+	
+	<bean id="subscription2" class="domain.Subscription">
+		<property name="creditcard" ref="creditCard2" />
+		<property name="customer" ref="customer2" />
+		<property name="newspaper" ref="newspaper2" />
+	</bean>
 	
 </beans>

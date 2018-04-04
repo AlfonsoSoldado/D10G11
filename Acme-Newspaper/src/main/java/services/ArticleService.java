@@ -56,7 +56,7 @@ public class ArticleService {
 
 	public Article save(final Article article) {
 		this.userService.checkAuthority();
-		Assert.isTrue(this.userService.findArticleCreator(article.getUser().getId()) == this.userService.findByPrincipal());
+		Assert.isTrue(this.userService.findArticleCreator(article.getWriter().getId()) == this.userService.findByPrincipal());
 		Article result = article;
 		Assert.notNull(article);
 		result = this.articleRepository.save(result);

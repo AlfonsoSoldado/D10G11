@@ -24,7 +24,7 @@ public class User extends Actor {
 	private Collection<User> followers;
 
 	@Valid
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "writer")
 	public Collection<Article> getArticles() {
 		return articles;
 	}
@@ -44,7 +44,7 @@ public class User extends Actor {
 	}
 
 	@Valid
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "author")
 	public Collection<Newspaper> getNewspapers() {
 		return newspapers;
 	}
@@ -64,7 +64,7 @@ public class User extends Actor {
 	}
 
 	@Valid
-	@ManyToMany(mappedBy = "user")
+	@ManyToMany(mappedBy = "following")
 	public Collection<User> getFollowers() {
 		return followers;
 	}
