@@ -18,10 +18,32 @@
 	">
 
 	<util:list id="converters">
-		<!-- 
-			Add your own converters using entries of the following form: 
-			<bean class="converters.Class1ToClass2" /> 
-		-->
+		<bean class="converters.ActorToStringConverter" /> 
+  		<bean class="converters.StringToActorConverter" /> 
+  		<bean class="converters.AdministratorToStringConverter" /> 
+  		<bean class="converters.StringToAdministratorConverter" /> 
+  		<bean class="converters.ArticleToStringConverter" /> 
+  		<bean class="converters.StringToArticleConverter" />
+  		<bean class="converters.AuthorityToStringConverter" /> 
+  		<bean class="converters.StringToAuthorityConverter" />
+  		<bean class="converters.ChirpToStringConverter" /> 
+  		<bean class="converters.StringToChirpConverter" />
+  		<bean class="converters.ConfigurationToStringConverter" /> 
+  		<bean class="converters.StringToConfigurationConverter" />
+  		<bean class="converters.CreditCardToStringConverter" /> 
+  		<bean class="converters.StringToCreditCardConverter" />
+  		<bean class="converters.CustomerToStringConverter" /> 
+  		<bean class="converters.StringToCustomerConverter" />
+  		<bean class="converters.FollowUpToStringConverter" /> 
+  		<bean class="converters.StringToFollowUpConverter" />
+  		<bean class="converters.NewspaperToStringConverter" /> 
+  		<bean class="converters.StringToNewspaperConverter" />
+  		<bean class="converters.SubscriptionToStringConverter" /> 
+  		<bean class="converters.StringToSubscriptionConverter" />
+  		<bean class="converters.UserAccountToStringConverter" /> 
+  		<bean class="converters.StringToUserAccountConverter" />
+  		<bean class="converters.UserToStringConverter" /> 
+  		<bean class="converters.StringToUserConverter" />
 	</util:list>
 	
 </beans>
