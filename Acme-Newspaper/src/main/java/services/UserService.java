@@ -32,7 +32,7 @@ public class UserService {
 	
 	// Supporting services ----------------------------------------------------
 
-//	@Autowired
+	@Autowired
 	private Validator validator;
 
 	// Constructor ------------------------------------------------------------

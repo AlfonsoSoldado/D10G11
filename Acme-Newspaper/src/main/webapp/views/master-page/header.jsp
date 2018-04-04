@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<img src="images/logo.png" alt="Acme-Newspaper Co., Inc." />
+	<a href="/Acme-Newspaper"><img src="images/logo.png" alt="Acme-Rendezvous Co., Inc." /></a>
 </div>
 
 <div>
@@ -42,6 +42,7 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv" href="user/register_User.do"><spring:message code="master.page.register.user" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
