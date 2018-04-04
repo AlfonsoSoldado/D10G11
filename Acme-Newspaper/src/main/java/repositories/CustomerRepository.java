@@ -9,7 +9,7 @@ import domain.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-	@Query("select c from Customer c join c.userAccount uc where uc.id = ?1")
+	@Query("select c from Customer c join c.userAccount ua where ua.id = ?1")
 	Customer findByPrincipal(int id);
 
 }
