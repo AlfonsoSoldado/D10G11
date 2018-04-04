@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -9,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.UserRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Article;
 import domain.User;
+import forms.UserForm;
 
 @Service
 @Transactional
@@ -28,7 +33,7 @@ public class UserService {
 	// Supporting services ----------------------------------------------------
 
 //	@Autowired
-//	private Validator validator;
+	private Validator validator;
 
 	// Constructor ------------------------------------------------------------
 
@@ -124,73 +129,69 @@ public class UserService {
 		Assert.isTrue(authority.contains(res));
 	}
 
-//	public UserForm reconstruct(final UserForm userForm, final BindingResult binding) {
-//		User res;
-//		UserForm userFinal = null;
-//		res = userForm.getUser();
-//		if (res.getId() == 0) {
-//			Collection<Comment> comment;
-//			Collection<Question> question;
-//			Collection<Rendezvous> rendezvous;
-//			Collection<RSVP> rsvp;
-//			UserAccount userAccount;
-//			Authority authority;
-//			userAccount = userForm.getUser().getUserAccount();
-//			authority = new Authority();
-//			comment = new ArrayList<Comment>();
-//			question = new ArrayList<Question>();
-//			rendezvous = new ArrayList<Rendezvous>();
-//			rsvp = new ArrayList<RSVP>();
-//			userForm.getUser().setUserAccount(userAccount);
-//			authority.setAuthority(Authority.USER);
-//			userAccount.addAuthority(authority);
-//			userForm.getUser().setComment(comment);
-//			userForm.getUser().setQuestion(question);
-//			userForm.getUser().setRendezvous(rendezvous);
-//			userForm.getUser().setRsvp(rsvp);
-//			userFinal = userForm;
-//		} else {
-//			res = this.userRepository.findOne(userForm.getUser().getId());
-//			userForm.getUser().setId(res.getId());
-//			userForm.getUser().setVersion(res.getVersion());
-//			userForm.getUser().setUserAccount(res.getUserAccount());
-//			userForm.getUser().setComment(res.getComment());
-//			userForm.getUser().setQuestion(res.getQuestion());
-//			userForm.getUser().setRendezvous(res.getRendezvous());
-//			userForm.getUser().setRsvp(res.getRsvp());
-//			userFinal = userForm;
-//		}
-//		this.validator.validate(userFinal, binding);
-//		return userFinal;
-//	}
-//
-//	public User reconstruct(final User user, final BindingResult binding) {
-//		User res;
-//		User userFinal;
-//		if (user.getId() == 0) {
-//			UserAccount userAccount;
-//			Authority authority;
-//			userAccount = user.getUserAccount();
-//			user.setUserAccount(userAccount);
-//			authority = new Authority();
-//			authority.setAuthority(Authority.USER);
-//			userAccount.addAuthority(authority);
-//			String password = "";
-//			password = user.getUserAccount().getPassword();
-//			user.getUserAccount().setPassword(password);
-//			userFinal = user;
-//		} else {
-//			res = this.userRepository.findOne(user.getId());
-//			user.setId(res.getId());
-//			user.setVersion(res.getVersion());
-//			user.setUserAccount(res.getUserAccount());
-//			user.getUserAccount().setPassword(user.getUserAccount().getPassword());
-//			user.getUserAccount().setAuthorities(user.getUserAccount().getAuthorities());
-//			userFinal = user;
-//		}
-//		this.validator.validate(userFinal, binding);
-//		return userFinal;
-//	}
+	public UserForm reconstruct(final UserForm userForm, final BindingResult binding) {
+		User res;
+		UserForm userFinal = null;
+		res = userForm.getUser();
+		if (res.getId() == 0) {
+			Collection<Article> articles;
+			Collection<User> following;
+			Collection<User> followers;
+			UserAccount userAccount;
+			Authority authority;
+			userAccount = userForm.getUser().getUserAccount();
+			authority = new Authority();
+			articles = new ArrayList<Article>();
+			following = new ArrayList<User>();
+			followers = new ArrayList<User>();
+			userForm.getUser().setUserAccount(userAccount);
+			authority.setAuthority(Authority.USER);
+			userAccount.addAuthority(authority);
+			userForm.getUser().setArticles(articles);
+			userForm.getUser().setFollowing(following);
+			userForm.getUser().setFollowers(followers);
+			userFinal = userForm;
+		} else {
+			res = this.userRepository.findOne(userForm.getUser().getId());
+			userForm.getUser().setId(res.getId());
+			userForm.getUser().setVersion(res.getVersion());
+			userForm.getUser().setUserAccount(res.getUserAccount());
+			userForm.getUser().setArticles(res.getArticles());
+			userForm.getUser().setFollowing(res.getFollowing());
+			userForm.getUser().setFollowers(res.getFollowers());
+			userFinal = userForm;
+		}
+		this.validator.validate(userFinal, binding);
+		return userFinal;
+	}
+
+	public User reconstruct(final User user, final BindingResult binding) {
+		User res;
+		User userFinal;
+		if (user.getId() == 0) {
+			UserAccount userAccount;
+			Authority authority;
+			userAccount = user.getUserAccount();
+			user.setUserAccount(userAccount);
+			authority = new Authority();
+			authority.setAuthority(Authority.USER);
+			userAccount.addAuthority(authority);
+			String password = "";
+			password = user.getUserAccount().getPassword();
+			user.getUserAccount().setPassword(password);
+			userFinal = user;
+		} else {
+			res = this.userRepository.findOne(user.getId());
+			user.setId(res.getId());
+			user.setVersion(res.getVersion());
+			user.setUserAccount(res.getUserAccount());
+			user.getUserAccount().setPassword(user.getUserAccount().getPassword());
+			user.getUserAccount().setAuthorities(user.getUserAccount().getAuthorities());
+			userFinal = user;
+		}
+		this.validator.validate(userFinal, binding);
+		return userFinal;
+	}
 
 	public void flush() {
 		this.userRepository.flush();

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -9,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CustomerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Customer;
+import domain.Subscription;
+import forms.CustomerForm;
 
 @Service
 @Transactional
@@ -27,8 +32,8 @@ public class CustomerService {
 	
 	// Supporting services ----------------------------------------------------
 
-//	@Autowired
-//	private Validator validator;
+	@Autowired
+	private Validator validator;
 
 	// Constructor ------------------------------------------------------------
 
@@ -117,73 +122,61 @@ public class CustomerService {
 		Assert.isTrue(authority.contains(res));
 	}
 
-//	public UserForm reconstruct(final UserForm userForm, final BindingResult binding) {
-//		User res;
-//		UserForm userFinal = null;
-//		res = userForm.getUser();
-//		if (res.getId() == 0) {
-//			Collection<Comment> comment;
-//			Collection<Question> question;
-//			Collection<Rendezvous> rendezvous;
-//			Collection<RSVP> rsvp;
-//			UserAccount userAccount;
-//			Authority authority;
-//			userAccount = userForm.getUser().getUserAccount();
-//			authority = new Authority();
-//			comment = new ArrayList<Comment>();
-//			question = new ArrayList<Question>();
-//			rendezvous = new ArrayList<Rendezvous>();
-//			rsvp = new ArrayList<RSVP>();
-//			userForm.getUser().setUserAccount(userAccount);
-//			authority.setAuthority(Authority.USER);
-//			userAccount.addAuthority(authority);
-//			userForm.getUser().setComment(comment);
-//			userForm.getUser().setQuestion(question);
-//			userForm.getUser().setRendezvous(rendezvous);
-//			userForm.getUser().setRsvp(rsvp);
-//			userFinal = userForm;
-//		} else {
-//			res = this.userRepository.findOne(userForm.getUser().getId());
-//			userForm.getUser().setId(res.getId());
-//			userForm.getUser().setVersion(res.getVersion());
-//			userForm.getUser().setUserAccount(res.getUserAccount());
-//			userForm.getUser().setComment(res.getComment());
-//			userForm.getUser().setQuestion(res.getQuestion());
-//			userForm.getUser().setRendezvous(res.getRendezvous());
-//			userForm.getUser().setRsvp(res.getRsvp());
-//			userFinal = userForm;
-//		}
-//		this.validator.validate(userFinal, binding);
-//		return userFinal;
-//	}
-//
-//	public User reconstruct(final User user, final BindingResult binding) {
-//		User res;
-//		User userFinal;
-//		if (user.getId() == 0) {
-//			UserAccount userAccount;
-//			Authority authority;
-//			userAccount = user.getUserAccount();
-//			user.setUserAccount(userAccount);
-//			authority = new Authority();
-//			authority.setAuthority(Authority.USER);
-//			userAccount.addAuthority(authority);
-//			String password = "";
-//			password = user.getUserAccount().getPassword();
-//			user.getUserAccount().setPassword(password);
-//			userFinal = user;
-//		} else {
-//			res = this.userRepository.findOne(user.getId());
-//			user.setId(res.getId());
-//			user.setVersion(res.getVersion());
-//			user.setUserAccount(res.getUserAccount());
-//			user.getUserAccount().setPassword(user.getUserAccount().getPassword());
-//			user.getUserAccount().setAuthorities(user.getUserAccount().getAuthorities());
-//			userFinal = user;
-//		}
-//		this.validator.validate(userFinal, binding);
-//		return userFinal;
-//	}
+	public CustomerForm reconstruct(final CustomerForm customerForm, final BindingResult binding) {
+		Customer res;
+		CustomerForm customerFinal = null;
+		res = customerForm.getCustomer();
+		if (res.getId() == 0) {
+			Collection<Subscription> subscriptions;
+			UserAccount userAccount;
+			Authority authority;
+			userAccount = customerForm.getCustomer().getUserAccount();
+			authority = new Authority();
+			subscriptions = new ArrayList<Subscription>();
+			customerForm.getCustomer().setUserAccount(userAccount);
+			authority.setAuthority(Authority.CUSTOMER);
+			userAccount.addAuthority(authority);
+			customerForm.getCustomer().setSubscriptions(subscriptions);
+			customerFinal = customerForm;
+		} else {
+			res = this.customerRepository.findOne(customerForm.getCustomer().getId());
+			customerForm.getCustomer().setId(res.getId());
+			customerForm.getCustomer().setVersion(res.getVersion());
+			customerForm.getCustomer().setUserAccount(res.getUserAccount());
+			customerForm.getCustomer().setSubscriptions(res.getSubscriptions());
+			customerFinal = customerForm;
+		}
+		this.validator.validate(customerFinal, binding);
+		return customerFinal;
+	}
+
+	public Customer reconstruct(final Customer customer, final BindingResult binding) {
+		Customer res;
+		Customer customerFinal;
+		if (customer.getId() == 0) {
+			UserAccount userAccount;
+			Authority authority;
+			userAccount = customer.getUserAccount();
+			customer.setUserAccount(userAccount);
+			authority = new Authority();
+			authority.setAuthority(Authority.CUSTOMER);
+			userAccount.addAuthority(authority);
+			String password = "";
+			password = customer.getUserAccount().getPassword();
+			customer.getUserAccount().setPassword(password);
+			customerFinal = customer;
+		} else {
+			res = this.customerRepository.findOne(customer.getId());
+			customer.setId(res.getId());
+			customer.setVersion(res.getVersion());
+			customer.setUserAccount(res.getUserAccount());
+			customer.getUserAccount().setPassword(customer.getUserAccount().getPassword());
+			customer.getUserAccount().setAuthorities(customer.getUserAccount().getAuthorities());
+			customerFinal = customer;
+		}
+		this.validator.validate(customerFinal, binding);
+		return customerFinal;
+	}
 
 	public void flush() {
 		this.customerRepository.flush();
