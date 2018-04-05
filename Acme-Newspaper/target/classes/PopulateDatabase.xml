@@ -201,7 +201,7 @@
 				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
 			</list>
 		</property>
-		<property name="draftmode" value="true" />
+		<property name="draftmode" value="false" />
 		<property name="followUps">
 			<list>
 				<ref bean="followUp1" />
@@ -221,7 +221,7 @@
 				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
 			</list>
 		</property>
-		<property name="draftmode" value="true" />
+		<property name="draftmode" value="false" />
 		<property name="followUps">
 			<list>
 				<ref bean="followUp2" />
@@ -292,6 +292,7 @@
 				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
 			</list>
 		</property>
+		<property name="article" ref="article1" />
 	</bean>
 	
 	<bean id="followUp2" class="domain.FollowUp">
@@ -304,6 +305,7 @@
 				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
 			</list>
 		</property>
+		<property name="article" ref="article2" />
 	</bean>
 	
 	<!-- NEWSPAPER -->
@@ -319,7 +321,7 @@
 				<ref bean="article1" />
 			</list>
 		</property>
-		<property name="author" ref="user1" />
+		<property name="publisher" ref="user1" />
 	</bean>
 	
 	<bean id="newspaper2" class="domain.Newspaper">
@@ -333,7 +335,7 @@
 				<ref bean="article2" />
 			</list>
 		</property>
-		<property name="author" ref="user2" />
+		<property name="publisher" ref="user2" />
 	</bean>
 	
 	<!-- SUBSCRIPTION -->

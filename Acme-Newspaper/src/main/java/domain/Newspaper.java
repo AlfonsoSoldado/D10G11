@@ -76,7 +76,7 @@ public class Newspaper extends DomainEntity {
 	// Relationships -------------------------------------------
 
 	private Collection<Article> articles;
-	private User author;
+	private User publisher;
 
 	@Valid
 	@OneToMany(mappedBy = "newspaper", cascade = CascadeType.REMOVE)
@@ -91,12 +91,12 @@ public class Newspaper extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getAuthor() {
-		return author;
+	public User getPublisher() {
+		return publisher;
 	}
 
-	public void setAuthor(User author) {
-		this.author = author;
+	public void setPublisher(User publisher) {
+		this.publisher = publisher;
 	}
 
 }

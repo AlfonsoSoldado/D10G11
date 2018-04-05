@@ -22,9 +22,9 @@
 
 <!-- Listing grid -->
 
-<form method = get action="article/search.do" >
-Search: <input type="text" name="criteria">
-<input type="submit" >
+<form method=GET action="article/search.do">
+	Search: <input type="text" name="criteria"> <input
+		type="submit">
 </form>
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -32,7 +32,7 @@ Search: <input type="text" name="criteria">
 	
 	<!-- Attributes -->
 
-	<security:authorize access="hasRole('USER')">
+	<security:authorize access="hasAnyRole('USER', 'ADMIN')">
 	<display:column><acme:links url="article/user/edit.do?articleId=${row.id}" code="article.edit" /></display:column>
 	</security:authorize>
 	
@@ -49,5 +49,5 @@ Search: <input type="text" name="criteria">
 <!-- Action links -->
 
 <br><security:authorize access="hasRole('USER')">
-		<display:column> <acme:links url="article/user/create.do" code="article.create" /> </display:column>
+		<acme:links url="article/user/create.do" code="article.create" />
 </security:authorize>

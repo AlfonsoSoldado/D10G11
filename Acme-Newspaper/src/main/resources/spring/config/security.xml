@@ -49,12 +49,16 @@
 		<security:intercept-url pattern="/article/list.do" access="permitAll" /> 
 		<security:intercept-url pattern="/article/search.do" access="permitAll" /> 
 		<security:intercept-url pattern="/newspaper/search.do" access="permitAll" /> 
-
+		<security:intercept-url pattern="/newspaper/display.do" access="permitAll" /> 
+		
 		<security:intercept-url pattern="/actor/customer/edit.do" access="hasRole('CUSTOMER')" /> 
 		
 		<security:intercept-url pattern="/actor/user/edit.do" access="hasRole('USER')" /> 
-		<security:intercept-url pattern="/newspaper/user/edit.do" access="hasRole('USER')" /> 
-		<security:intercept-url pattern="/article/user/edit.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/newspaper/user/edit.do" access="hasAnyRole('USER', 'ADMIN')" /> 
+		<security:intercept-url pattern="/newspaper/user/create.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/article/user/edit.do" access="hasAnyRole('USER', 'ADMIN')" /> 
+		<security:intercept-url pattern="/article/user/create.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/newspaper/user/listNotPublicated.do" access="hasRole('USER')" /> 
 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

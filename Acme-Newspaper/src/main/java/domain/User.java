@@ -44,7 +44,7 @@ public class User extends Actor {
 	}
 
 	@Valid
-	@OneToMany(mappedBy = "author")
+	@OneToMany(mappedBy = "publisher")
 	public Collection<Newspaper> getNewspapers() {
 		return newspapers;
 	}

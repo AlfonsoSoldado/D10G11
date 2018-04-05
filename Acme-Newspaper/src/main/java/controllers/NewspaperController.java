@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ArticleService;
 import services.NewspaperService;
+import domain.Article;
 import domain.Newspaper;
 
 @Controller
@@ -22,7 +24,10 @@ public class NewspaperController extends AbstractController {
 	private NewspaperService newspaperService;
 	
 	// Supporting services --------------------------------------------------
-
+	
+	@Autowired
+	private ArticleService articleService;
+	
 	// Constructors ---------------------------------------------------------
 
 	public NewspaperController() {
@@ -36,7 +41,7 @@ public class NewspaperController extends AbstractController {
 		ModelAndView result;
 		Collection<Newspaper> newspaper;
 
-		newspaper = this.newspaperService.findAll();
+		newspaper = this.newspaperService.findNewspapersPublicated();
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);
@@ -50,10 +55,24 @@ public class NewspaperController extends AbstractController {
 		ModelAndView res;
 		Collection<Newspaper> newspapers;
 		newspapers = this.newspaperService.searchNewspaper(criteria);
-		res = new ModelAndView("article/list");
-		res.addObject("article", newspapers);
-		res.addObject("requestURI", "article/list.do");
+		res = new ModelAndView("newspaper/list");
+		res.addObject("newspaper", newspapers);
+		res.addObject("requestURI", "newspaper/list.do");
 		return res;
+	}
+	
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int newspaperId) {
+		ModelAndView result;
+		Collection<Article> articles = articleService.findArticleByNewspaper(newspaperId); 
+		final Newspaper newspaper = this.newspaperService.findOne(newspaperId);
+
+		result = new ModelAndView("newspaper/display");
+		result.addObject("newspaper", newspaper);
+		result.addObject("articles", articles);
+		result.addObject("requestURI", "newspaper/display.do");
+
+		return result;
 	}
 
 }

@@ -19,23 +19,30 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestUri}" modelAttribute="newspaper">
+<form:form action="${requestURI}" modelAttribute="newspaper">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="publication" />
+	<form:hidden path="publisher" />
+	<form:hidden path="articles" />
 
+	<security:authorize access="hasRole('USER')">
 	<acme:textbox code="newspaper.title" path="title" />
 	<acme:textbox code="newspaper.description" path="description" />
 	<acme:textbox code="newspaper.picture" path="picture" />
 	<acme:selectBoolean code="newspaper.hide" path="hide" items="${hide}" />
-	<acme:select items="${articles}" itemLabel="articles" code="newspaper.article" path="articles"/>
 	
 	<!-- Buttons -->
 	
-	<acme:submit name="save" code="newspaper.save" />
+	<acme:submit name="save" code="newspaper.submit" />
+	<acme:cancel url="newspaper/list.do" code="newspaper.cancel" />
+	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMIN')">
 	<acme:delete confirmationCode="newspaper.confirm.delete" buttonCode="newspaper.delete" id="${newspaper.id}" />
 	<acme:cancel url="newspaper/list.do" code="newspaper.cancel" />
+	</security:authorize>
 
 </form:form>
 

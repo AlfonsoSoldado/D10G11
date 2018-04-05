@@ -24,6 +24,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -46,6 +47,7 @@
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
+			<li><a href="newspaper/user/listNotPublicated.do"><spring:message code="master.page.newspaper.list.notpublicated" /></a>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
@@ -58,16 +60,11 @@
 			</li>
 		<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a>
 		<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a>
-		<li><a href="article/search.do"><spring:message code="master.page.article.search" /></a>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
-			<li>
-				<a class="fNiv"> <spring:message code="master.page.profile" /> (<security:authentication property="principal.username" />)</a>
-			</li>
 		<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a>
 		<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a>
-		<li><a href="article/search.do"><spring:message code="master.page.article.search" /></a>
 		</security:authorize>
 	</ul>
 </div>

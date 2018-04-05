@@ -21,6 +21,8 @@ public class ActorUserController extends AbstractController {
 
 	@Autowired
 	private UserService userService;
+	
+	// Supporting services --------------------------------------------------
 
 	// Constructors ---------------------------------------------------------
 

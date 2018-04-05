@@ -91,7 +91,7 @@ public class Article extends DomainEntity {
 	private User writer;
 
 	@Valid
-	@OneToMany
+	@OneToMany(mappedBy = "article")
 	public Collection<FollowUp> getFollowUps() {
 		return followUps;
 	}

@@ -22,9 +22,9 @@
 
 <!-- Listing grid -->
 
-<form method = get action="newspaper/search.do" >
-Search: <input type="text" name="criteria">
-<input type="submit" >
+<form method=GET action="newspaper/search.do">
+	Search: <input type="text" name="criteria"> <input
+		type="submit">
 </form>
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -32,9 +32,11 @@ Search: <input type="text" name="criteria">
 	
 	<!-- Attributes -->
 
-	<security:authorize access="hasRole('USER')">
+	<security:authorize access="hasAnyRole('USER', 'ADMIN')">
 	<display:column><acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" /></display:column>
 	</security:authorize>
+	
+	<display:column><acme:links url="newspaper/display.do?newspaperId=${row.id}" code="newspaper.display" /></display:column>
 	
 	<acme:column property="title" code="newspaper.title" />
 	<acme:column property="publication" code="newspaper.publication" />
@@ -43,11 +45,12 @@ Search: <input type="text" name="criteria">
 	<display:column><img class="imagesNewspaper" src="${row.picture}"></display:column>
 
 	<display:column> <acme:links url="article/list.do?newspaperId=${row.id}" code="newspaper.articles" /> </display:column>
+	<display:column><acme:links url="user/display.do?userId=${row.publisher.id}" code="newspaper.publisher" /></display:column>
 
 </display:table>
 
 <!-- Action links -->
 
 <br><security:authorize access="hasRole('USER')">
-		<display:column> <acme:links url="newspaper/user/create.do" code="newspaper.create" /> </display:column>
+		<acme:links url="newspaper/user/create.do" code="newspaper.create" />
 </security:authorize>

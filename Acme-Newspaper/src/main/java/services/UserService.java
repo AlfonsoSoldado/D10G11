@@ -97,13 +97,6 @@ public class UserService {
 		return e;
 	}
 
-	public User findArticleCreator(final int id) {
-		User result;
-		result = this.userRepository.findArticleCreator(id);
-		Assert.notNull(result);
-		return result;
-	}
-
 	public boolean checkUserLogged() {
 		boolean result = false;
 		UserAccount userAccount;
