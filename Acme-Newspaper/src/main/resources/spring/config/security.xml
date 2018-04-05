@@ -42,20 +42,20 @@
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
 		<security:intercept-url pattern="/welcome/legal.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/register_User.do" access="permitAll" /> 
+		<security:intercept-url pattern="/customer/register_Customer.do" access="permitAll" /> 
+		<security:intercept-url pattern="/newspaper/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/user/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/user/display.do" access="permitAll" /> 
+		<security:intercept-url pattern="/article/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/article/search.do" access="permitAll" /> 
+		<security:intercept-url pattern="/article/searchList.do" access="permitAll" /> 
 
-		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/action-2.do" access="hasRole('ADMIN')" /> 
-
-		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/actor/customer/edit.do" access="hasRole('CUSTOMER')" /> 
 		
 		<security:intercept-url pattern="/actor/user/edit.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/newspaper/user/edit.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/article/user/edit.do" access="hasRole('USER')" /> 
 
-		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
-	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- 
- * tiles.xml
+ * tiles_es.xml
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -13,17 +13,17 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
+      
 <tiles-definitions>
 
-	<definition name="customer/action-1" extends="master.page">	
-		<put-attribute name="title" value="Customer: Action 1" />
-		<put-attribute name="body" value="/views/customer/action-1.jsp" />
+	<definition name="newspaper/list" extends="master.page">
+		<put-attribute name="title" value="Listar periódico" />
+		<put-attribute name="body" value="/views/newspaper/list.jsp" />
 	</definition>
 	
-	<definition name="customer/action-2" extends="master.page">	
-		<put-attribute name="title" value="Customer: Action 2" />
-		<put-attribute name="body" value="/views/customer/action-2.jsp" />
+	<definition name="newspaper/user/edit" extends="master.page">
+		<put-attribute name="title" value="Editar periódico" />
+		<put-attribute name="body" value="/views/newspaper/edit.jsp" />
 	</definition>
 	
 </tiles-definitions>

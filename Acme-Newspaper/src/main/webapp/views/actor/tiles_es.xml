@@ -36,4 +36,14 @@
 		<put-attribute name="body" value="/views/actor/display.jsp" />
 	</definition>
 	
+	<definition name="customer/register_Customer" extends="master.page">
+		<put-attribute name="title" value="Registrar cliente" />
+		<put-attribute name="body" value="/views/actor/register_Customer.jsp" />
+	</definition>
+	
+	<definition name="actor/customer/edit" extends="master.page">
+		<put-attribute name="title" value="Editar perfil" />
+		<put-attribute name="body" value="/views/actor/edit.jsp" />
+	</definition>
+	
 </tiles-definitions>

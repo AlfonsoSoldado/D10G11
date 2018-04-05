@@ -23,18 +23,26 @@
 <!-- Listing grid -->
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="user" requestURI="${requestURI}" id="row">
+	name="article" requestURI="${requestURI}" id="row">
 	
 	<!-- Attributes -->
+
+	<security:authorize access="hasRole('USER')">
+	<display:column><acme:links url="article/user/edit.do?articleId=${row.id}" code="article.edit" /></display:column>
+	</security:authorize>
 	
-	<acme:column code="actor.username" property="userAccount.username" />
-	
-	<spring:message var="displayHeader" code="user.display" />
-		<display:column title="${displayHeader}">
-		<a href="user/display.do?userId=${row.id}"> <spring:message
-				code="user.display" />
-		</a>
-	</display:column>
+	<acme:column property="title" code="article.title" />
+	<acme:column property="summary" code="article.summary" />
+	<acme:column property="body" code="article.body" />
+	<acme:column property="pictures" code="article.pictures"/>
+	<acme:column property="draftmode" code="article.draftmode" />
+
+	<display:column><acme:links url="user/display.do?userId=${row.writer.id}" code="article.user" /></display:column>
 
 </display:table>
-<br>
+
+<!-- Action links -->
+
+<br><security:authorize access="hasRole('USER')">
+		<display:column> <acme:links url="article/user/create.do" code="article.create" /> </display:column>
+</security:authorize>

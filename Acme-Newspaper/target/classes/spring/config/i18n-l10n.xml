@@ -25,7 +25,8 @@
 		
 		<value>/views/actor/messages</value>
 		<value>/views/administrator/messages</value>
-		<value>/views/customer/messages</value>
+		<value>/views/article/messages</value>
+		<value>/views/newspaper/messages</value>
 		<value>/views/profile/messages</value>
 	</util:list>
 

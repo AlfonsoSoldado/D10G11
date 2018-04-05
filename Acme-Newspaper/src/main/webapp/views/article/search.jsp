@@ -1,5 +1,5 @@
 <%--
- * action-1.jsp
+ * search.jsp
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -15,5 +15,23 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<p><spring:message code="customer.action.1" /></p>
+<form:form action="${requestURI}" modelAttribute="article">
+
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	
+	<form:hidden path="moment" />
+	<form:hidden path="summary" />
+	<form:hidden path="body" />
+	<form:hidden path="pictures" />
+	<form:hidden path="draftmode" />
+	
+	<acme:textbox code="article.title" path="title" />
+	
+	<!-- Buttons -->
+	
+	<acme:cancel url="article/searchList.do?criteria=${title}" code="article.search" />
+	
+</form:form>

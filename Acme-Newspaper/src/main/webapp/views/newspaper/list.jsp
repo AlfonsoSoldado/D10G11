@@ -23,18 +23,26 @@
 <!-- Listing grid -->
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="user" requestURI="${requestURI}" id="row">
+	name="newspaper" requestURI="${requestURI}" id="row">
 	
 	<!-- Attributes -->
+
+	<security:authorize access="hasRole('USER')">
+	<display:column><acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" /></display:column>
+	</security:authorize>
 	
-	<acme:column code="actor.username" property="userAccount.username" />
-	
-	<spring:message var="displayHeader" code="user.display" />
-		<display:column title="${displayHeader}">
-		<a href="user/display.do?userId=${row.id}"> <spring:message
-				code="user.display" />
-		</a>
-	</display:column>
+	<acme:column property="title" code="newspaper.title" />
+	<acme:column property="publication" code="newspaper.publication" />
+	<acme:column property="description" code="newspaper.description" />
+	<spring:message code="newspaper.picture" var="picture"/>
+	<display:column><img class="imagesNewspaper" src="${row.picture}"></display:column>
+
+	<display:column> <acme:links url="article/list.do?newspaperId=${row.id}" code="newspaper.articles" /> </display:column>
 
 </display:table>
-<br>
+
+<!-- Action links -->
+
+<br><security:authorize access="hasRole('USER')">
+		<display:column> <acme:links url="newspaper/user/create.do" code="newspaper.create" /> </display:column>
+</security:authorize>

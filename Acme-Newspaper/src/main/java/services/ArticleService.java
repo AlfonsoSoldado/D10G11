@@ -1,6 +1,6 @@
-
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -19,12 +19,12 @@ public class ArticleService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ArticleRepository	articleRepository;
+	private ArticleRepository articleRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private UserService		userService;
+	private UserService userService;
 
 	// Constructor ------------------------------------------------------------
 
@@ -56,7 +56,8 @@ public class ArticleService {
 
 	public Article save(final Article article) {
 		this.userService.checkAuthority();
-		Assert.isTrue(this.userService.findArticleCreator(article.getWriter().getId()) == this.userService.findByPrincipal());
+		Assert.isTrue(this.userService.findArticleCreator(article.getWriter()
+				.getId()) == this.userService.findByPrincipal());
 		Article result = article;
 		Assert.notNull(article);
 		result = this.articleRepository.save(result);
@@ -70,5 +71,24 @@ public class ArticleService {
 	}
 
 	// Other business method --------------------------------------------------
+
+	public Collection<Article> findArticleByNewspaper(int id) {
+		Collection<Article> res;
+		res = this.articleRepository.findArticleByNewspaper(id);
+		return res;
+	}
+	
+	public Article search() {
+		Article result;
+		result = new Article();
+		return result;
+	}
+	
+	public Collection<Article> searchArticle(String search) {
+		Collection<Article> res = new ArrayList<Article>();
+		res.addAll(articleRepository.searchArticle(search));
+		return res;
+		
+	}
 
 }
