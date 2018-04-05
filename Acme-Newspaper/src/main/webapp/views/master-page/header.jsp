@@ -58,6 +58,7 @@
 			</li>
 		<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a>
 		<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a>
+		<li><a href="article/search.do"><spring:message code="master.page.article.search" /></a>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -66,6 +67,7 @@
 			</li>
 		<li><a href="newspaper/list.do"><spring:message code="master.page.newspaper.list" /></a>
 		<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a>
+		<li><a href="article/search.do"><spring:message code="master.page.article.search" /></a>
 		</security:authorize>
 	</ul>
 </div>

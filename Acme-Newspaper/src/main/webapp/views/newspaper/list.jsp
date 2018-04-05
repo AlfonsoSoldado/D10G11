@@ -22,6 +22,11 @@
 
 <!-- Listing grid -->
 
+<form method = get action="newspaper/search.do" >
+Search: <input type="text" name="criteria">
+<input type="submit" >
+</form>
+
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="newspaper" requestURI="${requestURI}" id="row">
 	

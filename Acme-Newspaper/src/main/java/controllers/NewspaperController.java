@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.NewspaperService;
@@ -19,6 +20,8 @@ public class NewspaperController extends AbstractController {
 
 	@Autowired
 	private NewspaperService newspaperService;
+	
+	// Supporting services --------------------------------------------------
 
 	// Constructors ---------------------------------------------------------
 
@@ -40,6 +43,17 @@ public class NewspaperController extends AbstractController {
 		result.addObject("requestURI", "newspaper/list.do");
 
 		return result;
+	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public ModelAndView searchList(@RequestParam String criteria) {
+		ModelAndView res;
+		Collection<Newspaper> newspapers;
+		newspapers = this.newspaperService.searchNewspaper(criteria);
+		res = new ModelAndView("article/list");
+		res.addObject("article", newspapers);
+		res.addObject("requestURI", "article/list.do");
+		return res;
 	}
 
 }

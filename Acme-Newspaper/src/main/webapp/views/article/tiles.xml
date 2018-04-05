@@ -21,11 +21,6 @@
 	</definition>
 	
 	<definition name="article/search" extends="master.page">
-		<put-attribute name="title" value="Search article" />
-		<put-attribute name="body" value="/views/article/search.jsp" />
-	</definition>
-	
-	<definition name="article/searchList" extends="master.page">
 		<put-attribute name="title" value="List article" />
 		<put-attribute name="body" value="/views/article/list.jsp" />
 	</definition>

@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,15 @@ public class NewspaperService {
 	}
 
 	// Other business method --------------------------------------------------
+	
+	public Collection<Newspaper> searchNewspaper(String criteria) {
+		Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(newspaperRepository.searchNewspaper(criteria));
+		return res;
+	}
+	
+	public void flush() {
+		this.newspaperRepository.flush();
+	}
 
 }

@@ -84,11 +84,14 @@ public class ArticleService {
 		return result;
 	}
 	
-	public Collection<Article> searchArticle(String search) {
+	public Collection<Article> searchArticle(String criteria) {
 		Collection<Article> res = new ArrayList<Article>();
-		res.addAll(articleRepository.searchArticle(search));
+		res.addAll(articleRepository.searchArticle(criteria));
 		return res;
-		
+	}
+	
+	public void flush() {
+		this.articleRepository.flush();
 	}
 
 }
