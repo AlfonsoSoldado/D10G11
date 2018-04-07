@@ -17,4 +17,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	@Query("select a from Article a where (a.title like %?1% or a.summary like %?1% or a.body like %?1%)")
 	Collection<Article> searchArticle(String criteria);
 
+	@Query("select a from Article a where a.taboo=true")
+	Collection<Article> findArticleTaboo();
 }

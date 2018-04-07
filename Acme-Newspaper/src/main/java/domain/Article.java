@@ -29,6 +29,7 @@ public class Article extends DomainEntity {
 	private String body;
 	private Collection<String> pictures;
 	private Boolean draftmode;
+	private Boolean taboo;
 
 	@NotBlank
 	public String getTitle() {
@@ -82,6 +83,14 @@ public class Article extends DomainEntity {
 
 	public void setDraftmode(Boolean draftmode) {
 		this.draftmode = draftmode;
+	}
+	
+	public Boolean getTaboo() {
+		return taboo;
+	}
+
+	public void setTaboo(Boolean taboo) {
+		this.taboo = taboo;
 	}
 
 	// Relationships -------------------------------------------

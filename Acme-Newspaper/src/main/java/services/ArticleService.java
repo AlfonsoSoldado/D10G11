@@ -24,6 +24,9 @@ public class ArticleService {
 	private ArticleRepository articleRepository;
 
 	// Supporting services ----------------------------------------------------
+	
+	@Autowired
+	private ConfigurationService configurationService;
 
 	@Autowired
 	private UserService userService;
@@ -97,6 +100,29 @@ public class ArticleService {
 	public Collection<Article> searchArticle(String criteria) {
 		Collection<Article> res = new ArrayList<Article>();
 		res.addAll(articleRepository.searchArticle(criteria));
+		return res;
+	}
+	
+	public void checkTabooWords() {
+		administratorService.checkAuthority();
+		Collection<String> tabooWords = new ArrayList<String>();
+		tabooWords = configurationService.findTabooWords();
+
+		Collection<Article> articles = new ArrayList<Article>();
+		articles = this.findAll();
+
+		for (String s : tabooWords) {
+			for (Article a : articles) {
+				if (a.getTitle().contains(s) || a.getSummary().contains(s) || a.getBody().contains(s)) {
+					a.setTaboo(true);
+				}
+			}
+		}
+	}
+	
+	public Collection<Article> findArticleTaboo(){
+		Collection<Article> res = new ArrayList<Article>();
+		res.addAll(articleRepository.findArticleTaboo());
 		return res;
 	}
 	

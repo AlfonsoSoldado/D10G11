@@ -28,6 +28,8 @@
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
+			<li><a href="article/administrator/list.do"><spring:message code="master.page.article.taboo" /></a>
+			<li><a href="newspaper/administrator/list.do"><spring:message code="master.page.newspaper.taboo" /></a>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">

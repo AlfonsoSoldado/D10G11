@@ -20,4 +20,6 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	@Query("select n from Newspaper n join n.articles a where draftmode = true")
 	Collection<Newspaper> findNewspapersNotPublicated();
 
+	@Query("select n from Newspaper n where n.taboo=true")
+	Collection<Newspaper> findNewspaperTaboo();
 }

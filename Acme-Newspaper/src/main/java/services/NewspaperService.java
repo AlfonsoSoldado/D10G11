@@ -27,6 +27,9 @@ public class NewspaperService {
 	// Supporting services ----------------------------------------------------
 	
 	@Autowired
+	private ConfigurationService configurationService;
+	
+	@Autowired
 	private UserService userService;
 	
 	@Autowired
@@ -114,6 +117,29 @@ public class NewspaperService {
 	public Collection<Newspaper> findNewspapersNotPublicated() {
 		Collection<Newspaper> res = new ArrayList<Newspaper>();
 		res.addAll(newspaperRepository.findNewspapersNotPublicated());
+		return res;
+	}
+	
+	public void checkTabooWords() {
+		administratorService.checkAuthority();
+		Collection<String> tabooWords = new ArrayList<String>();
+		tabooWords = configurationService.findTabooWords();
+
+		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
+		newspapers = this.findAll();
+
+		for (String s : tabooWords) {
+			for (Newspaper n : newspapers) {
+				if (n.getTitle().contains(s) || n.getDescription().contains(s)) {
+					n.setTaboo(true);
+				}
+			}
+		}
+	}
+	
+	public Collection<Newspaper> findNewspaperTaboo(){
+		Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(newspaperRepository.findNewspaperTaboo());
 		return res;
 	}
 	

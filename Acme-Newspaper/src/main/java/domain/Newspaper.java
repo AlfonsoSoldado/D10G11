@@ -28,6 +28,7 @@ public class Newspaper extends DomainEntity {
 	private String description;
 	private String picture;
 	private Boolean hide;
+	private Boolean taboo;
 
 	@NotBlank
 	public String getTitle() {
@@ -71,6 +72,14 @@ public class Newspaper extends DomainEntity {
 
 	public void setHide(Boolean hide) {
 		this.hide = hide;
+	}
+	
+	public Boolean getTaboo() {
+		return taboo;
+	}
+
+	public void setTaboo(Boolean taboo) {
+		this.taboo = taboo;
 	}
 
 	// Relationships -------------------------------------------

@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +54,10 @@ public class ConfigurationService {
 
 	// Other business method --------------------------------------------------
 
+	public Collection<String> findTabooWords(){
+		Collection<String> res = new ArrayList<String>();
+		res.addAll(this.configurationRepository.findTabooWords());
+		return res;
+	}
+	
 }
