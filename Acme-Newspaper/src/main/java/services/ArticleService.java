@@ -104,7 +104,6 @@ public class ArticleService {
 	}
 	
 	public void checkTabooWords() {
-		administratorService.checkAuthority();
 		Collection<String> tabooWords = new ArrayList<String>();
 		tabooWords = configurationService.findTabooWords();
 

@@ -40,8 +40,11 @@ public class NewspaperController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Newspaper> newspaper;
+		
+		this.newspaperService.checkTabooWords();
 
 		newspaper = this.newspaperService.findNewspapersPublicated();
+		newspaper.removeAll(this.newspaperService.findNewspaperTaboo());
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);
@@ -55,6 +58,7 @@ public class NewspaperController extends AbstractController {
 		ModelAndView res;
 		Collection<Newspaper> newspapers;
 		newspapers = this.newspaperService.searchNewspaper(criteria);
+		newspapers.removeAll(this.newspaperService.findNewspaperTaboo());
 		res = new ModelAndView("newspaper/list");
 		res.addObject("newspaper", newspapers);
 		res.addObject("requestURI", "newspaper/list.do");

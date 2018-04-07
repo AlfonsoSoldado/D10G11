@@ -113,15 +113,8 @@ public class NewspaperService {
 		res.addAll(newspaperRepository.findNewspapersPublicated());
 		return res;
 	}
-	
-	public Collection<Newspaper> findNewspapersNotPublicated() {
-		Collection<Newspaper> res = new ArrayList<Newspaper>();
-		res.addAll(newspaperRepository.findNewspapersNotPublicated());
-		return res;
-	}
-	
+
 	public void checkTabooWords() {
-		administratorService.checkAuthority();
 		Collection<String> tabooWords = new ArrayList<String>();
 		tabooWords = configurationService.findTabooWords();
 

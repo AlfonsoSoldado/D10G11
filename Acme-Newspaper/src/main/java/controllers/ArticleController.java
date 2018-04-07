@@ -35,8 +35,11 @@ public class ArticleController extends AbstractController {
 	public ModelAndView list(@RequestParam int newspaperId) {
 		ModelAndView result;
 		Collection<Article> article;
+		
+		this.articleService.checkTabooWords();
 
 		article = this.articleService.findArticleByNewspaper(newspaperId);
+		article.removeAll(this.articleService.findArticleTaboo());
 
 		result = new ModelAndView("article/list");
 		result.addObject("article", article);

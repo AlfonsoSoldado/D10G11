@@ -40,11 +40,17 @@ public class NewspaperUserController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Newspaper> newspaper;
+		Collection<Newspaper> all;
+		
+		this.newspaperService.checkTabooWords();
 
-		newspaper = this.newspaperService.findNewspapersNotPublicated();
+		all = this.newspaperService.findAll();
+		newspaper = this.newspaperService.findNewspapersPublicated();
+		all.removeAll(newspaper);
+		all.removeAll(this.newspaperService.findNewspaperTaboo());
 
 		result = new ModelAndView("newspaper/list");
-		result.addObject("newspaper", newspaper);
+		result.addObject("newspaper", all);
 		result.addObject("requestURI", "newspaper/list.do");
 
 		return result;
