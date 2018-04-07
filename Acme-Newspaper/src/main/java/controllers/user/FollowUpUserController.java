@@ -1,6 +1,5 @@
 package controllers.user;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -14,40 +13,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
-import services.NewspaperService;
+import services.FollowUpService;
 import controllers.AbstractController;
 import domain.Article;
-import domain.Newspaper;
+import domain.FollowUp;
 
 @Controller
-@RequestMapping("/article/user")
-public class ArticleUserController extends AbstractController {
+@RequestMapping("/followUp/user")
+public class FollowUpUserController extends AbstractController {
 
 	// Services -------------------------------------------------------------
 
 	@Autowired
-	private ArticleService articleService;
+	private FollowUpService followUpService;
 	
 	// Supporting services --------------------------------------------------
 	
 	@Autowired
-	private NewspaperService newspaperService;
+	private ArticleService articleService;
 	
 	// Constructors ---------------------------------------------------------
 
-	public ArticleUserController() {
+	public FollowUpUserController() {
 		super();
 	}
-
+	
 	// Creation ---------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView res;
-		Article article;
+		FollowUp followUp;
 
-		article = this.articleService.create();
-		res = this.createEditModelAndView(article);
+		followUp = this.followUpService.create();
+		res = this.createEditModelAndView(followUp);
 		
 		return res;
 	}
@@ -55,13 +54,13 @@ public class ArticleUserController extends AbstractController {
 	// Editing ---------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int articleId) {
+	public ModelAndView edit(@RequestParam final int followUpId) {
 		ModelAndView result;
-		Article article;
+		FollowUp followUp;
 
-		article = this.articleService.findOne(articleId);
-		result = this.createEditModelAndView(article);
-		result.addObject("article", article);
+		followUp = this.followUpService.findOne(followUpId);
+		result = this.createEditModelAndView(followUp);
+		result.addObject("followUp", followUp);
 		
 		return result;
 	}
@@ -69,19 +68,19 @@ public class ArticleUserController extends AbstractController {
 	// Saving --------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Article article,
+	public ModelAndView save(@Valid FollowUp followUp,
 			final BindingResult binding) {
 		ModelAndView res;
 		if (binding.hasErrors())
-			res = this.createEditModelAndView(article,
-					"article.params.error");
+			res = this.createEditModelAndView(followUp,
+					"followUp.params.error");
 		else
 			try {
-				this.articleService.save(article);
-				res = new ModelAndView("redirect:../list.do?newspaperId=" + article.getNewspaper().getId());
+				this.followUpService.save(followUp);
+				res = new ModelAndView("redirect:../list.do?articleId=" + followUp.getArticle().getId());
 			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(article,
-						"article.commit.error");
+				res = this.createEditModelAndView(followUp,
+						"followUp.commit.error");
 			}
 		return res;
 	}
@@ -89,47 +88,42 @@ public class ArticleUserController extends AbstractController {
 	// Deleting --------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Article article,
+	public ModelAndView delete(@Valid final FollowUp followUp,
 			final BindingResult binding) {
 		ModelAndView res;
 		try {
-			this.articleService.delete(article);
+			this.followUpService.delete(followUp);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
 			System.out.println(oops.getMessage());
-			res = this.createEditModelAndView(article,
-					"article.commit.error");
+			res = this.createEditModelAndView(followUp,
+					"followUp.commit.error");
 		}
 		return res;
 	}
 
 	// Ancillary methods --------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Article article) {
+	protected ModelAndView createEditModelAndView(final FollowUp followUp) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(article, null);
+		result = this.createEditModelAndView(followUp, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Article article,
+	protected ModelAndView createEditModelAndView(final FollowUp followUp,
 			final String message) {
 		ModelAndView result;
-		final Collection<Boolean> draftmode = new ArrayList<>();
-		Collection<Newspaper> newspaper;
+		Collection<Article> article;
 		
-		draftmode.add(false);
-		draftmode.add(true);
-		newspaper = newspaperService.findAll();
-		newspaper.removeAll(newspaperService.findNewspapersPublicated());
+		article = articleService.findAll();
 
-		result = new ModelAndView("article/user/edit");
+		result = new ModelAndView("followUp/user/edit");
+		result.addObject("followUp", followUp);
 		result.addObject("article", article);
-		result.addObject("draftmode", draftmode);
-		result.addObject("newspaper", newspaper);
 		result.addObject("message", message);
-		result.addObject("requestURI", "article/user/edit.do");
+		result.addObject("requestURI", "followUp/user/edit.do");
 
 		return result;
 	}

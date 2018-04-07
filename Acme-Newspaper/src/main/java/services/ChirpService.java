@@ -65,5 +65,11 @@ public class ChirpService {
 	}
 
 	// Other business method --------------------------------------------------
+	
+	public Collection<Chirp> findChirpByUser(int id) {
+		Collection<Chirp> res;
+		res = this.chirpRepository.findChirpByUser(id);
+		return res;
+	}
 
 }

@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class FollowUpService {
 	private FollowUpRepository followUpRepository;
 
 	// Supporting services ----------------------------------------------------
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructor ------------------------------------------------------------
 
@@ -30,8 +34,14 @@ public class FollowUpService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public FollowUp create() {
+		this.userService.checkAuthority();
 		FollowUp result;
+		Date moment;
+		
 		result = new FollowUp();
+		moment = new Date(System.currentTimeMillis() - 1000);
+		result.setMoment(moment);
+		
 		return result;
 	}
 
@@ -51,6 +61,7 @@ public class FollowUpService {
 	}
 
 	public FollowUp save(FollowUp followUp) {
+		this.userService.checkAuthority();
 		Assert.notNull(followUp);
 		FollowUp res;
 		res = this.followUpRepository.save(followUp);
@@ -58,6 +69,7 @@ public class FollowUpService {
 	}
 
 	public void delete(FollowUp followUp) {
+		this.userService.checkAuthority();
 		Assert.notNull(followUp);
 		Assert.isTrue(followUp.getId() != 0);
 		Assert.isTrue(this.followUpRepository.exists(followUp.getId()));
@@ -65,5 +77,11 @@ public class FollowUpService {
 	}
 
 	// Other business method --------------------------------------------------
+	
+	public Collection<FollowUp> findFollowUpByArticle(int id) {
+		Collection<FollowUp> res;
+		res = this.followUpRepository.findFollowUpByArticle(id);
+		return res;
+	}
 
 }

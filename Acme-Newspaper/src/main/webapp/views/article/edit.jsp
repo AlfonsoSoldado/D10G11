@@ -32,17 +32,19 @@
 	<acme:textbox code="article.body" path="body" />
 	<acme:textbox code="article.pictures" path="pictures" />
 	<acme:selectBoolean code="article.draftmode" path="draftmode" items="${draftmode}" />
+	<jstl:if test="${article.id == 0}">
 	<acme:select items="${newspaper}" itemLabel="title" code="article.newspaper" path="newspaper"/>
+	</jstl:if>
 	
 	<!-- Buttons -->
 	
 	<acme:submit name="save" code="article.submit" />
-	<acme:cancel url="article/list.do" code="article.cancel" />
+	<acme:cancel url="article/list.do?newspaperId=${article.newspaper.id}" code="article.cancel" />
 	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">
 	<acme:delete confirmationCode="article.confirm.delete" buttonCode="article.delete" id="${article.id}" />
-	<acme:cancel url="newspaper/list.do" code="article.cancel" />
+	<acme:cancel url="article/list.do?newspaperId=${article.newspaper.id}" code="article.cancel" />
 	</security:authorize>
 
 </form:form>

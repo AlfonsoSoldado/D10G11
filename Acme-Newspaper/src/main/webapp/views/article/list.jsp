@@ -43,6 +43,7 @@
 	<acme:column property="draftmode" code="article.draftmode" />
 
 	<display:column><acme:links url="user/display.do?userId=${row.writer.id}" code="article.user" /></display:column>
+	<display:column> <acme:links url="followUp/list.do?articleId=${row.id}" code="article.followUp" /> </display:column>
 
 </display:table>
 

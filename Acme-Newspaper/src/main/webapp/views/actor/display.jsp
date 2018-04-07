@@ -63,6 +63,27 @@
 </p>
 </form:form>
 
+<display:table name="chirps" class="displaytag" id="row">
+	
+	<!-- Attributes -->
+
+	<spring:message code="newspaper.title" var="title" />:
+	<display:column title ="${title}" sortable="true">
+		<jstl:forEach var="title" items="${row.title}">
+			<jstl:out value="${title}"></jstl:out><br/>
+		</jstl:forEach>	
+	</display:column>
+	
+	
+	<spring:message code="newspaper.description" var="description" />:
+	<display:column title ="${description}" sortable="true">
+		<jstl:forEach var="description" items="${row.description}">
+			<jstl:out value="${description}"></jstl:out><br/>
+		</jstl:forEach>	
+	</display:column>
+	
+</display:table>
+
 <div>
 	<a href="#" onClick="history.back();"> <spring:message
 			code="actor.back" />

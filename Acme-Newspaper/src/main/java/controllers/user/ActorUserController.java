@@ -1,5 +1,7 @@
 package controllers.user;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ChirpService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Chirp;
 import domain.User;
 
 @Controller
@@ -23,6 +27,9 @@ public class ActorUserController extends AbstractController {
 	private UserService userService;
 	
 	// Supporting services --------------------------------------------------
+	
+	@Autowired
+	private ChirpService chirpService;
 
 	// Constructors ---------------------------------------------------------
 
@@ -57,6 +64,22 @@ public class ActorUserController extends AbstractController {
 				res = this.createEditModelAndView(user, "actor.commit.error");
 			}
 		return res;
+	}
+	
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display() {
+		ModelAndView result;
+		User user;
+
+		user = this.userService.findByPrincipal();
+		result = new ModelAndView("user/display");
+		Collection<Chirp> chirps = chirpService.findChirpByUser(user.getId());
+		
+		result.addObject("user", user);
+		result.addObject("chirps", chirps);
+		result.addObject("requestURI", "user/display.do");
+
+		return result;
 	}
 
 	// Ancillary methods --------------------------------------------------

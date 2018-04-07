@@ -50,7 +50,6 @@ public class ArticleService {
 		
 		result = new Article();
 		writer = userService.findByPrincipal();
-		
 		moment = new Date(System.currentTimeMillis() - 1000);
 		result.setMoment(moment);
 		result.setWriter(writer);
