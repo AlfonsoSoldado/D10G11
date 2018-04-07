@@ -112,7 +112,7 @@ public class ArticleService {
 
 		for (String s : tabooWords) {
 			for (Article a : articles) {
-				if (a.getTitle().contains(s) || a.getSummary().contains(s) || a.getBody().contains(s)) {
+				if (a.getTitle().toLowerCase().contains(s.toLowerCase()) || a.getSummary().toLowerCase().contains(s.toLowerCase()) || a.getBody().toLowerCase().contains(s.toLowerCase())) {
 					a.setTaboo(true);
 				}
 			}

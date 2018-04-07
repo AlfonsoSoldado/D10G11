@@ -123,7 +123,7 @@ public class NewspaperService {
 
 		for (String s : tabooWords) {
 			for (Newspaper n : newspapers) {
-				if (n.getTitle().contains(s) || n.getDescription().contains(s)) {
+				if (n.getTitle().toLowerCase().contains(s.toLowerCase()) || n.getDescription().toLowerCase().contains(s.toLowerCase())) {
 					n.setTaboo(true);
 				}
 			}
