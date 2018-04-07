@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.util.Assert;
 
 import repositories.ChirpRepository;
 import domain.Chirp;
+import domain.User;
 
 @Service
 @Transactional
@@ -20,6 +22,9 @@ public class ChirpService {
 	private ChirpRepository chirpRepository;
 
 	// Supporting services ----------------------------------------------------
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructor ------------------------------------------------------------
 
@@ -30,8 +35,17 @@ public class ChirpService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public Chirp create() {
+		this.userService.checkAuthority();
+		User user;
 		Chirp result;
+		Date moment;
+		
 		result = new Chirp();
+		moment = new Date(System.currentTimeMillis() - 1000);
+		user = userService.findByPrincipal();
+		result.setMoment(moment);
+		result.setUser(user);
+		
 		return result;
 	}
 
