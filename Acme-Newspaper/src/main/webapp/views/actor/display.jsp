@@ -16,9 +16,9 @@
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <form:form action="user/display.do" modelAttribute="user">
 
@@ -83,6 +83,10 @@
 	</display:column>
 	
 </display:table>
+
+<security:authorize access="hasRole('USER')">
+		<acme:links url="chirp/user/create.do" code="chirp.create" />
+</security:authorize>
 
 <div>
 	<a href="#" onClick="history.back();"> <spring:message

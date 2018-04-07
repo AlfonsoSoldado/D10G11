@@ -68,6 +68,8 @@
 		<security:intercept-url pattern="/followUp/user/create.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/followUp/user/edit.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/actor/user/display.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/chirp/user/edit.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/chirp/user/create.do" access="hasRole('USER')" /> 
 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
