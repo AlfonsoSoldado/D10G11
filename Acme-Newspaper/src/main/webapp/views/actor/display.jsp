@@ -66,8 +66,12 @@
 <display:table name="chirps" class="displaytag" id="row">
 	
 	<!-- Attributes -->
+	
+	<security:authorize access="hasAnyRole('USER', 'ADMIN')">
+	<display:column><acme:links url="chirp/user/edit.do?chirpId=${row.id}" code="chirp.edit" /></display:column>
+	</security:authorize>
 
-	<spring:message code="newspaper.title" var="title" />:
+	<spring:message code="chirp.title" var="title" />:
 	<display:column title ="${title}" sortable="true">
 		<jstl:forEach var="title" items="${row.title}">
 			<jstl:out value="${title}"></jstl:out><br/>
@@ -75,7 +79,7 @@
 	</display:column>
 	
 	
-	<spring:message code="newspaper.description" var="description" />:
+	<spring:message code="chirp.description" var="description" />:
 	<display:column title ="${description}" sortable="true">
 		<jstl:forEach var="description" items="${row.description}">
 			<jstl:out value="${description}"></jstl:out><br/>

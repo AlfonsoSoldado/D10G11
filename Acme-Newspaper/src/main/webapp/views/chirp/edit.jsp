@@ -33,7 +33,11 @@
 	
 	<acme:submit name="save" code="chirp.submit" />
 	<acme:cancel url="/" code="chirp.cancel" />
+	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMIN')">
 	<acme:delete confirmationCode="chirp.confirm.delete" buttonCode="chirp.delete" id="${chirp.id}" />
+	<acme:cancel url="/" code="chirp.cancel" />
 	</security:authorize>
 	
 </form:form>
