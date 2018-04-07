@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,25 @@ public class ArticleController extends AbstractController {
 		res.addObject("article", articles);
 		res.addObject("requestURI", "article/list.do");
 		return res;
+	}
+	
+	// Display ------------------------------------------------------
+	
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int articleId) {
+		ModelAndView result;
+		
+		Article article = this.articleService.findOne(articleId);
+		
+		Collection<String> pictures = new ArrayList<String>();
+		pictures = article.getPictures();
+
+		result = new ModelAndView("article/display");
+		result.addObject("article", article);
+		result.addObject("pictures", pictures);
+		result.addObject("requestURI", "article/display.do");
+
+		return result;
 	}
 
 }

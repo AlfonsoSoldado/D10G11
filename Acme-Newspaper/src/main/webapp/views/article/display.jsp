@@ -20,54 +20,49 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="newspaper/display.do" modelAttribute="newspaper">
+<form:form action="article/display.do" modelAttribute="article">
 
 <p>
 	<span style="font-weight: bold;"> <spring:message
-			code="newspaper.title" var="titleHeader" /> <jstl:out
+			code="article.title" var="titleHeader" /> <jstl:out
 			value="${titleHeader}" />:
 	</span>
-	<jstl:out value="${newspaper.title}" />
+	<jstl:out value="${article.title}" />
 </p>
 
 <p>
 	<span style="font-weight: bold;"> <spring:message
-			code="newspaper.description" var="descriptionHeader" /> <jstl:out
-			value="${descriptionHeader}" />:
+			code="article.moment" var="momentHeader" /> <jstl:out
+			value="${momentHeader}" />:
 	</span>
-	<jstl:out value="${newspaper.description}" />
+	<jstl:out value="${article.moment}" />
 </p>
 
 <p>
 	<span style="font-weight: bold;"> <spring:message
-			code="newspaper.picture" var="pictureHeader" /> <jstl:out
-			value="${pictureHeader}" />:
+			code="article.summary" var="summaryHeader" /> <jstl:out
+			value="${summaryHeader}" />:
 	</span>
-	<jstl:out value="${newspaper.picture}" />
+	<jstl:out value="${article.summary}" />
 </p>
 
-<display:table name="articles" class="displaytag" id="row">
-	
-	<!-- Attributes -->
+<p>
+	<span style="font-weight: bold;"> <spring:message
+			code="article.body" var="bodyHeader" /> <jstl:out
+			value="${bodyHeader}" />:
+	</span>
+	<jstl:out value="${article.body}" />
+</p>
 
-	<spring:message code="article.title" var="title" />:
-	<display:column title ="${title}" sortable="true">
-		<jstl:forEach var="title" items="${row.title}">
-			<a href="article/display.do?articleId=${row.id}">${title }</a>
-		</jstl:forEach>	
-	</display:column>
-	
-	
-	<spring:message code="article.summary" var="summary" />:
-	<display:column title ="${summary}" sortable="true">
-		<jstl:forEach var="summary" items="${row.summary}">
-			<jstl:out value="${summary}"></jstl:out><br/>
-		</jstl:forEach>	
-	</display:column>
-	
-	<display:column><acme:links url="user/display.do?userId=${row.writer.id}" code="article.user" /></display:column>
-
-</display:table>
+<p>
+	<span style="font-weight: bold;"> <spring:message
+			code="article.pictures" var="picturesHeader" /> <jstl:out
+			value="${picturesHeader}" />:
+	</span>
+	<jstl:forEach var="p" items="${pictures }">
+		<img src="${p }"/>
+	</jstl:forEach>
+</p>
 
 </form:form>
 

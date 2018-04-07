@@ -122,6 +122,7 @@ public class ArticleUserController extends AbstractController {
 		draftmode.add(false);
 		draftmode.add(true);
 		newspaper = newspaperService.findAll();
+		newspaper.removeAll(newspaperService.findNewspapersPublicated());
 
 		result = new ModelAndView("article/user/edit");
 		result.addObject("article", article);

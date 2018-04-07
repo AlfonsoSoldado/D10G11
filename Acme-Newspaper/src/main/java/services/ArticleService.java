@@ -74,7 +74,7 @@ public class ArticleService {
 	public Article save(final Article article) {
 		this.userService.checkAuthority();
 		if (article.getId() != 0) {
-			Assert.isTrue(article.getDraftmode() == false);
+			Assert.isTrue(article.getDraftmode() == true);
 		}
 		Article result = article;
 		Assert.notNull(article);
