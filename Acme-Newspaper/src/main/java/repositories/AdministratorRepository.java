@@ -47,7 +47,7 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	double averageFollowupsPerArticle();
 
 	// falta sumarle 7 dias al momento de publicacion
-	@Query("select avg(m.followUps.size*1.0) from Article m  join m.followUps a where a.moment<= m.moment;")
+	@Query("select avg(m.followUps.size*1.0) from Article m  join m.followUps a where a.moment<= m.moment")
 	double averageFollowupsPerArticleToOneWeekPublishedArticle();
 
 	@Query("select avg(m.chirps.size*1.0) from User m")
@@ -86,6 +86,6 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	@Query("select count(m)/(select count(v) from Newspaper v) from Newspaper m where m.hide=true")
 	double AveragePrivateNewspaperPerPublisher();
 	
-	@Query("select count(m)/(select count(v) from Newspaper v) from Newspaper m where m.hide=false;")
+	@Query("select count(m)/(select count(v) from Newspaper v) from Newspaper m where m.hide=false")
 	double AveragePublicNewspaperPerPublisher();
 }
