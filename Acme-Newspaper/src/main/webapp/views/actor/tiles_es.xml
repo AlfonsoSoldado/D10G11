@@ -31,6 +31,16 @@
 		<put-attribute name="body" value="/views/actor/list.jsp" />
 	</definition>
 	
+	<definition name="user/listFollowers" extends="master.page">
+		<put-attribute name="title" value="Lista de seguidores" />
+		<put-attribute name="body" value="/views/actor/list.jsp" />
+	</definition>
+	
+	<definition name="user/listFollowing" extends="master.page">
+		<put-attribute name="title" value="Lista de seguidos" />
+		<put-attribute name="body" value="/views/actor/list.jsp" />
+	</definition>
+	
 	<definition name="user/display" extends="master.page">
 		<put-attribute name="title" value="Mostrar usuario" />
 		<put-attribute name="body" value="/views/actor/display.jsp" />
@@ -44,6 +54,16 @@
 	<definition name="actor/customer/edit" extends="master.page">
 		<put-attribute name="title" value="Editar perfil" />
 		<put-attribute name="body" value="/views/actor/edit.jsp" />
+	</definition>
+	
+	<definition name="user/follow" extends="master.page">
+		<put-attribute name="title" value="Seguir" />
+		<put-attribute name="body" value="/views/actor/follow.jsp" />
+	</definition>
+	
+	<definition name="user/unfollow" extends="master.page">
+		<put-attribute name="title" value="Dejar de seguir" />
+		<put-attribute name="body" value="/views/actor/unfollow.jsp" />
 	</definition>
 	
 </tiles-definitions>

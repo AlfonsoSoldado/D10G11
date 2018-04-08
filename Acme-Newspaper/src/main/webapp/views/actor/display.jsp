@@ -63,6 +63,40 @@
 </p>
 </form:form>
 
+<spring:message code="actor.articles" var="articles" />
+<h2><jstl:out value="${articles}"></jstl:out></h2>
+
+<display:table name="articles" class="displaytag" id="row">
+	
+	<!-- Attributes -->
+	
+		<spring:message code="article.title" var="title" />:
+	<display:column title ="${title}" sortable="true">
+		<jstl:forEach var="title" items="${row.title}">
+			<a href="article/display.do?articleId=${row.id}">${title }</a>
+		</jstl:forEach>	
+	</display:column>
+	
+	<acme:column property="moment" code="article.moment" />
+	
+	<acme:column property="summary" code="article.summary" />
+	
+</display:table>
+
+<spring:message code="actor.chirp" var="chirp" />
+<h2><jstl:out value="${chirp}"></jstl:out></h2>
+<br/>
+
+<spring:message code="actor.follow" var="follow" />
+<h4><a href="user/follow.do?userId=${user.id }"><jstl:out value="${follow}"></jstl:out></a></h4>
+<spring:message code="actor.unfollow" var="unfollow" />
+<h4><a href="user/unfollow.do?userId=${user.id }"><jstl:out value="${unfollow}"></jstl:out></a></h4>
+
+<spring:message code="actor.followers" var="followers" />
+<spring:message code="actor.following" var="following" />
+<h4><a href="user/listFollowers.do?userId=${user.id }"><jstl:out value="${followers}"></jstl:out></a></h4>
+<h4><a href="user/listFollowing.do?userId=${user.id }"><jstl:out value="${following}"></jstl:out></a></h4>
+
 <display:table name="chirps" class="displaytag" id="row">
 	
 	<!-- Attributes -->

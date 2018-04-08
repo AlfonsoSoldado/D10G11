@@ -19,4 +19,7 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
 	@Query("select a from Article a where a.taboo=true")
 	Collection<Article> findArticleTaboo();
+	
+	@Query("select a from Article a where a.writer.id=?1 and a.draftmode = false")
+	Collection<Article> findArticlePublishedByUser(int id);
 }

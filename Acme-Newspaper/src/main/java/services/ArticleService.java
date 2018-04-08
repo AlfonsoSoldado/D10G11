@@ -124,6 +124,12 @@ public class ArticleService {
 		return res;
 	}
 	
+	public Collection<Article> findArticlePublishedByUser(int userId){
+		Collection<Article> res = new ArrayList<Article>();
+		res = articleRepository.findArticlePublishedByUser(userId);
+		return res;
+	}
+	
 	public void flush() {
 		this.articleRepository.flush();
 	}

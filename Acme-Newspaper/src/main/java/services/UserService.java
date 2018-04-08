@@ -87,6 +87,46 @@ public class UserService {
 	}
 
 	// Other business method --------------------------------------------------
+	
+	public void follow(int userId){
+		User actual;
+		actual = this.findByPrincipal();
+		
+		User follow;
+		follow = this.findOne(userId);
+		
+		Collection<User> following;
+		following = actual.getFollowing();
+		
+		Collection<User> followers;
+		followers = follow.getFollowers();
+		
+		following.add(follow);
+		followers.add(actual);
+		
+		follow.setFollowers(followers);
+		actual.setFollowing(following);
+	}
+	
+	public void unfollow(int userId){
+		User actual;
+		actual = this.findByPrincipal();
+		
+		User unfollow;
+		unfollow = this.findOne(userId);
+		
+		Collection<User> following;
+		following = actual.getFollowing();
+		
+		Collection<User> followers;
+		followers = unfollow.getFollowers();
+		
+		following.remove(unfollow);
+		followers.remove(actual);
+		
+		unfollow.setFollowers(following);
+		actual.setFollowing(followers);
+	}
 
 	public User findByPrincipal() {
 		User e;
