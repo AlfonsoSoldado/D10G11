@@ -39,12 +39,12 @@
 	<!-- Buttons -->
 	
 	<acme:submit name="save" code="article.submit" />
-	<acme:cancel url="article/list.do?newspaperId=${article.newspaper.id}" code="article.cancel" />
+	<acme:cancel url="newspaper/list.do" code="article.cancel" />
 	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">
 	<acme:delete confirmationCode="article.confirm.delete" buttonCode="article.delete" id="${article.id}" />
-	<acme:cancel url="article/list.do?newspaperId=${article.newspaper.id}" code="article.cancel" />
+	<acme:cancel url="newspaper/list.do" code="article.cancel" />
 	</security:authorize>
 
 </form:form>
