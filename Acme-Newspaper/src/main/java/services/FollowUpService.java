@@ -24,6 +24,9 @@ public class FollowUpService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 	// Constructor ------------------------------------------------------------
 
@@ -69,7 +72,7 @@ public class FollowUpService {
 	}
 
 	public void delete(FollowUp followUp) {
-		this.userService.checkAuthority();
+		this.administratorService.checkAuthority();
 		Assert.notNull(followUp);
 		Assert.isTrue(followUp.getId() != 0);
 		Assert.isTrue(this.followUpRepository.exists(followUp.getId()));

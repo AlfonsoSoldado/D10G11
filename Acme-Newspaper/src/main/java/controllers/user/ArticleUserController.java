@@ -86,23 +86,6 @@ public class ArticleUserController extends AbstractController {
 		return res;
 	}
 
-	// Deleting --------------------------------------------------------------
-
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Article article,
-			final BindingResult binding) {
-		ModelAndView res;
-		try {
-			this.articleService.delete(article);
-			res = new ModelAndView("redirect:../../");
-		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
-			res = this.createEditModelAndView(article,
-					"article.commit.error");
-		}
-		return res;
-	}
-
 	// Ancillary methods --------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(final Article article) {

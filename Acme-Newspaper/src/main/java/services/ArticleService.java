@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.ArticleRepository;
 import domain.Article;
+import domain.FollowUp;
 import domain.User;
 
 @Service
@@ -33,6 +34,9 @@ public class ArticleService {
 	
 	@Autowired
 	private AdministratorService administratorService;
+	
+	@Autowired
+	private FollowUpService followUpService;
 
 	// Constructor ------------------------------------------------------------
 
@@ -85,6 +89,12 @@ public class ArticleService {
 		this.administratorService.checkAuthority();
 		Assert.notNull(article);
 		Assert.isTrue(article.getId() != 0);
+		Collection<FollowUp> followUps;
+		followUps = new ArrayList<FollowUp>(this.followUpService.findFollowUpByArticle(article.getId()));
+		for (final FollowUp f : followUps)
+			if (f != null) {
+				this.followUpService.delete(f);
+			}
 		this.articleRepository.delete(article);
 	}
 

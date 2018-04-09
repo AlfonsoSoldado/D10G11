@@ -32,8 +32,12 @@
 	
 	<!-- Attributes -->
 
-	<security:authorize access="hasAnyRole('USER', 'ADMIN')">
-	<display:column><acme:links url="article/user/edit.do?articleId=${row.id}" code="article.edit" /></display:column>
+	<security:authorize access="hasRole('USER')">
+		<display:column><acme:links url="article/user/edit.do?articleId=${row.id}" code="article.edit" /></display:column>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMIN')">
+		<display:column><acme:links url="article/administrator/edit.do?articleId=${row.id}" code="article.delete" /></display:column>
 	</security:authorize>
 	
 	<acme:column property="title" code="article.title" />

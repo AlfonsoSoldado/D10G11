@@ -32,8 +32,12 @@
 	
 	<!-- Attributes -->
 
-	<security:authorize access="hasAnyRole('USER', 'ADMIN')">
-	<display:column><acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" /></display:column>
+	<security:authorize access="hasRole('USER')">
+		<display:column><acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" /></display:column>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMIN')">
+		<display:column><acme:links url="newspaper/administrator/edit.do?newspaperId=${row.id}" code="newspaper.delete" /></display:column>
 	</security:authorize>
 	
 	<display:column><acme:links url="newspaper/display.do?newspaperId=${row.id}" code="newspaper.display" /></display:column>

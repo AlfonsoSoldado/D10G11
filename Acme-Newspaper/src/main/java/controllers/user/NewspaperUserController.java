@@ -41,7 +41,7 @@ public class NewspaperUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Newspaper> newspaper;
 		Collection<Newspaper> all;
-		
+
 		this.newspaperService.checkTabooWords();
 
 		all = this.newspaperService.findAll();
@@ -101,22 +101,6 @@ public class NewspaperUserController extends AbstractController {
 				res = this.createEditModelAndView(newspaper,
 						"newspaper.commit.error");
 			}
-		return res;
-	}
-
-	// Deleting --------------------------------------------------------------
-
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Newspaper newspaper,
-			final BindingResult binding) {
-		ModelAndView res;
-		try {
-			this.newspaperService.delete(newspaper);
-			res = new ModelAndView("redirect:../../");
-		} catch (final Throwable oops) {
-			res = this.createEditModelAndView(newspaper,
-					"newspaper.commit.error");
-		}
 		return res;
 	}
 
