@@ -65,5 +65,11 @@ public class SubscriptionService {
 	}
 
 	// Other business method --------------------------------------------------
+	
+	public Collection<Subscription> findSubscriptionByNewspaper(int id) {
+		Collection<Subscription> res;
+		res = this.subscriptionRepository.findSubscriptionByNewspaper(id);
+		return res;
+	}
 
 }

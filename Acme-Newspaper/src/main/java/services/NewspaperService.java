@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import repositories.NewspaperRepository;
 import domain.Article;
 import domain.Newspaper;
+import domain.Subscription;
 import domain.User;
 
 @Service
@@ -37,6 +38,9 @@ public class NewspaperService {
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private SubscriptionService subscriptionService;
 
 	// Constructor ------------------------------------------------------------
 
@@ -97,6 +101,12 @@ public class NewspaperService {
 		articles = new ArrayList<Article>(this.articleService.findArticleByNewspaper(newspaper.getId()));
 		for (final Article s : articles)
 			this.articleService.delete(s);
+		Collection<Subscription> subscriptions;
+		subscriptions = new ArrayList<Subscription>(this.subscriptionService.findSubscriptionByNewspaper(newspaper.getId()));
+		for (final Subscription s : subscriptions)
+			if (s != null) {
+				this.subscriptionService.delete(s);
+			}
 		this.newspaperRepository.delete(newspaper);
 	}
 
