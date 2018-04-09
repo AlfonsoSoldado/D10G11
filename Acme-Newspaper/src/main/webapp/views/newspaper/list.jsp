@@ -50,6 +50,10 @@
 
 	<display:column> <acme:links url="article/list.do?newspaperId=${row.id}" code="newspaper.articles" /> </display:column>
 	<display:column><acme:links url="user/display.do?userId=${row.publisher.id}" code="newspaper.publisher" /></display:column>
+	
+	<security:authorize access="hasRole('CUSTOMER')">
+		<display:column><acme:links url="subscription/customer/create.do?newspaperId=${row.id}" code="newspaper.subscription" /></display:column>
+	</security:authorize>
 
 </display:table>
 

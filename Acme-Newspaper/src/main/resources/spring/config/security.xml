@@ -62,6 +62,7 @@
 		<security:intercept-url pattern="/newspaper/administrator/edit.do" access="hasRole('ADMIN')" /> 
 		
 		<security:intercept-url pattern="/actor/customer/edit.do" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/subscription/customer/**" access="hasRole('CUSTOMER')" /> 
 		
 		<security:intercept-url pattern="/actor/user/edit.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/newspaper/user/edit.do" access="hasRole('USER')" /> 

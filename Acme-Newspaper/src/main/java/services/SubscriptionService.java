@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SubscriptionRepository;
+import domain.Customer;
+import domain.Newspaper;
 import domain.Subscription;
 
 @Service
@@ -20,6 +22,9 @@ public class SubscriptionService {
 	private SubscriptionRepository subscriptionRepository;
 
 	// Supporting services ----------------------------------------------------
+	
+	@Autowired
+	private CustomerService customerService;
 
 	// Constructor ------------------------------------------------------------
 
@@ -29,9 +34,16 @@ public class SubscriptionService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	public Subscription create() {
+	public Subscription create(Newspaper newspaper) {
+		this.customerService.checkAuthority();
+		Customer customer;
 		Subscription result;
+		
+		customer = customerService.findByPrincipal();
 		result = new Subscription();
+		result.setCustomer(customer);
+		result.setNewspaper(newspaper);
+		
 		return result;
 	}
 
