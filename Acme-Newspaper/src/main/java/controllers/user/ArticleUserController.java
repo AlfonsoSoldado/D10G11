@@ -69,8 +69,7 @@ public class ArticleUserController extends AbstractController {
 	// Saving --------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Article article,
-			final BindingResult binding) {
+	public ModelAndView save(@Valid Article article, final BindingResult binding) {
 		ModelAndView res;
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(article,
@@ -79,6 +78,7 @@ public class ArticleUserController extends AbstractController {
 			try {
 				this.articleService.save(article);
 				res = new ModelAndView("redirect:../list.do?newspaperId=" + article.getNewspaper().getId());
+				
 			} catch (final Throwable oops) {
 				res = this.createEditModelAndView(article,
 						"article.commit.error");

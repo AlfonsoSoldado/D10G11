@@ -46,7 +46,6 @@ public class NewspaperUserController extends AbstractController {
 		newspaper = this.newspaperService.findAll();
 		newspaper.removeAll(this.newspaperService.findNewspaperTaboo());
 		newspaper.removeAll(this.newspaperService.findNewspapersPublicated());
-		newspaper.addAll(this.newspaperService.findNewspapersNotPublicated());
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);
@@ -85,8 +84,7 @@ public class NewspaperUserController extends AbstractController {
 	// Saving --------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Newspaper newspaper,
-			final BindingResult binding) {
+	public ModelAndView save(@Valid Newspaper newspaper, final BindingResult binding) {
 		ModelAndView res;
 		newspaper = this.newspaperService.reconstruct(newspaper, binding);
 		if (binding.hasErrors())

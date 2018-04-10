@@ -25,7 +25,10 @@
 	<form:hidden path="moment" />
 	<form:hidden path="followUps" />
 	<form:hidden path="writer" />
-	
+	<jstl:if test="${article.id != 0}">
+		<form:hidden path="newspaper" />
+	</jstl:if>
+
 	<security:authorize access="hasRole('USER')">
 	<acme:textbox code="article.title" path="title" />
 	<acme:textbox code="article.summary" path="summary" />

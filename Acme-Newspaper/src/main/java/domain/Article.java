@@ -110,7 +110,7 @@ public class Article extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	public Newspaper getNewspaper() {
 		return newspaper;
 	}
