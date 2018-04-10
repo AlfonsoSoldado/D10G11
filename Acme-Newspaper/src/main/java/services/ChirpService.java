@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -25,6 +26,9 @@ public class ChirpService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ConfigurationService configurationService;
 
 	// Constructor ------------------------------------------------------------
 
@@ -83,6 +87,28 @@ public class ChirpService {
 	public Collection<Chirp> findChirpByUser(int id) {
 		Collection<Chirp> res;
 		res = this.chirpRepository.findChirpByUser(id);
+		return res;
+	}
+	
+	public void checkTabooWords() {
+		Collection<String> tabooWords = new ArrayList<String>();
+		tabooWords = configurationService.findTabooWords();
+
+		Collection<Chirp> chirps = new ArrayList<Chirp>();
+		chirps = this.findAll();
+
+		for (String s : tabooWords) {
+			for (Chirp c : chirps) {
+				if (c.getTitle().toLowerCase().contains(s.toLowerCase()) || c.getDescription().toLowerCase().contains(s.toLowerCase())) {
+					c.setTaboo(true);
+				}
+			}
+		}
+	}
+	
+	public Collection<Chirp> findChirpTaboo(){
+		Collection<Chirp> res = new ArrayList<Chirp>();
+		res.addAll(chirpRepository.findChirpTaboo());
 		return res;
 	}
 

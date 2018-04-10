@@ -30,6 +30,8 @@
 			</li>
 			<li><a href="article/administrator/list.do"><spring:message code="master.page.article.taboo" /></a>
 			<li><a href="newspaper/administrator/list.do"><spring:message code="master.page.newspaper.taboo" /></a>
+			<li><a href="chirp/administrator/list.do"><spring:message code="master.page.chirp.taboo" /></a>
+			<li><a href="chirp/administrator/listAll.do"><spring:message code="master.page.chirp" /></a>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">

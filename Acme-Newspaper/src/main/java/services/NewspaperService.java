@@ -129,6 +129,18 @@ public class NewspaperService {
 		res.addAll(newspaperRepository.findNewspapersNotPublicated());
 		return res;
 	}
+	
+	public Collection<Newspaper> findNewspapersPublic() {
+		Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(newspaperRepository.findNewspapersPublic());
+		return res;
+	}
+	
+	public Collection<Newspaper> findNewspapersPrivate() {
+		Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(newspaperRepository.findNewspapersPrivate());
+		return res;
+	}
 
 	public void checkTabooWords() {
 		Collection<String> tabooWords = new ArrayList<String>();
