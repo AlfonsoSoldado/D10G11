@@ -40,8 +40,9 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	@Query("select (select count(a) from User a where a.newspapers.size>0)/count(ap)*1.0 from User ap")
 	double ratioUsersCreatedEverNewspaper();
 
-	@Query("select (select count(a) from User a where a.newspapers.size=0)/count(ap)*1.0 from User ap")
-	double ratioUsersCreatedNeverNewspaper();
+	/// The ratio of users who have ever written an article.
+	@Query("select (select count(a) from User a where a.articles.size>0)/count(ap)*1.0 from User ap")
+	double ratioUsersEverWrittenArticle();
 
 	@Query("select avg(m.followUps.size*1.0) from Article m")
 	double averageFollowupsPerArticle();
@@ -49,6 +50,13 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	// falta sumarle 7 dias al momento de publicacion
 	@Query("select avg(m.followUps.size*1.0) from Article m  join m.followUps a where a.moment<= m.moment")
 	double averageFollowupsPerArticleToOneWeekPublishedArticle();
+
+	// The average number of follow-ups per article up to two weeks after the
+	// corresponding
+	// newspapers been published.
+	// falta sumarle 14 dias al momento de publicacion
+	@Query("select avg(m.followUps.size*1.0) from Article m  join m.followUps a where a.moment<= m.moment")
+	double averageFollowupsPerArticleToTwoWeekPublishedArticle();
 
 	@Query("select avg(m.chirps.size*1.0) from User m")
 	double averageChirpsPerUser();
@@ -76,16 +84,16 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 
 	@Query("select count(m) from Customer m")
 	double numberOfCustomers();
-	
+
 	@Query("select count(m)/(select count(v) from User v) from Newspaper m where m.hide=true")
 	double ratioPrivateNewspaperPerPublisher();
-	
+
 	@Query("select count(m)/(select count(v) from User v) from Newspaper m where m.hide=false")
 	double ratioPublicNewspaperPerPublisher();
-	
+
 	@Query("select count(m)/(select count(v) from Newspaper v) from Newspaper m where m.hide=true")
 	double AveragePrivateNewspaperPerPublisher();
-	
+
 	@Query("select count(m)/(select count(v) from Newspaper v) from Newspaper m where m.hide=false")
 	double AveragePublicNewspaperPerPublisher();
 }
