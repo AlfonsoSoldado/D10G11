@@ -45,6 +45,7 @@ public class NewspaperController extends AbstractController {
 
 		newspaper = this.newspaperService.findNewspapersPublicated();
 		newspaper.removeAll(this.newspaperService.findNewspaperTaboo());
+		newspaper.removeAll(this.newspaperService.findNewspapersNotPublicated());
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);
