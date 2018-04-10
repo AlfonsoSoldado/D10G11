@@ -14,6 +14,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
+import domain.Newspaper;
 
 @Service
 @Transactional
@@ -118,5 +119,138 @@ public class AdministratorService {
 
 	public void flush() {
 		this.administratorRepository.flush();
+	}
+
+	// The average and the standard deviation of newspapers created per user.
+	public double averageNewspaperPerUser() {
+		return this.administratorRepository.averageNewspaperPerUser();
+
+	}
+
+	public double standardDesviationNewspaperPerUser() {
+		return this.standardDesviationNewspaperPerUser();
+	}
+	// The average and the standard deviation of articles written by writer.
+
+	public double averageArticlesPerUser() {
+		return this.administratorRepository.averageArticlesPerUser();
+
+	}
+
+	public double standardDesviationArticlesPerUser() {
+		return this.administratorRepository.standardDesviationArticlesPerUser();
+
+	}
+
+	// The average and the standard deviation of articles per newspaper.
+	public double averageArticlesPerNewspaper() {
+		return this.averageArticlesPerNewspaper();
+
+	}
+
+	public double standardDesviationArticlesPerNewspaper() {
+		return this.standardDesviationArticlesPerNewspaper();
+
+	}
+
+	// The newspapers that have at least 10% more articles than the average.
+	public Newspaper newspapers10moreThanAvereage() {
+		return this.administratorRepository.newspapers10moreThanAvereage();
+	}
+
+	// The newspapers that have at least 10% fewer articles than the average.
+	public Newspaper newspapers10fewerThanAvereage() {
+		return this.administratorRepository.newspapers10fewerThanAvereage();
+	}
+
+	// The ratio of users who have ever created a newspaper.
+	public double ratioUsersCreatedEverNewspaper() {
+		return this.ratioUsersCreatedEverNewspaper();
+
+	}
+
+	// The ratio of users who have ever written an article.
+	public double ratioUsersEverWrittenArticle() {
+		return this.ratioUsersEverWrittenArticle();
+	}
+
+	// The average number of follow-ups per article.
+	public double averageFollowupsPerArticle() {
+		return this.averageFollowupsPerArticle();
+	}
+	// The average number of follow-ups per article up to one week after the
+	// corresponding
+	// newspapers been published.
+
+	public double averageFollowupsPerArticleToOneWeekPublishedArticle() {
+		return averageFollowupsPerArticleToOneWeekPublishedArticle();
+	}
+
+	// The average number of follow-ups per article up to two weeks after the
+	// corresponding
+	// newspapers been published
+	public double averageFollowupsPerArticleToTwoWeekPublishedArticle() {
+		return this.averageFollowupsPerArticleToTwoWeekPublishedArticle();
+	}
+
+	// The average and the standard deviation of the number of chirps per user.
+	public double averageChirpsPerUser() {
+		return this.averageChirpsPerUser();
+	}
+
+	public double standardDesviationChirpsPerUser() {
+		return this.standardDesviationChirpsPerUser();
+	}
+
+	// The ratio of users who have posted above 75% the average number of chirps per
+	// user.
+	public double ratioUsersMorePosted75ChirpsOfAveragePerUser() {
+		return this.ratioUsersMorePosted75ChirpsOfAveragePerUser();
+	}
+
+	// The ratio of public versus private newspapers.
+	public double[] ratioPublicVsPrivateNewspaper() {
+		double ratio[] = new double[2];
+		ratio[0] = this.administratorRepository.ratioPublicNewspaper();
+		ratio[1] = this.administratorRepository.ratioPrivateNewspaper();
+		return ratio;
+
+	}
+
+	// The average number of articles per private newspapers.
+	public Double averageArticlesPerNewspaperPrivates() {
+		Double a = this.administratorRepository.averageArticlesPerNewspaperPrivates();
+		if (a == null) {
+			a = 0.;
+		}
+		return a;
+	}
+
+	// The average number of articles per public newspapers.
+	public Double averageArticlesPerNewspaperPublics() {
+		Double a = this.administratorRepository.averageArticlesPerNewspaperPublics();
+		if (a == null) {
+			a = 0.;
+		}
+		return a;
+	}
+
+	// The ratio of subscribers per private newspaper versus the total number of
+	// customers.
+	public double[] ratioPrivateNewspaperSubsciptionsVsTotalCustomers() {
+		double ratio[] = new double[2];
+		ratio[0] = this.administratorRepository.ratioPrivateNewspaperSubsciptions();
+		ratio[1] = this.administratorRepository.numberOfCustomers();
+		return ratio;
+	}
+
+	// The average ratio of private versus public newspapers per publisher.
+	public double[] AverageRatioPrivateVsPublicNewspaperPerPublisher() {
+		double ratio[] = new double[4];
+		ratio[0] = this.administratorRepository.ratioPrivateNewspaperPerPublisher();
+		ratio[1] = this.administratorRepository.AveragePrivateNewspaperPerPublisher();
+		ratio[2] = this.administratorRepository.ratioPublicNewspaperPerPublisher();
+		ratio[3] = this.administratorRepository.AveragePublicNewspaperPerPublisher();
+		return ratio;
 	}
 }
