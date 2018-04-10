@@ -22,6 +22,18 @@
 
 <form:form action="user/display.do" modelAttribute="user">
 
+<security:authorize access="hasRole('USER')">
+<display:table name="followTable" class="displaytag" id="row">
+
+<display:column><acme:links url="user/follow.do?userId=${row.id}" code="actor.follow" /></display:column>
+<display:column><acme:links url="user/unfollow.do?userId=${row.id}" code="actor.unfollow" /></display:column>
+
+<display:column><acme:links url="user/listFollowers.do?userId=${row.id }" code="actor.followers" /></display:column>
+<display:column><acme:links url="user/listFollowing.do?userId=${row.id }" code="actor.following" /></display:column>
+
+</display:table>
+</security:authorize>
+
 <p>
 	<span style="font-weight: bold;"> <spring:message
 			code="actor.name" var="nameHeader" /> <jstl:out
@@ -85,17 +97,6 @@
 
 <spring:message code="actor.chirp" var="chirp" />
 <h2><jstl:out value="${chirp}"></jstl:out></h2>
-<br/>
-
-<spring:message code="actor.follow" var="follow" />
-<h4><a href="user/follow.do?userId=${user.id }"><jstl:out value="${follow}"></jstl:out></a></h4>
-<spring:message code="actor.unfollow" var="unfollow" />
-<h4><a href="user/unfollow.do?userId=${user.id }"><jstl:out value="${unfollow}"></jstl:out></a></h4>
-
-<spring:message code="actor.followers" var="followers" />
-<spring:message code="actor.following" var="following" />
-<h4><a href="user/listFollowers.do?userId=${user.id }"><jstl:out value="${followers}"></jstl:out></a></h4>
-<h4><a href="user/listFollowing.do?userId=${user.id }"><jstl:out value="${following}"></jstl:out></a></h4>
 
 <display:table name="chirps" class="displaytag" id="row">
 	
@@ -125,9 +126,3 @@
 <security:authorize access="hasRole('USER')">
 		<acme:links url="chirp/user/create.do" code="chirp.create" />
 </security:authorize>
-
-<div>
-	<a href="#" onClick="history.back();"> <spring:message
-			code="actor.back" />
-	</a>
-</div>

@@ -65,11 +65,15 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int userId) {
 		ModelAndView result;
+		User user;
+		Collection<Chirp> chirps;
+		Collection<Article> articles;
+		Collection<Newspaper> newspapersPublished;
 
-		Collection<Chirp> chirps = chirpService.findChirpByUser(userId);
-		Collection<Article> articles = articleService.findArticlePublishedByUser(userId);
-
-		Collection<Newspaper> newspapersPublished = newspaperService.findNewspapersPublicated();
+		user = this.userService.findOne(userId);
+		chirps = chirpService.findChirpByUser(userId);
+		articles = articleService.findArticlePublishedByUser(userId);
+		newspapersPublished = newspaperService.findNewspapersPublicated();
 		
 		for(Article a: articles){
 			if(!newspapersPublished.contains(a.getNewspaper())){
@@ -77,12 +81,11 @@ public class UserController extends AbstractController {
 			}
 		}
 		
-		final User user = this.userService.findOne(userId);
-
 		result = new ModelAndView("user/display");
 		result.addObject("user", user);
 		result.addObject("chirps", chirps);
 		result.addObject("articles", articles);
+		result.addObject("followTable", user);
 		result.addObject("requestURI", "user/display.do");
 
 		return result;
@@ -130,7 +133,6 @@ public class UserController extends AbstractController {
 		User user;
 		
 		user = userService.findOne(userId);
-
 		userService.follow(userId);
 		result = this.createEditModelAndView(user);
 
@@ -143,7 +145,6 @@ public class UserController extends AbstractController {
 		User user;
 		
 		user = userService.findOne(userId);
-
 		userService.unfollow(userId);
 		result = this.createEditModelAndViewUnfollow(user);
 

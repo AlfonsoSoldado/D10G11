@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ArticleService;
 import services.ChirpService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Article;
 import domain.Chirp;
 import domain.User;
 
@@ -30,6 +32,9 @@ public class ActorUserController extends AbstractController {
 	
 	@Autowired
 	private ChirpService chirpService;
+	
+	@Autowired
+	private ArticleService articleService;
 
 	// Constructors ---------------------------------------------------------
 
@@ -70,13 +75,17 @@ public class ActorUserController extends AbstractController {
 	public ModelAndView display() {
 		ModelAndView result;
 		User user;
+		Collection<Chirp> chirps;
+		Collection<Article> articles;
 
 		user = this.userService.findByPrincipal();
 		result = new ModelAndView("user/display");
-		Collection<Chirp> chirps = chirpService.findChirpByUser(user.getId());
+		chirps = chirpService.findChirpByUser(user.getId());
+		articles = articleService.findArticlePublishedByUser(user.getId());
 		
 		result.addObject("user", user);
 		result.addObject("chirps", chirps);
+		result.addObject("articles", articles);
 		result.addObject("requestURI", "user/display.do");
 
 		return result;
