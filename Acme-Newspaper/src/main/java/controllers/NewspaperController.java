@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
+import services.CustomerService;
 import services.NewspaperService;
 import domain.Article;
 import domain.Newspaper;
@@ -28,6 +29,9 @@ public class NewspaperController extends AbstractController {
 	@Autowired
 	private ArticleService articleService;
 	
+	@Autowired
+	private CustomerService customerService;
+	
 	// Constructors ---------------------------------------------------------
 
 	public NewspaperController() {
@@ -40,12 +44,21 @@ public class NewspaperController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Newspaper> newspaper;
+		Collection<Newspaper> privateNewspaper;
 		
 		this.newspaperService.checkTabooWords();
 
 		newspaper = this.newspaperService.findNewspapersPublicated();
 		newspaper.removeAll(this.newspaperService.findNewspaperTaboo());
 		newspaper.removeAll(this.newspaperService.findNewspapersNotPublicated());
+		
+		try {
+			customerService.findByPrincipal();
+			privateNewspaper = newspaperService.findNewspapersPrivate();
+			newspaper.removeAll(privateNewspaper);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);

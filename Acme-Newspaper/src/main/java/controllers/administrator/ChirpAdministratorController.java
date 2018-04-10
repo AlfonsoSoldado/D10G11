@@ -1,6 +1,5 @@
-package controllers.user;
+package controllers.administrator;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -14,42 +13,61 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ChirpService;
-import services.UserService;
 import controllers.AbstractController;
 import domain.Chirp;
-import domain.User;
 
 @Controller
-@RequestMapping("/chirp/user")
-public class ChirpUserController extends AbstractController {
+@RequestMapping("/chirp/administrator")
+public class ChirpAdministratorController extends AbstractController {
 
 	// Services -------------------------------------------------------------
 
 	@Autowired
 	private ChirpService chirpService;
-	
+
 	// Supporting services --------------------------------------------------
-	
-	@Autowired
-	private UserService userService;
-	
+
 	// Constructors ---------------------------------------------------------
 
-	public ChirpUserController() {
+	public ChirpAdministratorController() {
 		super();
 	}
+
+	// Listing --------------------------------------------------------------
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+		Collection<Chirp> chirps;
+
+		chirpService.checkTabooWords();
+		chirps = this.chirpService.findChirpTaboo();
+
+		result = new ModelAndView("chirp/administrator/list");
+		result.addObject("chirp", chirps);
+		result.addObject("requestURI", "chirp/administrator/list.do");
+
+		return result;
+	}
 	
-	// Creation ---------------------------------------------------------------
+	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+	public ModelAndView listAll() {
+		ModelAndView result;
+		Collection<Chirp> chirps;
+		Collection<Chirp> tabooChirps;
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
-		ModelAndView res;
-		Chirp chirp;
-
-		chirp = this.chirpService.create();
-		res = this.createEditModelAndView(chirp);
+		chirps = chirpService.findAll();
 		
-		return res;
+		chirpService.checkTabooWords();
+		tabooChirps = this.chirpService.findChirpTaboo();
+		
+		chirps.removeAll(tabooChirps);
+
+		result = new ModelAndView("chirp/administrator/listAll");
+		result.addObject("chirp", chirps);
+		result.addObject("requestURI", "chirp/administrator/listAll.do");
+
+		return result;
 	}
 
 	// Editing ---------------------------------------------------------------
@@ -62,28 +80,8 @@ public class ChirpUserController extends AbstractController {
 		chirp = this.chirpService.findOne(chirpId);
 		result = this.createEditModelAndView(chirp);
 		result.addObject("chirp", chirp);
-		
+
 		return result;
-	}
-
-	// Saving --------------------------------------------------------------
-
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Chirp chirp,
-			final BindingResult binding) {
-		ModelAndView res;
-		if (binding.hasErrors())
-			res = this.createEditModelAndView(chirp,
-					"chirp.params.error");
-		else
-			try {
-				this.chirpService.save(chirp);
-				res = new ModelAndView("redirect:../../");
-			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(chirp,
-						"chirp.commit.error");
-			}
-		return res;
 	}
 
 	// Deleting --------------------------------------------------------------
@@ -96,39 +94,10 @@ public class ChirpUserController extends AbstractController {
 			this.chirpService.delete(chirp);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
 			res = this.createEditModelAndView(chirp,
 					"chirp.commit.error");
 		}
 		return res;
-	}
-	
-	// Displaying --------------------------------------------------------------
-	
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display() {
-		ModelAndView result;
-		User user;
-		Collection<Chirp> chirps = new ArrayList<Chirp>();;
-
-		user = this.userService.findByPrincipal();
-		result = new ModelAndView("chirp/user/display");
-		
-		Collection<User> users = user.getFollowing();
-		
-		for (User u : users) {
-			chirps.addAll(u.getChirps());
-		}
-		
-		Collection<Chirp> tabooChirps;
-		tabooChirps = chirpService.findChirpTaboo();
-		
-		chirps.removeAll(tabooChirps);
-		
-		result.addObject("chirpTable", chirps);
-		result.addObject("requestURI", "chirp/user/display.do");
-
-		return result;
 	}
 
 	// Ancillary methods --------------------------------------------------
@@ -145,10 +114,10 @@ public class ChirpUserController extends AbstractController {
 			final String message) {
 		ModelAndView result;
 
-		result = new ModelAndView("chirp/user/edit");
+		result = new ModelAndView("chirp/administrator/edit");
 		result.addObject("chirp", chirp);
 		result.addObject("message", message);
-		result.addObject("requestURI", "chirp/user/edit.do");
+		result.addObject("requestURI", "chirp/administrator/edit.do");
 
 		return result;
 	}

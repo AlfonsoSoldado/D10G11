@@ -23,6 +23,7 @@ public class Chirp extends DomainEntity {
 	private Date moment;
 	private String title;
 	private String description;
+	private Boolean taboo;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
@@ -50,6 +51,14 @@ public class Chirp extends DomainEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Boolean getTaboo() {
+		return taboo;
+	}
+
+	public void setTaboo(Boolean taboo) {
+		this.taboo = taboo;
 	}
 
 	// Relationships -------------------------------------------

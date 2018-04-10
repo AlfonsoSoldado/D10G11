@@ -85,6 +85,20 @@ public class ActorUserController extends AbstractController {
 		user = this.userService.findByPrincipal();
 		result = new ModelAndView("user/display");
 		chirps = chirpService.findChirpByUser(user.getId());
+		
+		chirpService.checkTabooWords();
+		
+		Collection<Chirp> tabooChirps;
+		tabooChirps = chirpService.findChirpTaboo();
+		
+		System.out.println("Taboo chirps: "+tabooChirps);
+		
+		System.out.println("Chirps antes de borrar las Taboo: "+chirps);
+		
+		chirps.removeAll(tabooChirps);
+		
+		System.out.println("Chirps después de borrar las Taboo: "+chirps);
+		
 		articles = articleService.findArticlePublishedByUser(user.getId());
 		
 		result.addObject("user", user);
