@@ -69,6 +69,8 @@ public class UserController extends AbstractController {
 		Collection<Chirp> chirps;
 		Collection<Article> articles;
 		Collection<Newspaper> newspapersPublished;
+		User currentUser;
+		Integer currentUserId;
 
 		user = this.userService.findOne(userId);
 		chirps = chirpService.findChirpByUser(userId);
@@ -86,6 +88,11 @@ public class UserController extends AbstractController {
 		result.addObject("chirps", chirps);
 		result.addObject("articles", articles);
 		result.addObject("followTable", user);
+		if (this.userService.findByPrincipal() != null) {
+			currentUser = this.userService.findByPrincipal();
+			currentUserId = currentUser.getId();
+			result.addObject("currentUserId", currentUserId);
+		}
 		result.addObject("requestURI", "user/display.do");
 
 		return result;

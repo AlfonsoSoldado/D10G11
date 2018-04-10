@@ -25,8 +25,10 @@
 <security:authorize access="hasRole('USER')">
 <display:table name="followTable" class="displaytag" id="row">
 
-<display:column><acme:links url="user/follow.do?userId=${row.id}" code="actor.follow" /></display:column>
-<display:column><acme:links url="user/unfollow.do?userId=${row.id}" code="actor.unfollow" /></display:column>
+<jstl:if test="${row.id != currentUserId }">
+	<display:column><acme:links url="user/follow.do?userId=${row.id}" code="actor.follow" /></display:column>
+	<display:column><acme:links url="user/unfollow.do?userId=${row.id}" code="actor.unfollow" /></display:column>
+</jstl:if>
 
 <display:column><acme:links url="user/listFollowers.do?userId=${row.id }" code="actor.followers" /></display:column>
 <display:column><acme:links url="user/listFollowing.do?userId=${row.id }" code="actor.following" /></display:column>

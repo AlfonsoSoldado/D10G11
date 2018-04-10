@@ -77,7 +77,11 @@ public class ActorUserController extends AbstractController {
 		User user;
 		Collection<Chirp> chirps;
 		Collection<Article> articles;
+		User currentUser;
+		Integer currentUserId;
 
+		currentUser = this.userService.findByPrincipal();
+		currentUserId = currentUser.getId();
 		user = this.userService.findByPrincipal();
 		result = new ModelAndView("user/display");
 		chirps = chirpService.findChirpByUser(user.getId());
@@ -86,6 +90,8 @@ public class ActorUserController extends AbstractController {
 		result.addObject("user", user);
 		result.addObject("chirps", chirps);
 		result.addObject("articles", articles);
+		result.addObject("currentUserId", currentUserId);
+		result.addObject("followTable", user);
 		result.addObject("requestURI", "user/display.do");
 
 		return result;
