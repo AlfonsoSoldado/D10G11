@@ -1,5 +1,6 @@
 package controllers.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -12,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ArticleService;
 import services.FollowUpService;
+import services.NewspaperService;
 import controllers.AbstractController;
 import domain.Article;
 import domain.FollowUp;
+import domain.Newspaper;
 
 @Controller
 @RequestMapping("/followUp/user")
@@ -30,7 +32,7 @@ public class FollowUpUserController extends AbstractController {
 	// Supporting services --------------------------------------------------
 	
 	@Autowired
-	private ArticleService articleService;
+	private NewspaperService newspaperService;
 	
 	// Constructors ---------------------------------------------------------
 
@@ -115,13 +117,16 @@ public class FollowUpUserController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final FollowUp followUp,
 			final String message) {
 		ModelAndView result;
-		Collection<Article> article;
 		
-		article = articleService.findAll();
-
+		Collection<Newspaper> news = newspaperService.findNewspapersPublicated();
+		Collection<Article> articlesPublicated = new ArrayList<Article>();
+		for (Newspaper n : news) {
+			articlesPublicated.addAll(n.getArticles());
+		}
+		
 		result = new ModelAndView("followUp/user/edit");
 		result.addObject("followUp", followUp);
-		result.addObject("article", article);
+		result.addObject("article", articlesPublicated);
 		result.addObject("message", message);
 		result.addObject("requestURI", "followUp/user/edit.do");
 

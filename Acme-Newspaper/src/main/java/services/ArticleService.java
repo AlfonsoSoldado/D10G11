@@ -78,6 +78,9 @@ public class ArticleService {
 		this.userService.checkAuthority();
 		Article result = article;
 		Assert.notNull(article);
+		if (article.getId() != 0) {
+			Assert.isTrue(article.getDraftmode() == false);
+		}
 		result = this.articleRepository.save(result);
 		return result;
 	}

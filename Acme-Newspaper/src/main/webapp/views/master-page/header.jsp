@@ -52,6 +52,7 @@
 			</li>
 			<li><a href="newspaper/user/listNotPublicated.do"><spring:message code="master.page.newspaper.list.notpublicated" /></a>
 			<li><a href="actor/user/display.do"><spring:message code="master.page.profile" /></a>
+			<li><a href="chirp/user/display.do"><spring:message code="master.page.chirp" /></a>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">

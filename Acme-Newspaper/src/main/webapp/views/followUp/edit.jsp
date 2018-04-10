@@ -35,7 +35,7 @@
 	
 	<acme:submit name="save" code="followUp.submit" />
 	<acme:cancel url="followUp/list.do?articleId=${followUp.article.id}" code="followUp.cancel" />
-	<acme:delete confirmationCode="followUp.confirm.delete" buttonCode="followUp.delete" id="${followUp.id}" />
+	<%-- <acme:delete confirmationCode="followUp.confirm.delete" buttonCode="followUp.delete" id="${followUp.id}" /> --%>
 	</security:authorize>
 	
 </form:form>
