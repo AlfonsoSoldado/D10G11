@@ -95,17 +95,25 @@ public class UserService {
 		User follow;
 		follow = this.findOne(userId);
 		
-		Collection<User> following;
-		following = actual.getFollowing();
-		
-		Collection<User> followers;
-		followers = follow.getFollowers();
-		
-		following.add(follow);
-		followers.add(actual);
-		
-		follow.setFollowers(followers);
-		actual.setFollowing(following);
+		if (actual != follow) {
+			Collection<User> following;
+			following = actual.getFollowing();
+			
+			Collection<User> followers;
+			followers = follow.getFollowers();
+			
+			if (followers.contains(actual)) {
+				follow.setFollowers(followers);
+				actual.setFollowing(following);
+				
+			} else {
+				following.add(follow);
+				followers.add(actual);
+				
+				follow.setFollowers(followers);
+				actual.setFollowing(following);
+			}
+		}
 	}
 	
 	public void unfollow(int userId){
