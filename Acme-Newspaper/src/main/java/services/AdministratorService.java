@@ -1,6 +1,8 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -9,12 +11,12 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Administrator;
+import domain.Newspaper;
 import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Administrator;
-import domain.Newspaper;
 
 @Service
 @Transactional
@@ -128,7 +130,7 @@ public class AdministratorService {
 	}
 
 	public double standardDesviationNewspaperPerUser() {
-		return this.standardDesviationNewspaperPerUser();
+		return this.administratorRepository.standardDesviationNewspaperPerUser();
 	}
 	// The average and the standard deviation of articles written by writer.
 
@@ -144,68 +146,77 @@ public class AdministratorService {
 
 	// The average and the standard deviation of articles per newspaper.
 	public double averageArticlesPerNewspaper() {
-		return this.averageArticlesPerNewspaper();
+		return this.administratorRepository.averageArticlesPerNewspaper();
 
 	}
 
 	public double standardDesviationArticlesPerNewspaper() {
-		return this.standardDesviationArticlesPerNewspaper();
+		return this.administratorRepository.standardDesviationArticlesPerNewspaper();
 
 	}
 
 	// The newspapers that have at least 10% more articles than the average.
-	public Newspaper newspapers10moreThanAvereage() {
-		return this.administratorRepository.newspapers10moreThanAvereage();
+	public List<Newspaper> newspapers10moreThanAvereage() {
+		List<Newspaper> a = new ArrayList<>(this.administratorRepository.newspapers10moreThanAvereage());
+		if (a == null || a.isEmpty()) {
+			a = null;
+		}
+		return a;
 	}
 
 	// The newspapers that have at least 10% fewer articles than the average.
-	public Newspaper newspapers10fewerThanAvereage() {
-		return this.administratorRepository.newspapers10fewerThanAvereage();
+	public List<Newspaper> newspapers10fewerThanAvereage() {
+		List<Newspaper> a = new ArrayList<>(this.administratorRepository.newspapers10fewerThanAvereage());
+
+		if (a == null || a.isEmpty()) {
+			a = null;
+		}
+		return a;
 	}
 
 	// The ratio of users who have ever created a newspaper.
 	public double ratioUsersCreatedEverNewspaper() {
-		return this.ratioUsersCreatedEverNewspaper();
+		return this.administratorRepository.ratioUsersCreatedEverNewspaper();
 
 	}
 
 	// The ratio of users who have ever written an article.
 	public double ratioUsersEverWrittenArticle() {
-		return this.ratioUsersEverWrittenArticle();
+		return this.administratorRepository.ratioUsersEverWrittenArticle();
 	}
 
 	// The average number of follow-ups per article.
 	public double averageFollowupsPerArticle() {
-		return this.averageFollowupsPerArticle();
+		return this.administratorRepository.averageFollowupsPerArticle();
 	}
 	// The average number of follow-ups per article up to one week after the
 	// corresponding
 	// newspapers been published.
 
 	public double averageFollowupsPerArticleToOneWeekPublishedArticle() {
-		return averageFollowupsPerArticleToOneWeekPublishedArticle();
+		return this.administratorRepository.averageFollowupsPerArticleToOneWeekPublishedArticle();
 	}
 
 	// The average number of follow-ups per article up to two weeks after the
 	// corresponding
 	// newspapers been published
 	public double averageFollowupsPerArticleToTwoWeekPublishedArticle() {
-		return this.averageFollowupsPerArticleToTwoWeekPublishedArticle();
+		return this.administratorRepository.averageFollowupsPerArticleToTwoWeekPublishedArticle();
 	}
 
 	// The average and the standard deviation of the number of chirps per user.
 	public double averageChirpsPerUser() {
-		return this.averageChirpsPerUser();
+		return this.administratorRepository.averageChirpsPerUser();
 	}
 
 	public double standardDesviationChirpsPerUser() {
-		return this.standardDesviationChirpsPerUser();
+		return this.administratorRepository.standardDesviationChirpsPerUser();
 	}
 
 	// The ratio of users who have posted above 75% the average number of chirps per
 	// user.
 	public double ratioUsersMorePosted75ChirpsOfAveragePerUser() {
-		return this.ratioUsersMorePosted75ChirpsOfAveragePerUser();
+		return this.administratorRepository.ratioUsersMorePosted75ChirpsOfAveragePerUser();
 	}
 
 	// The ratio of public versus private newspapers.

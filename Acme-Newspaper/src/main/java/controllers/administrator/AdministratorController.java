@@ -52,13 +52,13 @@ public class AdministratorController extends AbstractController {
 				this.administratorService.standardDesviationChirpsPerUser());
 		result.addObject("ratioUsersMorePosted75ChirpsOfAveragePerUser",
 				this.administratorService.ratioUsersMorePosted75ChirpsOfAveragePerUser());
-		result.addObject("ratioPublicVsPrivateNewspaper", this.administratorService.ratioPublicVsPrivateNewspaper());
+		result.addObject("ratioPublicVsPrivateNewspaper", this.administratorService.ratioPublicVsPrivateNewspaper().toString());
 		result.addObject("averageArticlesPerNewspaperPrivates",
 				this.administratorService.averageArticlesPerNewspaperPrivates());
 		result.addObject("averageArticlesPerNewspaperPublics",
 				this.administratorService.averageArticlesPerNewspaperPublics());
 		result.addObject("ratioPrivateNewspaperSubsciptionsVsTotalCustomers",
-				this.administratorService.ratioPrivateNewspaperSubsciptionsVsTotalCustomers());
+				this.administratorService.ratioPrivateNewspaperSubsciptionsVsTotalCustomers().toString());
 		result.addObject("AverageRatioPrivateVsPublicNewspaperPerPublisher",
 				this.administratorService.AverageRatioPrivateVsPublicNewspaperPerPublisher());
 

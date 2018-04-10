@@ -1,5 +1,7 @@
 package repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -32,10 +34,10 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	double standardDesviationArticlesPerNewspaper();
 
 	@Query("select m from Newspaper m where m.articles.size > (select avg(v.articles.size)*1.1 from Newspaper v)")
-	Newspaper newspapers10moreThanAvereage();
+	List<Newspaper> newspapers10moreThanAvereage();
 
 	@Query("select m from Newspaper m where m.articles.size < (select avg(v.articles.size)*1.1 from Newspaper v)")
-	Newspaper newspapers10fewerThanAvereage();
+	List<Newspaper> newspapers10fewerThanAvereage();
 
 	@Query("select (select count(a) from User a where a.newspapers.size>0)/count(ap)*1.0 from User ap")
 	double ratioUsersCreatedEverNewspaper();
