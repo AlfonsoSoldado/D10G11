@@ -43,8 +43,10 @@ public class NewspaperUserController extends AbstractController {
 
 		this.newspaperService.checkTabooWords();
 
-		newspaper = this.newspaperService.findNewspapersNotPublicated();
+		newspaper = this.newspaperService.findAll();
 		newspaper.removeAll(this.newspaperService.findNewspaperTaboo());
+		newspaper.removeAll(this.newspaperService.findNewspapersPublicated());
+		newspaper.addAll(this.newspaperService.findNewspapersNotPublicated());
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);
