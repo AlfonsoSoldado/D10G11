@@ -33,7 +33,9 @@
 	<!-- Attributes -->
 
 	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${row.draftmode == true}">
 		<display:column><acme:links url="article/user/edit.do?articleId=${row.id}" code="article.edit" /></display:column>
+		</jstl:if>
 	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">
