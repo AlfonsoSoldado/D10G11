@@ -22,6 +22,8 @@ public class ChirpService {
 	@Autowired
 	private ChirpRepository chirpRepository;
 
+	@Autowired
+	private AdministratorService administratorService;
 	// Supporting services ----------------------------------------------------
 	
 	@Autowired
@@ -76,6 +78,7 @@ public class ChirpService {
 	}
 
 	public void delete(Chirp chirp) {
+		this.administratorService.checkAuthority();
 		Assert.notNull(chirp);
 		Assert.isTrue(chirp.getId() != 0);
 		Assert.isTrue(this.chirpRepository.exists(chirp.getId()));
@@ -110,6 +113,10 @@ public class ChirpService {
 		Collection<Chirp> res = new ArrayList<Chirp>();
 		res.addAll(chirpRepository.findChirpTaboo());
 		return res;
+	}
+
+	public void flush() {
+		this.chirpRepository.flush();
 	}
 
 }
