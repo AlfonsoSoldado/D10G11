@@ -14,37 +14,47 @@
 		<put-attribute name="title" value="List newspaper" />
 		<put-attribute name="body" value="/views/newspaper/list.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/administrator/list" extends="master.page">
 		<put-attribute name="title" value="List taboo newspaper" />
 		<put-attribute name="body" value="/views/newspaper/listTaboo.jsp" />
 	</definition>
+
+	<definition name="newspaper/customer/list" extends="master.page">
+		<put-attribute name="title" value="List private newspaper" />
+		<put-attribute name="body" value="/views/newspaper/listPrivate.jsp" />
+	</definition>
 	
+	<definition name="newspaper/customer/search" extends="master.page">
+		<put-attribute name="title" value="List newspapers" />
+		<put-attribute name="body" value="/views/newspaper/listPrivate.jsp" />
+	</definition>
+
 	<definition name="newspaper/display" extends="master.page">
 		<put-attribute name="title" value="Display newspaper" />
 		<put-attribute name="body" value="/views/newspaper/display.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/user/listNotPublicated" extends="master.page">
 		<put-attribute name="title" value="List newspaper" />
 		<put-attribute name="body" value="/views/newspaper/list.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/user/edit" extends="master.page">
 		<put-attribute name="title" value="Edit newspaper" />
 		<put-attribute name="body" value="/views/newspaper/edit.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/administrator/edit" extends="master.page">
 		<put-attribute name="title" value="Delete newspaper" />
 		<put-attribute name="body" value="/views/newspaper/edit.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/user/create" extends="master.page">
 		<put-attribute name="title" value="Edit newspaper" />
 		<put-attribute name="body" value="/views/newspaper/edit.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/search" extends="master.page">
 		<put-attribute name="title" value="List newspaper" />
 		<put-attribute name="body" value="/views/newspaper/list.jsp" />

@@ -98,6 +98,10 @@
 			access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/subscription/customer/**"
 			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/newspaper/customer/list.do"
+			access="hasRole('CUSTOMER')" />
+					<security:intercept-url pattern="/newspaper/customer/search.do"
+			access="hasRole('CUSTOMER')" />
 
 		<security:intercept-url pattern="/actor/user/edit.do"
 			access="hasRole('USER')" />
