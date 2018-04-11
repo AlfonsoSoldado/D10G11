@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -23,24 +24,25 @@ public class NewspaperService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private NewspaperRepository newspaperRepository;
+	private NewspaperRepository		newspaperRepository;
 
 	// Supporting services ----------------------------------------------------
-	
+
 	@Autowired
-	private ConfigurationService configurationService;
-	
+	private ConfigurationService	configurationService;
+
 	@Autowired
-	private UserService userService;
-	
+	private UserService				userService;
+
 	@Autowired
-	private AdministratorService administratorService;
-	
+	private AdministratorService	administratorService;
+
 	@Autowired
-	private ArticleService articleService;
-	
+	private ArticleService			articleService;
+
 	@Autowired
-	private SubscriptionService subscriptionService;
+	private SubscriptionService		subscriptionService;
+
 
 	// Constructor ------------------------------------------------------------
 
@@ -56,16 +58,16 @@ public class NewspaperService {
 		User publisher;
 		Date publication;
 		Collection<Article> articles;
-		
-		publisher = userService.findByPrincipal();
+
+		publisher = this.userService.findByPrincipal();
 		result = new Newspaper();
 		articles = new ArrayList<Article>();
-		
+
 		publication = new Date(System.currentTimeMillis() - 1000);
 		result.setPublication(publication);
 		result.setPublisher(publisher);
 		result.setArticles(articles);
-		
+
 		return result;
 	}
 
@@ -76,7 +78,7 @@ public class NewspaperService {
 		return res;
 	}
 
-	public Newspaper findOne(int id) {
+	public Newspaper findOne(final int id) {
 		Assert.isTrue(id != 0);
 		Newspaper res;
 		res = this.newspaperRepository.findOne(id);
@@ -84,15 +86,16 @@ public class NewspaperService {
 		return res;
 	}
 
-	public Newspaper save(Newspaper newspaper) {
+	public Newspaper save(final Newspaper newspaper) {
 		this.userService.checkAuthority();
+		Assert.isTrue(newspaper.getPublisher() == this.userService.findByPrincipal());
 		Assert.notNull(newspaper);
 		Newspaper res;
 		res = this.newspaperRepository.save(newspaper);
 		return res;
 	}
 
-	public void delete(Newspaper newspaper) {
+	public void delete(final Newspaper newspaper) {
 		this.administratorService.checkAuthority();
 		Assert.notNull(newspaper);
 		Assert.isTrue(newspaper.getId() != 0);
@@ -104,70 +107,66 @@ public class NewspaperService {
 		Collection<Subscription> subscriptions;
 		subscriptions = new ArrayList<Subscription>(this.subscriptionService.findSubscriptionByNewspaper(newspaper.getId()));
 		for (final Subscription s : subscriptions)
-			if (s != null) {
+			if (s != null)
 				this.subscriptionService.delete(s);
-			}
 		this.newspaperRepository.delete(newspaper);
 	}
 
 	// Other business method --------------------------------------------------
-	
-	public Collection<Newspaper> searchNewspaper(String criteria) {
-		Collection<Newspaper> res = new ArrayList<Newspaper>();
-		res.addAll(newspaperRepository.searchNewspaper(criteria));
+
+	public Collection<Newspaper> searchNewspaper(final String criteria) {
+		final Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(this.newspaperRepository.searchNewspaper(criteria));
 		return res;
 	}
-	
+
 	public Collection<Newspaper> findNewspapersPublicated() {
-		Collection<Newspaper> res = new ArrayList<Newspaper>();
-		res.addAll(newspaperRepository.findNewspapersPublicated());
+		final Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(this.newspaperRepository.findNewspapersPublicated());
 		return res;
 	}
-	
+
 	public Collection<Newspaper> findNewspapersNotPublicated() {
-		Collection<Newspaper> res = new ArrayList<Newspaper>();
-		res.addAll(newspaperRepository.findNewspapersNotPublicated());
+		final Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(this.newspaperRepository.findNewspapersNotPublicated());
 		return res;
 	}
-	
+
 	public Collection<Newspaper> findNewspapersPublic() {
-		Collection<Newspaper> res = new ArrayList<Newspaper>();
-		res.addAll(newspaperRepository.findNewspapersPublic());
+		final Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(this.newspaperRepository.findNewspapersPublic());
 		return res;
 	}
-	
+
 	public Collection<Newspaper> findNewspapersPrivate() {
-		Collection<Newspaper> res = new ArrayList<Newspaper>();
-		res.addAll(newspaperRepository.findNewspapersPrivate());
+		final Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(this.newspaperRepository.findNewspapersPrivate());
 		return res;
 	}
 
 	public void checkTabooWords() {
 		Collection<String> tabooWords = new ArrayList<String>();
-		tabooWords = configurationService.findTabooWords();
+		tabooWords = this.configurationService.findTabooWords();
 
 		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
 		newspapers = this.findAll();
 
-		for (String s : tabooWords) {
-			for (Newspaper n : newspapers) {
-				if (n.getTitle().toLowerCase().contains(s.toLowerCase()) || n.getDescription().toLowerCase().contains(s.toLowerCase())) {
+		for (final String s : tabooWords)
+			for (final Newspaper n : newspapers)
+				if (n.getTitle().toLowerCase().contains(s.toLowerCase()) || n.getDescription().toLowerCase().contains(s.toLowerCase()))
 					n.setTaboo(true);
-				}
-			}
-		}
 	}
-	
-	public Collection<Newspaper> findNewspaperTaboo(){
-		Collection<Newspaper> res = new ArrayList<Newspaper>();
-		res.addAll(newspaperRepository.findNewspaperTaboo());
+
+	public Collection<Newspaper> findNewspaperTaboo() {
+		final Collection<Newspaper> res = new ArrayList<Newspaper>();
+		res.addAll(this.newspaperRepository.findNewspaperTaboo());
 		return res;
 	}
-	
+
 	public void flush() {
 		this.newspaperRepository.flush();
 	}
-	
+
 	public Newspaper reconstruct(final Newspaper newspaper, final BindingResult binding) {
 		Newspaper res;
 		Newspaper newspaperFinal;
