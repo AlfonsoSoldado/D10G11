@@ -71,6 +71,16 @@ public class CustomerService {
 		Customer result = customer;
 		Assert.notNull(customer);
 		if (customer.getId() == 0) {
+			Class<?> caught;
+			caught = null;
+			try {
+				LoginService.getPrincipal();
+			} catch (final Throwable oops) {
+				caught = oops.getClass();
+			}
+			this.checkExceptions(IllegalArgumentException.class, caught);
+		}
+		if (customer.getId() == 0) {
 			String pass = customer.getUserAccount().getPassword();
 			final Md5PasswordEncoder code = new Md5PasswordEncoder();
 			pass = code.encodePassword(pass, null);
@@ -180,5 +190,13 @@ public class CustomerService {
 
 	public void flush() {
 		this.customerRepository.flush();
+	}
+	protected void checkExceptions(final Class<?> expected, final Class<?> caught) {
+		if (expected != null && caught == null)
+			throw new RuntimeException(expected.getName() + " was expected");
+		else if (expected == null && caught != null)
+			throw new RuntimeException(caught.getName() + " was unexpected");
+		else if (expected != null && caught != null && !expected.equals(caught))
+			throw new RuntimeException(expected.getName() + " was expected, but " + caught.getName() + " was thrown");
 	}
 }
