@@ -51,14 +51,14 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	double averageFollowupsPerArticle();
 
 	// falta sumarle 7 dias al momento de publicacion
-	@Query("select avg(a.followUps.size) from Article a where a.newspaper.publicationDate<?1")
+	@Query("select avg(a.followUps.size) from Article a where a.newspaper.publication< ?1")
 	double averageFollowupsPerArticleToOneWeekPublishedArticle(Date moment);
 
 	// The average number of follow-ups per article up to two weeks after the
 	// corresponding
 	// newspapers been published.
 	// falta sumarle 14 dias al momento de publicacion
-	@Query("select avg(a.followUps.size) from Article a where a.newspaper.publicationDate<?1")
+	@Query("select avg(a.followUps.size) from Article a where a.newspaper.publication< ?1")
 	double averageFollowupsPerArticleToTwoWeekPublishedArticle(Date moment);
 
 	@Query("select avg(m.chirps.size*1.0) from User m")
