@@ -8,7 +8,7 @@
  * http://www.tdg-seville.info/License.html
  */
 
-package sample;
+package useCases;
 
 import javax.transaction.Transactional;
 
@@ -25,7 +25,7 @@ import utilities.AbstractTest;
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class SampleTest extends AbstractTest {
+public class AdminTest extends AbstractTest {
 
 	// System under test ------------------------------------------------------
 
