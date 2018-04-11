@@ -12,8 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ArticleService;
 import services.CustomerService;
 import services.NewspaperService;
+import services.SubscriptionService;
+import services.UserService;
 import domain.Article;
+import domain.Customer;
 import domain.Newspaper;
+import domain.Subscription;
+import domain.User;
 
 @Controller
 @RequestMapping("/newspaper")
@@ -31,6 +36,12 @@ public class NewspaperController extends AbstractController {
 	
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private SubscriptionService subscriptionService;
+	
+	@Autowired
+	private UserService userService;
 	
 	// Constructors ---------------------------------------------------------
 
@@ -51,13 +62,46 @@ public class NewspaperController extends AbstractController {
 		newspaper = this.newspaperService.findNewspapersPublicated();
 		newspaper.removeAll(this.newspaperService.findNewspaperTaboo());
 		newspaper.removeAll(this.newspaperService.findNewspapersNotPublicated());
+		newspaper.removeAll(this.newspaperService.findNewspapersPrivate());
+		
+		Collection<Newspaper> privates;
+		privates = this.newspaperService.findNewspapersPrivate();
+		privates.removeAll(this.newspaperService.findNewspaperTaboo());
+		
+		Collection<Newspaper> acum;
+		acum = newspaperService.findNewspapersPrivate();
+		acum.removeAll(this.newspaperService.findNewspaperTaboo());
+		
 		
 		try {
-			customerService.findByPrincipal();
+			Customer c;
+			c = customerService.findByPrincipal();
+			
+			Collection<Subscription> sC;
+			sC = subscriptionService.findSubscriptionByCustomer(c.getId());
+
+			for(Subscription s: sC){
+				for(Newspaper n: privates){
+					if(s.getNewspaper().getId() == n.getId()){
+						newspaper.add(n);
+					}
+				}
+			}
+		} catch (Exception e) {
 			privateNewspaper = newspaperService.findNewspapersPrivate();
 			newspaper.removeAll(privateNewspaper);
+		}
+		
+		try {
+			User user;
+			user = userService.findByPrincipal();
+			
+			for(Newspaper n: acum){
+				if(n.getPublisher().getId() == user.getId()){
+					newspaper.add(n);
+				}
+			}
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 
 		result = new ModelAndView("newspaper/list");
@@ -71,8 +115,51 @@ public class NewspaperController extends AbstractController {
 	public ModelAndView searchList(@RequestParam String criteria) {
 		ModelAndView res;
 		Collection<Newspaper> newspapers;
+		Collection<Newspaper> privateNewspaper;
+		
 		newspapers = this.newspaperService.searchNewspaper(criteria);
 		newspapers.removeAll(this.newspaperService.findNewspaperTaboo());
+		
+		Collection<Newspaper> privates;
+		privates = this.newspaperService.findNewspapersPrivate();
+		privates.removeAll(this.newspaperService.findNewspaperTaboo());
+		
+		Collection<Newspaper> acum;
+		acum = newspaperService.findNewspapersPrivate();
+		acum.removeAll(this.newspaperService.findNewspaperTaboo());
+		
+		try {
+			Customer c;
+			c = customerService.findByPrincipal();
+			
+			Collection<Subscription> sC;
+			sC = subscriptionService.findSubscriptionByCustomer(c.getId());
+
+			for(Subscription s: sC){
+				for(Newspaper n: privates){
+					if(s.getNewspaper().getId() == n.getId()){
+						newspapers.add(n);
+					}
+				}
+			}
+		} catch (Exception e) {
+			privateNewspaper = newspaperService.findNewspapersPrivate();
+			newspapers.removeAll(privateNewspaper);
+		}
+		
+		try {
+			User user;
+			user = userService.findByPrincipal();
+			
+			for(Newspaper n: acum){
+				if(n.getPublisher().getId() == user.getId()){
+					newspapers.add(n);
+				}
+			}
+		} catch (Exception e) {
+		}
+		
+		
 		res = new ModelAndView("newspaper/list");
 		res.addObject("newspaper", newspapers);
 		res.addObject("requestURI", "newspaper/list.do");

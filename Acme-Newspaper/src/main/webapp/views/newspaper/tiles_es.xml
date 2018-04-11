@@ -1,59 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
- * tiles_es.xml
- *
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * tiles_es.xml * * Copyright (C) 2017 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-      
+
 <tiles-definitions>
 
 	<definition name="newspaper/list" extends="master.page">
 		<put-attribute name="title" value="Lista de periódicos" />
 		<put-attribute name="body" value="/views/newspaper/list.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/administrator/list" extends="master.page">
-		<put-attribute name="title" value="Listado de periódicos con palabras Taboo" />
+		<put-attribute name="title"
+			value="Listado de periódicos con palabras Taboo" />
 		<put-attribute name="body" value="/views/newspaper/listTaboo.jsp" />
 	</definition>
+
+	<definition name="newspaper/customer/list" extends="master.page">
+		<put-attribute name="title" value="Lista de periódicos privados" />
+		<put-attribute name="body" value="/views/newspaper/listPrivate.jsp" />
+	</definition>
 	
+		<definition name="newspaper/customer/search" extends="master.page">
+		<put-attribute name="title" value="Lista de periódicos" />
+		<put-attribute name="body" value="/views/newspaper/listPrivate.jsp" />
+	</definition>
+
 	<definition name="newspaper/display" extends="master.page">
 		<put-attribute name="title" value="Mostrar periódico" />
 		<put-attribute name="body" value="/views/newspaper/display.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/user/listNotPublicated" extends="master.page">
 		<put-attribute name="title" value="Lista de periódicos" />
 		<put-attribute name="body" value="/views/newspaper/list.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/user/edit" extends="master.page">
 		<put-attribute name="title" value="Editar periódico" />
 		<put-attribute name="body" value="/views/newspaper/edit.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/administrator/edit" extends="master.page">
 		<put-attribute name="title" value="Eliminar periódico" />
 		<put-attribute name="body" value="/views/newspaper/edit.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/user/create" extends="master.page">
 		<put-attribute name="title" value="Crear periódico" />
 		<put-attribute name="body" value="/views/newspaper/edit.jsp" />
 	</definition>
-	
+
 	<definition name="newspaper/search" extends="master.page">
 		<put-attribute name="title" value="Lista de periódicos" />
 		<put-attribute name="body" value="/views/newspaper/list.jsp" />
 	</definition>
-	
+
 </tiles-definitions>

@@ -22,7 +22,7 @@
 
 <!-- Listing grid -->
 
-<form method=GET action="newspaper/search.do">
+<form method=GET action="newspaper/customer/search.do">
 	Search: <input type="text" name="criteria"> <input
 		type="submit">
 </form>
@@ -31,16 +31,6 @@
 	name="newspaper" requestURI="${requestURI}" id="row">
 	
 	<!-- Attributes -->
-
-	<security:authorize access="hasRole('USER')">
-		<display:column><acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" /></display:column>
-	</security:authorize>
-	
-	<security:authorize access="hasRole('ADMIN')">
-		<display:column><acme:links url="newspaper/administrator/edit.do?newspaperId=${row.id}" code="newspaper.delete" /></display:column>
-	</security:authorize>
-	
-	<display:column><acme:links url="newspaper/display.do?newspaperId=${row.id}" code="newspaper.display" /></display:column>
 	
 	<acme:column property="title" code="newspaper.title" />
 	<acme:column property="publication" code="newspaper.publication" />
@@ -48,12 +38,10 @@
 	<spring:message code="newspaper.picture" var="picture"/>
 	<display:column><img class="imagesNewspaper" src="${row.picture}"></display:column>
 
-	<display:column> <acme:links url="article/list.do?newspaperId=${row.id}" code="newspaper.articles" /> </display:column>
 	<display:column><acme:links url="user/display.do?userId=${row.publisher.id}" code="newspaper.publisher" /></display:column>
+	
+	<security:authorize access="hasRole('CUSTOMER')">
+		<display:column><acme:links url="subscription/customer/create.do?newspaperId=${row.id}" code="newspaper.subscription" /></display:column>
+	</security:authorize>
+
 </display:table>
-
-<!-- Action links -->
-
-<br><security:authorize access="hasRole('USER')">
-		<acme:links url="newspaper/user/create.do" code="newspaper.create" />
-</security:authorize>

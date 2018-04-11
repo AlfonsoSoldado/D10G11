@@ -84,4 +84,10 @@ public class SubscriptionService {
 		return res;
 	}
 
+	public Collection<Subscription> findSubscriptionByCustomer(int id) {
+		Collection<Subscription> res;
+		res = this.subscriptionRepository.findSubscriptionByCustomer(id);
+		return res;
+	}
+
 }

@@ -13,5 +13,8 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
 	
 	@Query("select s from Subscription s where s.newspaper.id=?1")
 	Collection<Subscription> findSubscriptionByNewspaper(int id);
+	
+	@Query("select s from Subscription s where s.customer.id=?1")
+	Collection<Subscription> findSubscriptionByCustomer(int id);
 
 }
