@@ -14,69 +14,61 @@ import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.Assert;
 
+import domain.Administrator;
+import services.AdministratorService;
 import utilities.AbstractTest;
 
-@ContextConfiguration(locations = {
-	"classpath:spring/junit.xml"
-})
+@ContextConfiguration(locations = { "classpath:spring/junit.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class AdminTest extends AbstractTest {
 
-	// System under test ------------------------------------------------------
-
-	// Tests ------------------------------------------------------------------
-
-	// The following are fictitious test cases that are intended to check that 
-	// JUnit works well in this project.  Just righ-click this class and run 
-	// it using JUnit.
+	@Autowired
+	private AdministratorService administratorService;
 
 	@Test
-	public void samplePositiveTest() {
-		Assert.isTrue(true);
-	}
+	public void administratorTest() {
 
-	@Test(expected = IllegalArgumentException.class)
-	public void sampleNegativeTest() {
-		Assert.isTrue(false);
-	}
-
-	@Test
-	public void sampleDriver() {
 		final Object testingData[][] = {
-			{
-				"userAccount1", 4, null
-			}, {
-				"userAccount2", 5, null
-			}, {
-				"userAccount3", 6, null
-			}, {
-				"non-existent", 0, AssertionError.class
-			}
-		};
+				// test login succes and fail
+				{ "admin", null }, { "adminNotRegister", IllegalArgumentException.class },
+				//test only the admin can display the dashboard
+				{ "admin", null }, { "adminNotRegister", IllegalArgumentException.class } };
 
-		for (int i = 0; i < testingData.length; i++)
-			this.sampleTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		for (int i = 0; i < 2; i++)
+			this.loginAdministratorTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+
+		for (int i = 2; i < 4; i++)
+			this.loginAdministratorTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
 
-	// Ancillary methods ------------------------------------------------------
-
-	protected void sampleTemplate(final String beanName, final int id, final Class<?> expected) {
+	public void loginAdministratorTemplate(final String user, final Class<?> expected) {
 		Class<?> caught;
-		int dbId;
-
 		caught = null;
 		try {
-			dbId = super.getEntityId(beanName);
-			Assert.isTrue(dbId == id);
+			this.authenticate(user);
+			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
-
+		this.checkExceptions(expected, caught);
+	}
+//only test two data, all functions have loggin check
+	public void displayDashBoard(final String user, final Class<?> expected) {
+		Class<?> caught;
+		caught = null;
+		try {
+			this.authenticate(user);
+			administratorService.averageArticlesPerNewspaper();
+			administratorService.AverageRatioPrivateVsPublicNewspaperPerPublisher();
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
 		this.checkExceptions(expected, caught);
 	}
 
