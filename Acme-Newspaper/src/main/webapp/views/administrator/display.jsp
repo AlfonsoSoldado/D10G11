@@ -178,12 +178,23 @@
 </p>
 
 
+
+
 <h3>
 	<spring:message code="administrator.ratioPublicVsPrivateNewspaper" />
+
 </h3>
-<p>
-	<jstl:out value="${ratioPublicVsPrivateNewspaper}" />
-</p>
+<jstl:forEach var="row" items="${ratioPublicVsPrivateNewspaper}">
+	<h4>
+		[
+		<jstl:out value="${row }"></jstl:out>
+		]
+	</h4>
+</jstl:forEach>
+
+
+
+
 
 
 <h3>
@@ -204,13 +215,6 @@
 </p>
 
 
-<h3>
-	<spring:message
-		code="administrator.ratioPrivateNewspaperSubsciptionsVsTotalCustomers" />
-</h3>
-<p>
-	<jstl:out value="${ratioPrivateNewspaperSubsciptionsVsTotalCustomers}" />
-</p>
 
 
 <h3>

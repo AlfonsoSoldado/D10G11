@@ -2,7 +2,9 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.transaction.Transactional;
 
@@ -194,14 +196,18 @@ public class AdministratorService {
 	// newspapers been published.
 
 	public double averageFollowupsPerArticleToOneWeekPublishedArticle() {
-		return this.administratorRepository.averageFollowupsPerArticleToOneWeekPublishedArticle();
+				long dias = TimeUnit.DAYS.toMillis(7);
+				Date moment = new Date(System.currentTimeMillis() - dias);
+		return this.administratorRepository.averageFollowupsPerArticleToOneWeekPublishedArticle(moment);
 	}
 
 	// The average number of follow-ups per article up to two weeks after the
 	// corresponding
 	// newspapers been published
 	public double averageFollowupsPerArticleToTwoWeekPublishedArticle() {
-		return this.administratorRepository.averageFollowupsPerArticleToTwoWeekPublishedArticle();
+		long dias = TimeUnit.DAYS.toMillis(14);
+		Date moment = new Date(System.currentTimeMillis() - dias);
+		return this.administratorRepository.averageFollowupsPerArticleToTwoWeekPublishedArticle(moment);
 	}
 
 	// The average and the standard deviation of the number of chirps per user.
