@@ -13,10 +13,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import domain.Customer;
-import domain.User;
 import security.Authority;
 import security.UserAccount;
 import services.CustomerService;
+import services.UserService;
 import utilities.AbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,10 +27,11 @@ public class CustomerTest extends AbstractTest {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private CustomerService customerService;
+	@Autowired
+	private UserService userService;
 	// An actor who is not authenticated must be able to:
-	// 1. Register to the system as a user.
-	// 2. List the users of the system
-	// . An actor who is authenticated as a user must be able to:
+	// 1. Register to the system as a customer.
+	// . An actor who is authenticated as a customer must be able to:
 	// Do the same that unauthenticate actor but register
 
 	@Test
@@ -69,7 +70,7 @@ public class CustomerTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(user);
-			this.customerService.findAll();
+			this.userService.findAll();
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
