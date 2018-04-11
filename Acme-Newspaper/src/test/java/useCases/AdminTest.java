@@ -43,7 +43,7 @@ public class AdminTest extends AbstractTest {
 			this.loginAdministratorTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
 
 		for (int i = 2; i < 4; i++)
-			this.loginAdministratorTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+			this.displayDashBoard((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
 
 	public void loginAdministratorTemplate(final String user, final Class<?> expected) {

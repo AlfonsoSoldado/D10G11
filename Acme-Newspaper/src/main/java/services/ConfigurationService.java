@@ -19,6 +19,8 @@ public class ConfigurationService {
 
 	@Autowired
 	private ConfigurationRepository configurationRepository;
+	@Autowired
+	private AdministratorService administratorService;
 
 	// Supporting services ----------------------------------------------------
 
@@ -46,6 +48,7 @@ public class ConfigurationService {
 	}
 
 	public Configuration save(Configuration configuration) {
+		this.administratorService.checkAuthority();
 		Assert.notNull(configuration);
 		Configuration res;
 		res = this.configurationRepository.save(configuration);
