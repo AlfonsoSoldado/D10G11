@@ -35,7 +35,7 @@ public class NewspaperTest extends AbstractTest {
 
 	// Test---------------------------------------------------------------
 	@Test
-	public void rendezvousTest() {
+	public void newspaperTest() {
 		final Object testingData[][] = {
 
 			//An actor who is not authenticated must be able to: 
@@ -118,7 +118,7 @@ public class NewspaperTest extends AbstractTest {
 		caught = null;
 		try {
 
-			//-----------------Delete Rendezvous-------------------
+			//-----------------Delete newspaper-------------------
 			this.authenticate(user);
 			final int newspaperId = this.getEntityId(newspaper);
 			final Newspaper newspaperFinded = this.newspaperService.findOne(newspaperId);
@@ -135,7 +135,7 @@ public class NewspaperTest extends AbstractTest {
 		caught = null;
 		try {
 
-			//-----------------Edit Rendezvous-------------------
+			//-----------------Edit newspaper-------------------
 			this.authenticate(user);
 			final int newspaperId = this.getEntityId(newspaper);
 			final Newspaper newspaperFinded = this.newspaperService.findOne(newspaperId);
@@ -154,7 +154,7 @@ public class NewspaperTest extends AbstractTest {
 		caught = null;
 		try {
 
-			//-----------------Create Rendezvous-------------------
+			//-----------------Create newspaper-------------------
 			this.authenticate(user);
 			final Newspaper newspaper = this.newspaperService.create();
 			newspaper.setTitle(title);
@@ -174,7 +174,7 @@ public class NewspaperTest extends AbstractTest {
 		caught = null;
 		try {
 
-			//-----------------List Rendezvous-------------------
+			//-----------------List newspaper-------------------
 			this.authenticate(user);
 			this.newspaperService.findAll();
 		} catch (final Throwable oops) {
