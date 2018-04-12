@@ -27,7 +27,7 @@ public class ChirpTest extends AbstractTest {
 
 	// Test---------------------------------------------------------------
 	@Test
-	public void announcementTest() {
+	public void chirpTest() {
 		final Object testingData[][] = {
 
 				// User create a chirp

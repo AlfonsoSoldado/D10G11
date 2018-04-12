@@ -33,7 +33,7 @@ public class ConfigurationTest extends AbstractTest {
 	private ConfigurationService configurationService;
 
 	@Test
-	public void administratorTest() {
+	public void configurationTest() {
 
 		final Object testingData[][] = {
 				//test admin edit configuration of taboo words
