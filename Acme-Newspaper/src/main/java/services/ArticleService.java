@@ -9,6 +9,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ArticleRepository;
 import domain.Article;
@@ -37,6 +39,9 @@ public class ArticleService {
 	
 	@Autowired
 	private FollowUpService followUpService;
+	
+	@Autowired
+	private Validator validator;
 
 	// Constructor ------------------------------------------------------------
 
@@ -78,6 +83,8 @@ public class ArticleService {
 		this.userService.checkAuthority();
 		Article result = article;
 		Assert.notNull(article);
+		Assert.isTrue(article.getWriter().equals(this.userService.findByPrincipal()));
+		Assert.isTrue(article.getNewspaper().getPublisher().equals(article.getWriter()));
 		if (article.getId() != 0) {
 			Assert.isTrue(article.getDraftmode() == false);
 		}
@@ -142,6 +149,43 @@ public class ArticleService {
 	
 	public void flush() {
 		this.articleRepository.flush();
+	}
+	
+	public Article reconstruct(final Article article, final BindingResult binding) {
+		Article res;
+		Article articleFinal;
+
+		if (article.getId() == 0) {
+			User userPrincipal;
+			final Collection<FollowUp> followUps;
+
+			userPrincipal = this.userService.findByPrincipal();
+
+			article.setWriter(userPrincipal);
+			followUps = new ArrayList<FollowUp>();
+			article.setFollowUps(followUps);
+			Assert.isTrue(article.getNewspaper().getPublisher().equals(userPrincipal));
+			Assert.isNull(article.getNewspaper().getPublication());
+			if (!article.getDraftmode())
+				article.setMoment(new Date(System.currentTimeMillis() - 1000));
+			res = article;
+		} else {
+			articleFinal = this.articleRepository.findOne(article.getId());
+			Assert.isNull(articleFinal.getMoment());
+			Assert.isTrue(articleFinal.getNewspaper().equals(article.getNewspaper()));
+			article.setId(articleFinal.getId());
+			article.setVersion(articleFinal.getVersion());
+			if (!article.getDraftmode()) {
+				article.setMoment(new Date(System.currentTimeMillis() - 1000));
+			} 
+			article.setWriter(articleFinal.getWriter());
+			article.setFollowUps(articleFinal.getFollowUps());
+			article.setNewspaper(articleFinal.getNewspaper());
+
+			res = article;
+		}
+		this.validator.validate(res, binding);
+		return res;
 	}
 
 }

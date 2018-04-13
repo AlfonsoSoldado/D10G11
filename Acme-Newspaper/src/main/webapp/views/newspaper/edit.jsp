@@ -21,11 +21,7 @@
 
 <form:form action="${requestURI}" modelAttribute="newspaper">
 
-	<form:hidden path="id" />
-	<form:hidden path="version" />
-	<form:hidden path="publication" />
 	<form:hidden path="publisher" />
-	<form:hidden path="articles" />
 
 	<security:authorize access="hasRole('USER')">
 	<acme:textbox code="newspaper.title" path="title" />

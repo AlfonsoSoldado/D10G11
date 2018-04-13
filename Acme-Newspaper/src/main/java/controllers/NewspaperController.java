@@ -103,6 +103,7 @@ public class NewspaperController extends AbstractController {
 			}
 		} catch (Exception e) {
 		}
+		newspaper.removeAll(this.newspaperService.findNewspapersNotPublicated());
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);
