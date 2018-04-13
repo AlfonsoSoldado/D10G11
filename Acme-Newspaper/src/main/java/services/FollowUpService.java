@@ -95,7 +95,7 @@ public class FollowUpService {
 	
 	public FollowUp reconstruct(final FollowUp followUp, final BindingResult binding) {
 		FollowUp res;
-		final FollowUp followUpFinal;
+		FollowUp followUpFinal;
 		Date moment;
 
 		if (followUp.getId() == 0) {

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.SubscriptionRepository;
 import domain.Customer;
@@ -25,6 +27,9 @@ public class SubscriptionService {
 	
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private Validator validator;
 
 	// Constructor ------------------------------------------------------------
 
@@ -87,6 +92,23 @@ public class SubscriptionService {
 	public Collection<Subscription> findSubscriptionByCustomer(int id) {
 		Collection<Subscription> res;
 		res = this.subscriptionRepository.findSubscriptionByCustomer(id);
+		return res;
+	}
+	
+	public Subscription reconstruct(final Subscription subscription, final BindingResult binding) {
+		Subscription res;
+		
+		if (subscription.getId() == 0) {
+			
+			Customer customer;
+			customer = this.customerService.findByPrincipal();
+			subscription.setCustomer(customer);
+
+			res = subscription;
+		} else {
+			res = subscription;
+		}
+		this.validator.validate(res, binding);
 		return res;
 	}
 

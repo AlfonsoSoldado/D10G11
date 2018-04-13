@@ -72,6 +72,7 @@ public class ChirpUserController extends AbstractController {
 	public ModelAndView save(@Valid Chirp chirp,
 			final BindingResult binding) {
 		ModelAndView res;
+		chirp = this.chirpService.reconstruct(chirp, binding);
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(chirp,
 					"chirp.params.error");

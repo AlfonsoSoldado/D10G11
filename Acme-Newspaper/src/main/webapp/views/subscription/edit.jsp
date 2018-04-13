@@ -21,8 +21,6 @@
 <security:authorize access="hasRole('CUSTOMER')">
 <form:form action="${requestURI}" modelAttribute="subscription">
 
-	<form:hidden path="id" />
-	<form:hidden path="version" />
 	<form:hidden path="customer" />
 	<form:hidden path="newspaper" />
 	

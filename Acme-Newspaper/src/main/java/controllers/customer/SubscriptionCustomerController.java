@@ -72,6 +72,7 @@ public class SubscriptionCustomerController extends AbstractController {
 	public ModelAndView save(@Valid Subscription subscription,
 			final BindingResult binding) {
 		ModelAndView res;
+		subscription = this.subscriptionService.reconstruct(subscription, binding);
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(subscription,
 					"subscription.params.error");
