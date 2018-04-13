@@ -128,46 +128,75 @@ public class AdministratorService {
 	// The average and the standard deviation of newspapers created per user.
 	public double averageNewspaperPerUser() {
 		checkAuthority();
-		return this.administratorRepository.averageNewspaperPerUser();
+		try {
+			return this.administratorRepository.averageNewspaperPerUser();
+		} catch (Exception e) {
+			return 0.;
+		}
 
 	}
 
 	public double standardDesviationNewspaperPerUser() {
 		checkAuthority();
-		return this.administratorRepository.standardDesviationNewspaperPerUser();
+		try {
+			return this.administratorRepository
+					.standardDesviationNewspaperPerUser();
+		} catch (Exception e) {
+			return 0.;
+		}
+
 	}
+
 	// The average and the standard deviation of articles written by writer.
 
 	public double averageArticlesPerUser() {
 		checkAuthority();
-		return this.administratorRepository.averageArticlesPerUser();
+		try {
+			return this.administratorRepository.averageArticlesPerUser();
+		} catch (Exception e) {
+			return 0.;
+		}
 
 	}
 
 	public double standardDesviationArticlesPerUser() {
 		checkAuthority();
-		return this.administratorRepository.standardDesviationArticlesPerUser();
+		try {
+			return this.administratorRepository
+					.standardDesviationArticlesPerUser();
+		} catch (Exception e) {
+			return 0.;
+		}
 
 	}
 
 	// The average and the standard deviation of articles per newspaper.
 	public double averageArticlesPerNewspaper() {
 		checkAuthority();
-		return this.administratorRepository.averageArticlesPerNewspaper();
-		
+		try {
+			return this.administratorRepository.averageArticlesPerNewspaper();
+		} catch (Exception e) {
+			return 0.;
+		}
 
 	}
 
 	public double standardDesviationArticlesPerNewspaper() {
 		checkAuthority();
-		return this.administratorRepository.standardDesviationArticlesPerNewspaper();
+		try {
+			return this.administratorRepository
+					.standardDesviationArticlesPerNewspaper();
+		} catch (Exception e) {
+			return 0.;
+		}
 
 	}
 
 	// The newspapers that have at least 10% more articles than the average.
 	public List<Newspaper> newspapers10moreThanAvereage() {
 		checkAuthority();
-		List<Newspaper> a = new ArrayList<>(this.administratorRepository.newspapers10moreThanAvereage());
+		List<Newspaper> a = new ArrayList<>(
+				this.administratorRepository.newspapers10moreThanAvereage());
 		if (a == null || a.isEmpty()) {
 			a = null;
 		}
@@ -177,7 +206,8 @@ public class AdministratorService {
 	// The newspapers that have at least 10% fewer articles than the average.
 	public List<Newspaper> newspapers10fewerThanAvereage() {
 		checkAuthority();
-		List<Newspaper> a = new ArrayList<>(this.administratorRepository.newspapers10fewerThanAvereage());
+		List<Newspaper> a = new ArrayList<>(
+				this.administratorRepository.newspapers10fewerThanAvereage());
 
 		if (a == null || a.isEmpty()) {
 			a = null;
@@ -188,30 +218,50 @@ public class AdministratorService {
 	// The ratio of users who have ever created a newspaper.
 	public double ratioUsersCreatedEverNewspaper() {
 		checkAuthority();
-		return this.administratorRepository.ratioUsersCreatedEverNewspaper();
+		try {
+			return this.administratorRepository
+					.ratioUsersCreatedEverNewspaper();
+		} catch (Exception e) {
+			return 0.;
+		}
 
 	}
 
 	// The ratio of users who have ever written an article.
 	public double ratioUsersEverWrittenArticle() {
 		checkAuthority();
-		return this.administratorRepository.ratioUsersEverWrittenArticle();
+		try {
+			return this.administratorRepository.ratioUsersEverWrittenArticle();
+		} catch (Exception e) {
+			return 0.;
+		}
 	}
 
 	// The average number of follow-ups per article.
 	public double averageFollowupsPerArticle() {
 		checkAuthority();
-		return this.administratorRepository.averageFollowupsPerArticle();
+		try {
+			return this.administratorRepository.averageFollowupsPerArticle();
+		} catch (Exception e) {
+			return 0.;
+		}
+
 	}
+
 	// The average number of follow-ups per article up to one week after the
 	// corresponding
 	// newspapers been published.
 
 	public double averageFollowupsPerArticleToOneWeekPublishedArticle() {
 		checkAuthority();
-				long dias = TimeUnit.DAYS.toMillis(7);
-				Date moment = new Date(System.currentTimeMillis() - dias);
-		return this.administratorRepository.averageFollowupsPerArticleToOneWeekPublishedArticle(moment);
+		long dias = TimeUnit.DAYS.toMillis(7);
+		Date moment = new Date(System.currentTimeMillis() - dias);
+		try {
+			return this.administratorRepository
+					.averageFollowupsPerArticleToOneWeekPublishedArticle(moment);
+		} catch (Exception e) {
+			return 0.;
+		}
 	}
 
 	// The average number of follow-ups per article up to two weeks after the
@@ -221,55 +271,95 @@ public class AdministratorService {
 		checkAuthority();
 		long dias = TimeUnit.DAYS.toMillis(14);
 		Date moment = new Date(System.currentTimeMillis() - dias);
-		return this.administratorRepository.averageFollowupsPerArticleToTwoWeekPublishedArticle(moment);
+		try {
+			return this.administratorRepository
+					.averageFollowupsPerArticleToTwoWeekPublishedArticle(moment);
+		} catch (Exception e) {
+			return 0.;
+		}
+
 	}
 
 	// The average and the standard deviation of the number of chirps per user.
 	public double averageChirpsPerUser() {
 		checkAuthority();
-		return this.administratorRepository.averageChirpsPerUser();
+		try {
+			return this.administratorRepository.averageChirpsPerUser();
+		} catch (Exception e) {
+			return 0.;
+		}
 	}
 
 	public double standardDesviationChirpsPerUser() {
 		checkAuthority();
-		return this.administratorRepository.standardDesviationChirpsPerUser();
+		try {
+			return this.administratorRepository
+					.standardDesviationChirpsPerUser();
+		} catch (Exception e) {
+			return 0.;
+		}
 	}
 
-	// The ratio of users who have posted above 75% the average number of chirps per
+	// The ratio of users who have posted above 75% the average number of chirps
+	// per
 	// user.
 	public double ratioUsersMorePosted75ChirpsOfAveragePerUser() {
 		checkAuthority();
-		return this.administratorRepository.ratioUsersMorePosted75ChirpsOfAveragePerUser();
+		try {
+			return this.administratorRepository
+					.ratioUsersMorePosted75ChirpsOfAveragePerUser();
+		} catch (Exception e) {
+			return 0.;
+		}
 	}
 
 	// The ratio of public versus private newspapers.
 	public double[] ratioPublicVsPrivateNewspaper() {
 		checkAuthority();
 		double ratio[] = new double[2];
-		ratio[0] = this.administratorRepository.ratioPublicNewspaper();
-		ratio[1] = this.administratorRepository.ratioPrivateNewspaper();
-		return ratio;
+		double res[] = new double[2];
+		res[0] = 0.;
+		res[1] = 0.;
+
+		try {
+			ratio[0] = this.administratorRepository.ratioPublicNewspaper();
+			ratio[1] = this.administratorRepository.ratioPrivateNewspaper();
+			return ratio;
+		} catch (Exception e) {
+			return res;
+		}
 
 	}
 
 	// The average number of articles per private newspapers.
 	public Double averageArticlesPerNewspaperPrivates() {
 		checkAuthority();
-		Double a = this.administratorRepository.averageArticlesPerNewspaperPrivates();
+		Double a = this.administratorRepository
+				.averageArticlesPerNewspaperPrivates();
 		if (a == null) {
 			a = 0.;
 		}
-		return a;
+		try {
+			return a;
+		} catch (Exception e) {
+			return 0.;
+		}
+
 	}
 
 	// The average number of articles per public newspapers.
 	public Double averageArticlesPerNewspaperPublics() {
 		checkAuthority();
-		Double a = this.administratorRepository.averageArticlesPerNewspaperPublics();
+		Double a = this.administratorRepository
+				.averageArticlesPerNewspaperPublics();
 		if (a == null) {
 			a = 0.;
 		}
-		return a;
+		try {
+			return a;
+		} catch (Exception e) {
+			return 0.;
+		}
 	}
 
 	// The ratio of subscribers per private newspaper versus the total number of
@@ -277,19 +367,41 @@ public class AdministratorService {
 	public double[] ratioPrivateNewspaperSubsciptionsVsTotalCustomers() {
 		checkAuthority();
 		double ratio[] = new double[2];
-		ratio[0] = this.administratorRepository.ratioPrivateNewspaperSubsciptions();
-		ratio[1] = this.administratorRepository.numberOfCustomers();
-		return ratio;
+		double res[] = new double[2];
+		res[0] = 0.;
+		res[1] = 0.;
+		try {
+			ratio[0] = this.administratorRepository
+					.ratioPrivateNewspaperSubsciptions();
+			ratio[1] = this.administratorRepository.numberOfCustomers();
+			return ratio;
+		} catch (Exception e) {
+			return res;
+		}
+
 	}
 
 	// The average ratio of private versus public newspapers per publisher.
 	public double[] AverageRatioPrivateVsPublicNewspaperPerPublisher() {
 		checkAuthority();
 		double ratio[] = new double[4];
-		ratio[0] = this.administratorRepository.ratioPrivateNewspaperPerPublisher();
-		ratio[1] = this.administratorRepository.AveragePrivateNewspaperPerPublisher();
-		ratio[2] = this.administratorRepository.ratioPublicNewspaperPerPublisher();
-		ratio[3] = this.administratorRepository.AveragePublicNewspaperPerPublisher();
-		return ratio;
+		double res[] = new double[4];
+		res[0] = 0.;
+		res[1] = 0.;
+		res[2] = 0.;
+		res[3] = 0.;
+		try {
+			ratio[0] = this.administratorRepository
+					.ratioPrivateNewspaperPerPublisher();
+			ratio[1] = this.administratorRepository
+					.AveragePrivateNewspaperPerPublisher();
+			ratio[2] = this.administratorRepository
+					.ratioPublicNewspaperPerPublisher();
+			ratio[3] = this.administratorRepository
+					.AveragePublicNewspaperPerPublisher();
+			return ratio;
+		} catch (Exception e) {
+			return res;
+		}
 	}
 }

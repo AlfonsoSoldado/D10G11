@@ -1,23 +1,5 @@
 #./src/main/resources/Entities.map
-#Fri Apr 13 13:00:43 CEST 2018
-chirp2=35
-chirp1=34
-followUp2=38
-followUp1=37
-admin1=27
-article2=33
-subscription2=42
-article1=32
-subscription1=41
-userAccount5=26
-configuration=36
-userAccount4=25
-userAccount3=24
-userAccount2=23
-userAccount1=22
-customer2=29
-customer1=28
-user2=31
-user1=30
-newspaper2=40
-newspaper1=39
+#Fri Apr 13 13:55:26 CEST 2018
+admin1=5
+userAccount1=4
+configuration=6
