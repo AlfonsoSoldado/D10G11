@@ -47,6 +47,9 @@
 	
 	<display:column><acme:links url="newspaper/display.do?newspaperId=${row.id}" code="newspaper.display" /></display:column>
 	
+	<security:authorize access="hasRole('USER')">
+		<acme:column property="hide" code="newspaper.hide" />
+	</security:authorize>
 	<acme:column property="title" code="newspaper.title" />
 	<acme:column property="publication" code="newspaper.publication" />
 	<acme:column property="description" code="newspaper.description" />
