@@ -142,8 +142,8 @@ public class UserService {
 		following.remove(unfollow);
 		followers.remove(actual);
 		
-		unfollow.setFollowers(following);
-		actual.setFollowing(followers);
+		unfollow.setFollowers(followers);
+		actual.setFollowing(following);
 	}
 
 	public User findByPrincipal() {
