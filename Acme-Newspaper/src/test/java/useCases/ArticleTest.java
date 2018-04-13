@@ -19,8 +19,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import services.ArticleService;
+import services.NewspaperService;
 import utilities.AbstractTest;
 import domain.Article;
+import domain.Newspaper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -31,7 +33,9 @@ public class ArticleTest extends AbstractTest {
 
 	@Autowired
 	private ArticleService	articleService;
-
+	
+	@Autowired
+	private NewspaperService	newspaperService;
 
 	// Test---------------------------------------------------------------
 	@Test
@@ -62,7 +66,7 @@ public class ArticleTest extends AbstractTest {
 				"user3", IllegalArgumentException.class
 			}, {
 				//User creates article.
-				"user2", "title1", "summary1", "body1", false, null
+				"user2", "title1", "summary1", "body1", false, IllegalArgumentException.class
 			}, {
 				//User creates article.
 				"user1", "title2", "summary2", "body2", false, null
@@ -120,6 +124,10 @@ public class ArticleTest extends AbstractTest {
 			article.setSummary(summary);
 			article.setBody(body);
 			article.setDraftmode(draftMode);
+			
+			int newspaperId = this.getEntityId("newspaper1");
+			Newspaper newspaper = newspaperService.findOne(newspaperId);
+			article.setNewspaper(newspaper);
 
 			this.articleService.save(article);
 			this.unauthenticate();
