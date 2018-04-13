@@ -135,5 +135,9 @@ public class SubscriptionService {
 		} 
 		return res;
 	}
+	
+	public void flush() {
+		this.subscriptionRepository.flush();
+	}
 
 }
