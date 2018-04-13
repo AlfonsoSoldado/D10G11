@@ -21,6 +21,8 @@
 
 <form:form action="${requestURI}" modelAttribute="newspaper">
 
+	<form:hidden path="id" />
+	<form:hidden path="version" />
 	<form:hidden path="publisher" />
 
 	<security:authorize access="hasRole('USER')">

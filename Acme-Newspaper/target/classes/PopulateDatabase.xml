@@ -198,7 +198,7 @@
 		<property name="body" value="It's gonna rain tomorrow in the morning." />
 		<property name="pictures">
 			<list>
-				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
+				<value>http://www.theclinic.cl/wp-content/uploads/2013/07/New-York-Times-Logo11.jpg</value>
 			</list>
 		</property>
 		<property name="draftmode" value="false" />
@@ -219,7 +219,7 @@
 		<property name="body" value="Sevilla FC won the champions league." />
 		<property name="pictures">
 			<list>
-				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
+				<value>http://www.theclinic.cl/wp-content/uploads/2013/07/New-York-Times-Logo11.jpg</value>
 			</list>
 		</property>
 		<property name="draftmode" value="false" />
@@ -293,7 +293,7 @@
 		<property name="text" value="This is a text" />
 		<property name="pictures">
 			<list>
-				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
+				<value>http://www.theclinic.cl/wp-content/uploads/2013/07/New-York-Times-Logo11.jpg</value>
 			</list>
 		</property>
 		<property name="article" ref="article1" />
@@ -306,7 +306,7 @@
 		<property name="text" value="This is another text" />
 		<property name="pictures">
 			<list>
-				<value>http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg</value>
+				<value>http://www.theclinic.cl/wp-content/uploads/2013/07/New-York-Times-Logo11.jpg</value>
 			</list>
 		</property>
 		<property name="article" ref="article2" />
@@ -318,7 +318,7 @@
 		<property name="title" value="This is a title" />
 		<property name="publication" value="2017/04/15" />
 		<property name="description" value="This is a description" />
-		<property name="picture" value="http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg" />
+		<property name="picture" value="http://www.theclinic.cl/wp-content/uploads/2013/07/New-York-Times-Logo11.jpg" />
 		<property name="hide" value="false" />
 		<property name="taboo" value="false" />
 		<property name="articles">
@@ -333,7 +333,7 @@
 		<property name="title" value="This is another title" />
 		<property name="publication" value="2017/08/15" />
 		<property name="description" value="This is another description" />
-		<property name="picture" value="http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg" />
+		<property name="picture" value="http://www.theclinic.cl/wp-content/uploads/2013/07/New-York-Times-Logo11.jpg" />
 		<property name="hide" value="false" />
 		<property name="taboo" value="false" />
 		<property name="articles">

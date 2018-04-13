@@ -20,6 +20,9 @@
 
 <form:form action="${requestURI}" modelAttribute="followUp">
 
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	
 	<security:authorize access="hasRole('USER')">
 	<acme:textbox code="followUp.title" path="title" />
 	<acme:textbox code="followUp.summary" path="summary" />

@@ -63,10 +63,18 @@ public class FollowUpUserController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int followUpId) {
 		ModelAndView result;
 		FollowUp followUp;
+		User user;
 
+		user = this.userService.findByPrincipal();
 		followUp = this.followUpService.findOne(followUpId);
 		result = this.createEditModelAndView(followUp);
-		result.addObject("followUp", followUp);
+		if (followUp.getArticle().getWriter().equals(user)) {
+			followUp = this.followUpService.findOne(followUpId);
+			result = this.createEditModelAndView(followUp);
+			result.addObject("followUp", followUp);
+		} else {
+			result = new ModelAndView("redirect:../../");
+		}
 		
 		return result;
 	}
@@ -102,7 +110,6 @@ public class FollowUpUserController extends AbstractController {
 			this.followUpService.delete(followUp);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
 			res = this.createEditModelAndView(followUp,
 					"followUp.commit.error");
 		}

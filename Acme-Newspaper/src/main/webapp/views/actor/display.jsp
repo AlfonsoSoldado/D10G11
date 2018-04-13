@@ -104,7 +104,7 @@
 	
 	<!-- Attributes -->
 	
-	<security:authorize access="hasAnyRole('USER', 'ADMIN')">
+	<security:authorize access="hasRole('ADMIN')">
 	<display:column><acme:links url="chirp/user/edit.do?chirpId=${row.id}" code="chirp.edit" /></display:column>
 	</security:authorize>
 

@@ -97,7 +97,6 @@ public class SubscriptionCustomerController extends AbstractController {
 			this.subscriptionService.delete(subscription);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
 			res = this.createEditModelAndView(subscription,
 					"subscription.commit.error");
 		}

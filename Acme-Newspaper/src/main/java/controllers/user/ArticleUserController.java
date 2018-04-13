@@ -63,10 +63,19 @@ public class ArticleUserController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int articleId) {
 		ModelAndView result;
 		Article article;
+		User user;
 
+		user = this.userService.findByPrincipal();
 		article = this.articleService.findOne(articleId);
 		result = this.createEditModelAndView(article);
-		result.addObject("article", article);
+		
+		if (user.getArticles().contains(article)) {
+			article = this.articleService.findOne(articleId);
+			result = this.createEditModelAndView(article);
+			result.addObject("article", article);
+		} else {
+			result = new ModelAndView("redirect:../../");
+		}
 		
 		return result;
 	}

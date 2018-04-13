@@ -164,18 +164,12 @@ public class ArticleService {
 			article.setWriter(userPrincipal);
 			followUps = new ArrayList<FollowUp>();
 			article.setFollowUps(followUps);
-			Assert.isTrue(article.getNewspaper().getPublisher().equals(userPrincipal));
-			Assert.isNull(article.getNewspaper().getPublication());
-			if (!article.getDraftmode())
+			if (article.getDraftmode())
 				article.setMoment(new Date(System.currentTimeMillis() - 1000));
 			res = article;
 		} else {
 			articleFinal = this.articleRepository.findOne(article.getId());
-			Assert.isNull(articleFinal.getMoment());
-			Assert.isTrue(articleFinal.getNewspaper().equals(article.getNewspaper()));
-			article.setId(articleFinal.getId());
-			article.setVersion(articleFinal.getVersion());
-			if (!article.getDraftmode()) {
+			if (article.getDraftmode()) {
 				article.setMoment(new Date(System.currentTimeMillis() - 1000));
 			} 
 			article.setWriter(articleFinal.getWriter());

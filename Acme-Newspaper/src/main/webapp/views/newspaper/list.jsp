@@ -33,9 +33,11 @@
 	<!-- Attributes -->
 
 	<security:authorize access="hasRole('USER')">
-	<jstl:if test="${row.publisher.id == currentUserId }">
-		<display:column><acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" /></display:column>
+		<display:column>
+		<jstl:if test="${row.publisher.id == currentUserId }">
+		<acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" />
 		</jstl:if>
+		</display:column>
 	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">

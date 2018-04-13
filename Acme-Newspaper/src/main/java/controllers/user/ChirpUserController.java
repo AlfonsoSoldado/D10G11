@@ -97,7 +97,6 @@ public class ChirpUserController extends AbstractController {
 			this.chirpService.delete(chirp);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
 			res = this.createEditModelAndView(chirp,
 					"chirp.commit.error");
 		}

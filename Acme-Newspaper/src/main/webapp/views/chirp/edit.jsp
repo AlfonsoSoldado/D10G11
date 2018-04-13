@@ -20,6 +20,8 @@
 
 <form:form action="${requestURI}" modelAttribute="chirp">
 
+	<form:hidden path="id" />
+	<form:hidden path="version" />
 	<form:hidden path="user" />
 	
 	<security:authorize access="hasRole('USER')">

@@ -1,6 +1,8 @@
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.SubscriptionRepository;
+import domain.CreditCard;
 import domain.Customer;
 import domain.Newspaper;
 import domain.Subscription;
@@ -70,6 +73,7 @@ public class SubscriptionService {
 	public Subscription save(Subscription subscription) {
 		Assert.notNull(subscription);
 		Subscription res;
+		Assert.isTrue(this.checkCreditCard(subscription.getCreditcard()));
 		res = this.subscriptionRepository.save(subscription);
 		return res;
 	}
@@ -109,6 +113,26 @@ public class SubscriptionService {
 			res = subscription;
 		}
 		this.validator.validate(res, binding);
+		return res;
+	}
+	
+	public boolean checkCreditCard(final CreditCard creditCard) {
+		boolean res;
+		Calendar calendar;
+		int actualYear;
+
+		res = false;
+		calendar = new GregorianCalendar();
+		actualYear = calendar.get(Calendar.YEAR);
+		actualYear = actualYear % 100;
+		
+		if (creditCard.getExpirationYear() != null) {
+			if (creditCard.getExpirationYear() > actualYear) {
+				res = true;
+			} else if (creditCard.getExpirationYear() == actualYear && creditCard.getExpirationMonth() >= calendar.get(Calendar.MONTH)) {
+				res = true;
+			} 
+		} 
 		return res;
 	}
 

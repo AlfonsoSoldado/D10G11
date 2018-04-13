@@ -106,15 +106,19 @@ public class NewspaperController extends AbstractController {
 		} catch (Exception e) {
 		}
 		newspaper.removeAll(this.newspaperService.findNewspapersNotPublicated());
+		newspaper.removeAll(this.newspaperService.findNewspapersPrivate());
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);
-		currentUser = this.userService.findByPrincipal();
-		currentUserId = currentUser.getId();
-		result.addObject("currentUserId", currentUserId);
+		try {
+			currentUser = this.userService.findByPrincipal();
+			currentUserId = currentUser.getId();
+			result.addObject("currentUserId", currentUserId);
+			result.addObject("requestURI", "newspaper/list.do");
+		} catch (Exception e) {
+			result.addObject("requestURI", "newspaper/list.do");
+		}
 			
-		result.addObject("requestURI", "newspaper/list.do");
-
 		return result;
 	}
 	

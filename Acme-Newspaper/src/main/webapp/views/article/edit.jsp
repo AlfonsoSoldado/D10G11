@@ -20,6 +20,8 @@
 
 <form:form action="${requestURI}" modelAttribute="article">
 
+	<form:hidden path="id" />
+	<form:hidden path="version" />
 	<form:hidden path="writer" />
 
 	<security:authorize access="hasRole('USER')">

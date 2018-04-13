@@ -184,9 +184,13 @@ public class NewspaperService {
 			final BindingResult binding) {
 		Newspaper res;
 		Newspaper newspaperFinal;
+		Date publication;
 		if (newspaper.getId() == 0) {
 			User user;
 			Collection<Article> articles;
+			
+			publication = new Date(System.currentTimeMillis() - 1000);
+			newspaper.setPublication(publication);
 
 			user = this.userService.findByPrincipal();
 			articles = new ArrayList<Article>();
