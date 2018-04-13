@@ -72,6 +72,7 @@ public class ChirpUserController extends AbstractController {
 	public ModelAndView save(@Valid Chirp chirp,
 			final BindingResult binding) {
 		ModelAndView res;
+		chirp = this.chirpService.reconstruct(chirp, binding);
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(chirp,
 					"chirp.params.error");
@@ -96,7 +97,6 @@ public class ChirpUserController extends AbstractController {
 			this.chirpService.delete(chirp);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
 			res = this.createEditModelAndView(chirp,
 					"chirp.commit.error");
 		}

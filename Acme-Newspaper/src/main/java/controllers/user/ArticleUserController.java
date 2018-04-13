@@ -15,9 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
 import services.NewspaperService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Article;
 import domain.Newspaper;
+import domain.User;
 
 @Controller
 @RequestMapping("/article/user")
@@ -32,6 +34,9 @@ public class ArticleUserController extends AbstractController {
 	
 	@Autowired
 	private NewspaperService newspaperService;
+	
+	@Autowired
+	private UserService userService;
 	
 	// Constructors ---------------------------------------------------------
 
@@ -58,10 +63,19 @@ public class ArticleUserController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int articleId) {
 		ModelAndView result;
 		Article article;
+		User user;
 
+		user = this.userService.findByPrincipal();
 		article = this.articleService.findOne(articleId);
 		result = this.createEditModelAndView(article);
-		result.addObject("article", article);
+		
+		if (user.getArticles().contains(article)) {
+			article = this.articleService.findOne(articleId);
+			result = this.createEditModelAndView(article);
+			result.addObject("article", article);
+		} else {
+			result = new ModelAndView("redirect:../../");
+		}
 		
 		return result;
 	}
@@ -71,10 +85,11 @@ public class ArticleUserController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Article article, final BindingResult binding) {
 		ModelAndView res;
-		if (binding.hasErrors())
-			res = this.createEditModelAndView(article,
-					"article.params.error");
-		else
+		article = this.articleService.reconstruct(article, binding);
+		if (binding.hasErrors()) {
+//			res = new ModelAndView("redirect:edit.do?articleId=" + article.getId());
+			res = this.createEditModelAndView(article, "article.params.error");
+		} else {
 			try {
 				this.articleService.save(article);
 				res = new ModelAndView("redirect:../list.do?newspaperId=" + article.getNewspaper().getId());
@@ -83,6 +98,7 @@ public class ArticleUserController extends AbstractController {
 				res = this.createEditModelAndView(article,
 						"article.commit.error");
 			}
+		}
 		return res;
 	}
 
@@ -101,10 +117,12 @@ public class ArticleUserController extends AbstractController {
 		ModelAndView result;
 		final Collection<Boolean> draftmode = new ArrayList<>();
 		Collection<Newspaper> newspaper;
+		User user;
 		
+		user = userService.findByPrincipal();
 		draftmode.add(false);
 		draftmode.add(true);
-		newspaper = newspaperService.findAll();
+		newspaper = newspaperService.findNewspapersByUser(user.getId());
 		newspaper.removeAll(newspaperService.findNewspapersPublicated());
 
 		result = new ModelAndView("article/user/edit");
@@ -112,7 +130,12 @@ public class ArticleUserController extends AbstractController {
 		result.addObject("draftmode", draftmode);
 		result.addObject("newspaper", newspaper);
 		result.addObject("message", message);
-		result.addObject("requestURI", "article/user/edit.do");
+		if(article.getId() == 0){
+			result.addObject("requestURI", "article/user/edit.do");
+		} else {
+			result.addObject("requestURI", "article/user/edit.do?articleId=" + article.getId());
+		}
+
 
 		return result;
 	}

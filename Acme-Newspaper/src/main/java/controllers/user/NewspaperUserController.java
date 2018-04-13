@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.NewspaperService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Newspaper;
+import domain.User;
 
 @Controller
 @RequestMapping("/newspaper/user")
@@ -27,6 +29,9 @@ public class NewspaperUserController extends AbstractController {
 	private NewspaperService newspaperService;
 
 	// Supporting services --------------------------------------------------
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructors ---------------------------------------------------------
 
@@ -40,6 +45,8 @@ public class NewspaperUserController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Newspaper> newspaper;
+		User currentUser;
+		Integer currentUserId;
 
 		this.newspaperService.checkTabooWords();
 
@@ -48,6 +55,9 @@ public class NewspaperUserController extends AbstractController {
 		newspaper.removeAll(this.newspaperService.findNewspapersPublicated());
 
 		result = new ModelAndView("newspaper/list");
+		currentUser = this.userService.findByPrincipal();
+		currentUserId = currentUser.getId();
+		result.addObject("currentUserId", currentUserId);
 		result.addObject("newspaper", newspaper);
 		result.addObject("requestURI", "newspaper/list.do");
 
@@ -73,10 +83,17 @@ public class NewspaperUserController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int newspaperId) {
 		ModelAndView result;
 		Newspaper newspaper;
+		User user;
 
+		user = this.userService.findByPrincipal();
 		newspaper = this.newspaperService.findOne(newspaperId);
-		result = this.createEditModelAndView(newspaper);
-		result.addObject("newspaper", newspaper);
+		if (user.getNewspapers().contains(newspaper)) {
+			newspaper = this.newspaperService.findOne(newspaperId);
+			result = this.createEditModelAndView(newspaper);
+			result.addObject("newspaper", newspaper);
+		} else {
+			result = new ModelAndView("redirect:../../");
+		}
 
 		return result;
 	}
@@ -123,8 +140,11 @@ public class NewspaperUserController extends AbstractController {
 		result.addObject("newspaper", newspaper);
 		result.addObject("hide", hide);
 		result.addObject("message", message);
-		result.addObject("requestURI", "newspaper/user/edit.do");
-
+		if(newspaper.getId() == 0){
+			result.addObject("requestURI", "newspaper/user/edit.do");
+		} else {
+			result.addObject("requestURI", "newspaper/user/edit.do?newspaperId=" + newspaper.getId());
+		}
 		return result;
 	}
 

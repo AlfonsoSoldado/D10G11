@@ -74,7 +74,6 @@ public class ArticleAdministratorController extends AbstractController {
 			this.articleService.delete(article);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
 			res = this.createEditModelAndView(article, "article.commit.error");
 		}
 		return res;

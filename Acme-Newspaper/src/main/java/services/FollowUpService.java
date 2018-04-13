@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.FollowUpRepository;
 import domain.FollowUp;
@@ -27,6 +29,9 @@ public class FollowUpService {
 	
 	@Autowired
 	private AdministratorService administratorService;
+	
+	@Autowired
+	private Validator validator;
 
 	// Constructor ------------------------------------------------------------
 
@@ -65,6 +70,7 @@ public class FollowUpService {
 
 	public FollowUp save(FollowUp followUp) {
 		this.userService.checkAuthority();
+		Assert.isTrue(followUp.getArticle().getWriter().equals(this.userService.findByPrincipal()));
 		Assert.notNull(followUp);
 		FollowUp res;
 		res = this.followUpRepository.save(followUp);
@@ -84,6 +90,30 @@ public class FollowUpService {
 	public Collection<FollowUp> findFollowUpByArticle(int id) {
 		Collection<FollowUp> res;
 		res = this.followUpRepository.findFollowUpByArticle(id);
+		return res;
+	}
+	
+	public FollowUp reconstruct(final FollowUp followUp, final BindingResult binding) {
+		FollowUp res;
+		FollowUp followUpFinal;
+		Date moment;
+
+		if (followUp.getId() == 0) {
+			moment = new Date(System.currentTimeMillis() - 1000);
+			followUp.setMoment(moment);
+			
+			res = followUp;
+		} else {
+			followUpFinal = this.followUpRepository.findOne(followUp.getId());
+			
+			followUp.setId(followUpFinal.getId());
+			followUp.setVersion(followUpFinal.getVersion());
+			followUp.setArticle(followUpFinal.getArticle());
+			followUp.setMoment(followUpFinal.getMoment());
+
+			res = followUp;
+		}
+		this.validator.validate(res, binding);
 		return res;
 	}
 

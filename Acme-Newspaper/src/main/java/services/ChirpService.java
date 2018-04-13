@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ChirpRepository;
 import domain.Chirp;
@@ -31,6 +33,9 @@ public class ChirpService {
 	
 	@Autowired
 	private ConfigurationService configurationService;
+	
+	@Autowired
+	private Validator validator;
 
 	// Constructor ------------------------------------------------------------
 
@@ -117,6 +122,32 @@ public class ChirpService {
 
 	public void flush() {
 		this.chirpRepository.flush();
+	}
+	
+	public Chirp reconstruct(final Chirp chirp, final BindingResult binding) {
+		Chirp res;
+		Chirp chirpFinal;
+		if (chirp.getId() == 0) {
+			User userPrincipal;
+
+			userPrincipal = this.userService.findByPrincipal();
+			chirp.setUser(userPrincipal);
+			
+			res = chirp;
+		} else {
+			chirpFinal = this.chirpRepository.findOne(chirp.getId());
+			
+			chirp.setId(chirpFinal.getId());
+			chirp.setVersion(chirpFinal.getVersion());
+			chirp.setMoment(chirpFinal.getMoment());
+			chirp.setUser(chirpFinal.getUser());
+			chirp.setDescription(chirpFinal.getDescription());
+			chirp.setTitle(chirpFinal.getTitle());
+
+			res = chirp;
+		}
+		this.validator.validate(res, binding);
+		return res;
 	}
 
 }

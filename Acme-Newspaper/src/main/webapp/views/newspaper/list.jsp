@@ -33,15 +33,23 @@
 	<!-- Attributes -->
 
 	<security:authorize access="hasRole('USER')">
-		<display:column><acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" /></display:column>
+		<display:column>
+		<jstl:if test="${row.publisher.id == currentUserId }">
+		<acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" />
+		</jstl:if>
+		</display:column>
 	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">
+	
 		<display:column><acme:links url="newspaper/administrator/edit.do?newspaperId=${row.id}" code="newspaper.delete" /></display:column>
 	</security:authorize>
 	
 	<display:column><acme:links url="newspaper/display.do?newspaperId=${row.id}" code="newspaper.display" /></display:column>
 	
+	<security:authorize access="hasRole('USER')">
+		<acme:column property="hide" code="newspaper.hide" />
+	</security:authorize>
 	<acme:column property="title" code="newspaper.title" />
 	<acme:column property="publication" code="newspaper.publication" />
 	<acme:column property="description" code="newspaper.description" />

@@ -22,7 +22,6 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="moment" />
 	
 	<security:authorize access="hasRole('USER')">
 	<acme:textbox code="followUp.title" path="title" />
@@ -34,7 +33,7 @@
 	<!-- Buttons -->
 	
 	<acme:submit name="save" code="followUp.submit" />
-	<acme:cancel url="followUp/list.do?articleId=${followUp.article.id}" code="followUp.cancel" />
+	<acme:cancel url="newspaper/list.do" code="followUp.cancel" />
 	<%-- <acme:delete confirmationCode="followUp.confirm.delete" buttonCode="followUp.delete" id="${followUp.id}" /> --%>
 	</security:authorize>
 	

@@ -70,10 +70,11 @@
 		, la correcta navegación del usuario y el borrado virtual de la
 		información. Esta información será confidencial y únicamente será
 		utilizada para mejorar la seguridad y funcionamiento del portal
-		on-line. <br> - Uso de
-
-
-
+		on-line. <br>
+		El administrador ha seleccionado ciertas palabras que son tabú en el sitema,
+		no se podrá escribir ningún periódico, artículo, o chirp que contengan estas
+		palabras. Estas palabras pueden ser modificadas por el administrador.
+		
 	</p>
 
 
@@ -142,8 +143,10 @@
 		<jstl:out value="${name }" />
 		portal, the correct user navigation and the virtual erasure of
 		information. This information will be confidential and will only be
-		used to improve the security and functioning of the online portal.
-
+		used to improve the security and functioning of the online portal. <br>
+		The administrator has selected certain words that are taboo in the system, 
+		no newspaper, article, or chirp containing these words may be written. 
+		These words can be modified by the administrator.
 
 	</p>
 

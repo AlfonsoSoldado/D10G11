@@ -91,13 +91,7 @@ public class ActorUserController extends AbstractController {
 		Collection<Chirp> tabooChirps;
 		tabooChirps = chirpService.findChirpTaboo();
 		
-		System.out.println("Taboo chirps: "+tabooChirps);
-		
-		System.out.println("Chirps antes de borrar las Taboo: "+chirps);
-		
 		chirps.removeAll(tabooChirps);
-		
-		System.out.println("Chirps después de borrar las Taboo: "+chirps);
 		
 		articles = articleService.findArticlePublishedByUser(user.getId());
 		

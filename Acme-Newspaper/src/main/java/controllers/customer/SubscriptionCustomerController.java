@@ -72,6 +72,7 @@ public class SubscriptionCustomerController extends AbstractController {
 	public ModelAndView save(@Valid Subscription subscription,
 			final BindingResult binding) {
 		ModelAndView res;
+		subscription = this.subscriptionService.reconstruct(subscription, binding);
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(subscription,
 					"subscription.params.error");
@@ -96,7 +97,6 @@ public class SubscriptionCustomerController extends AbstractController {
 			this.subscriptionService.delete(subscription);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
 			res = this.createEditModelAndView(subscription,
 					"subscription.commit.error");
 		}

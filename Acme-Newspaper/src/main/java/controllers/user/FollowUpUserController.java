@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ArticleService;
 import services.FollowUpService;
-import services.NewspaperService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Article;
 import domain.FollowUp;
-import domain.Newspaper;
+import domain.User;
 
 @Controller
 @RequestMapping("/followUp/user")
@@ -32,7 +33,10 @@ public class FollowUpUserController extends AbstractController {
 	// Supporting services --------------------------------------------------
 	
 	@Autowired
-	private NewspaperService newspaperService;
+	private ArticleService articleService;
+	
+	@Autowired
+	private UserService userService;
 	
 	// Constructors ---------------------------------------------------------
 
@@ -59,10 +63,18 @@ public class FollowUpUserController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int followUpId) {
 		ModelAndView result;
 		FollowUp followUp;
+		User user;
 
+		user = this.userService.findByPrincipal();
 		followUp = this.followUpService.findOne(followUpId);
 		result = this.createEditModelAndView(followUp);
-		result.addObject("followUp", followUp);
+		if (followUp.getArticle().getWriter().equals(user)) {
+			followUp = this.followUpService.findOne(followUpId);
+			result = this.createEditModelAndView(followUp);
+			result.addObject("followUp", followUp);
+		} else {
+			result = new ModelAndView("redirect:../../");
+		}
 		
 		return result;
 	}
@@ -73,6 +85,7 @@ public class FollowUpUserController extends AbstractController {
 	public ModelAndView save(@Valid FollowUp followUp,
 			final BindingResult binding) {
 		ModelAndView res;
+		followUp = this.followUpService.reconstruct(followUp, binding);
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(followUp,
 					"followUp.params.error");
@@ -97,7 +110,6 @@ public class FollowUpUserController extends AbstractController {
 			this.followUpService.delete(followUp);
 			res = new ModelAndView("redirect:../../");
 		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
 			res = this.createEditModelAndView(followUp,
 					"followUp.commit.error");
 		}
@@ -117,18 +129,21 @@ public class FollowUpUserController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final FollowUp followUp,
 			final String message) {
 		ModelAndView result;
+		User user;
 		
-		Collection<Newspaper> news = newspaperService.findNewspapersPublicated();
+		user = userService.findByPrincipal();
 		Collection<Article> articlesPublicated = new ArrayList<Article>();
-		for (Newspaper n : news) {
-			articlesPublicated.addAll(n.getArticles());
-		}
+		articlesPublicated = articleService.findArticlePublishedByUser(user.getId());
 		
 		result = new ModelAndView("followUp/user/edit");
 		result.addObject("followUp", followUp);
 		result.addObject("article", articlesPublicated);
 		result.addObject("message", message);
-		result.addObject("requestURI", "followUp/user/edit.do");
+		if(followUp.getId() == 0){
+			result.addObject("requestURI", "followUp/user/edit.do");
+		} else {
+			result.addObject("requestURI", "followUp/user/edit.do?followUpId=" + followUp.getId());
+		}
 
 		return result;
 	}

@@ -83,6 +83,7 @@ public class NewspaperCustomerController extends AbstractController {
 		newspapers.removeAll(this.newspaperService.findNewspaperTaboo());
 		newspapers.removeAll(this.newspaperService.findNewspapersPrivate());
 		
+		
 		Collection<Newspaper> acum;
 		acum = this.newspaperService.searchNewspaper(criteria);
 		acum.removeAll(this.newspaperService.findNewspaperTaboo());
@@ -104,6 +105,7 @@ public class NewspaperCustomerController extends AbstractController {
 		} catch (Exception e) {
 			newspapers = new ArrayList<Newspaper>();
 		}
+		newspapers.removeAll(this.newspaperService.findNewspapersPublic());
 		
 		res = new ModelAndView("newspaper/customer/list");
 		res.addObject("newspaper", newspapers);
