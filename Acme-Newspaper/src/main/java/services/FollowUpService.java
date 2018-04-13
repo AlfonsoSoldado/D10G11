@@ -109,6 +109,7 @@ public class FollowUpService {
 			followUp.setId(followUpFinal.getId());
 			followUp.setVersion(followUpFinal.getVersion());
 			followUp.setArticle(followUpFinal.getArticle());
+			followUp.setMoment(followUpFinal.getMoment());
 
 			res = followUp;
 		}

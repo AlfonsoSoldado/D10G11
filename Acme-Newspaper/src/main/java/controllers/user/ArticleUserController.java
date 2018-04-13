@@ -86,10 +86,10 @@ public class ArticleUserController extends AbstractController {
 	public ModelAndView save(@Valid Article article, final BindingResult binding) {
 		ModelAndView res;
 		article = this.articleService.reconstruct(article, binding);
-		if (binding.hasErrors())
-			res = this.createEditModelAndView(article,
-					"article.params.error");
-		else
+		if (binding.hasErrors()) {
+//			res = new ModelAndView("redirect:edit.do?articleId=" + article.getId());
+			res = this.createEditModelAndView(article, "article.params.error");
+		} else {
 			try {
 				this.articleService.save(article);
 				res = new ModelAndView("redirect:../list.do?newspaperId=" + article.getNewspaper().getId());
@@ -98,6 +98,7 @@ public class ArticleUserController extends AbstractController {
 				res = this.createEditModelAndView(article,
 						"article.commit.error");
 			}
+		}
 		return res;
 	}
 
@@ -129,7 +130,12 @@ public class ArticleUserController extends AbstractController {
 		result.addObject("draftmode", draftmode);
 		result.addObject("newspaper", newspaper);
 		result.addObject("message", message);
-		result.addObject("requestURI", "article/user/edit.do");
+		if(article.getId() == 0){
+			result.addObject("requestURI", "article/user/edit.do");
+		} else {
+			result.addObject("requestURI", "article/user/edit.do?articleId=" + article.getId());
+		}
+
 
 		return result;
 	}

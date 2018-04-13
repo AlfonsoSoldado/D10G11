@@ -139,7 +139,11 @@ public class FollowUpUserController extends AbstractController {
 		result.addObject("followUp", followUp);
 		result.addObject("article", articlesPublicated);
 		result.addObject("message", message);
-		result.addObject("requestURI", "followUp/user/edit.do");
+		if(followUp.getId() == 0){
+			result.addObject("requestURI", "followUp/user/edit.do");
+		} else {
+			result.addObject("requestURI", "followUp/user/edit.do?followUpId=" + followUp.getId());
+		}
 
 		return result;
 	}

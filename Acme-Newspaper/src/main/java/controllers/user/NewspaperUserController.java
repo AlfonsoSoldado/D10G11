@@ -140,8 +140,11 @@ public class NewspaperUserController extends AbstractController {
 		result.addObject("newspaper", newspaper);
 		result.addObject("hide", hide);
 		result.addObject("message", message);
-		result.addObject("requestURI", "newspaper/user/edit.do");
-
+		if(newspaper.getId() == 0){
+			result.addObject("requestURI", "newspaper/user/edit.do");
+		} else {
+			result.addObject("requestURI", "newspaper/user/edit.do?newspaperId=" + newspaper.getId());
+		}
 		return result;
 	}
 
