@@ -19,7 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestUri}" modelAttribute="actor">
+<form:form action="${requestURI}" modelAttribute="actor">
 
 	<form:hidden path="id" />
 	<form:hidden path="userAccount" />
@@ -30,22 +30,6 @@
 	<acme:textbox code="actor.phoneNumber" path="phoneNumber" />
 	<acme:textbox code="actor.postalAddress" path="postalAddress" />
 	
-	<security:authorize access="hasRole('CUSTOMER')">
-	
-	<form:hidden path="subscriptions"/>
-	
-	</security:authorize>
-
-	<security:authorize access="hasRole('USER')">
-		
-		<form:hidden path="articles"/>
-		<form:hidden path="chirps"/>
-		<form:hidden path="newspapers"/>
-		<form:hidden path="following"/>
-		<form:hidden path="followers" />
-
-	</security:authorize>
-
 	<acme:submit name="save" code="actor.submit" />
 	<acme:cancel url="/" code="actor.cancel" />
 
