@@ -90,8 +90,7 @@ public class NewspaperService {
 
 	public Newspaper save(final Newspaper newspaper) {
 		this.userService.checkAuthority();
-		Assert.isTrue(newspaper.getPublisher() == this.userService
-				.findByPrincipal());
+		Assert.isTrue(newspaper.getPublisher().equals(this.userService.findByPrincipal()));
 		Assert.notNull(newspaper);
 		Newspaper res;
 		res = this.newspaperRepository.save(newspaper);

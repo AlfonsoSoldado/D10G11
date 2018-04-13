@@ -33,10 +33,13 @@
 	<!-- Attributes -->
 
 	<security:authorize access="hasRole('USER')">
+	<jstl:if test="${row.publisher.id == currentUserId }">
 		<display:column><acme:links url="newspaper/user/edit.do?newspaperId=${row.id}" code="newspaper.edit" /></display:column>
+		</jstl:if>
 	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">
+	
 		<display:column><acme:links url="newspaper/administrator/edit.do?newspaperId=${row.id}" code="newspaper.delete" /></display:column>
 	</security:authorize>
 	

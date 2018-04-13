@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.NewspaperService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Newspaper;
+import domain.User;
 
 @Controller
 @RequestMapping("/newspaper/user")
@@ -27,6 +29,9 @@ public class NewspaperUserController extends AbstractController {
 	private NewspaperService newspaperService;
 
 	// Supporting services --------------------------------------------------
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructors ---------------------------------------------------------
 
@@ -73,10 +78,17 @@ public class NewspaperUserController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int newspaperId) {
 		ModelAndView result;
 		Newspaper newspaper;
+		User user;
 
+		user = this.userService.findByPrincipal();
 		newspaper = this.newspaperService.findOne(newspaperId);
-		result = this.createEditModelAndView(newspaper);
-		result.addObject("newspaper", newspaper);
+		if (user.getNewspapers().contains(newspaper)) {
+			newspaper = this.newspaperService.findOne(newspaperId);
+			result = this.createEditModelAndView(newspaper);
+			result.addObject("newspaper", newspaper);
+		} else {
+			result = new ModelAndView("redirect:../../");
+		}
 
 		return result;
 	}

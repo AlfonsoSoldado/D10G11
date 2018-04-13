@@ -56,6 +56,8 @@ public class NewspaperController extends AbstractController {
 		ModelAndView result;
 		Collection<Newspaper> newspaper;
 		Collection<Newspaper> privateNewspaper;
+		User currentUser;
+		Integer currentUserId;
 		
 		this.newspaperService.checkTabooWords();
 
@@ -107,6 +109,10 @@ public class NewspaperController extends AbstractController {
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspaper", newspaper);
+		currentUser = this.userService.findByPrincipal();
+		currentUserId = currentUser.getId();
+		result.addObject("currentUserId", currentUserId);
+			
 		result.addObject("requestURI", "newspaper/list.do");
 
 		return result;
